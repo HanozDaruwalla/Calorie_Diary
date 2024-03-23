@@ -1,18 +1,20 @@
 package com.example.caloriediary;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.caloriediary.databinding.ActivityCreateAccountBinding;
 
+import java.util.ArrayList;
+
 public class Create_Account extends AppCompatActivity {
 
     private ActivityCreateAccountBinding binding;
     int Default_Password_Input_Type;
-    public String Error_Msg = "No Error";
+    Intent Page_Movement_Intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,46 +27,64 @@ public class Create_Account extends AppCompatActivity {
 
     public void Validation_Checks_Not_Null(View view) {
 
+        ReusableFunctions reusableFunctions = new ReusableFunctions();
+
         String Username = binding.UsernameInput.getText().toString();
         String Password = binding.PasswordInput.getText().toString();
         String Password2 = binding.PasswordInput2.getText().toString();
         String Email = binding.EmailInput.getText().toString();
 
+        //checks no fields are Null
         if(Username.equals("") || Password.equals("") || Password2.equals("") || Email.equals("") || binding.EmailConfirmationCheckBox.isChecked() == false) {
-            Create_Toast("Please Enter data to all fields and tick checkbox.");
+            reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter data to all fields and tick checkbox.");
         }else {
-            Validation_Checks_Valid_Inputs(Password, Password2, Email);
-            Create_Toast(Error_Msg);
+            Validation_Checks_Valid_Inputs(Username, Password, Password2, Email, reusableFunctions, view);
         }
 
     }
 
-    public void Validation_Checks_Valid_Inputs(String Password, String Password2, String Email) {
+    public void Validation_Checks_Valid_Inputs(String Username, String Password, String Password2, String Email, ReusableFunctions reusableFunctions, View view) {
         boolean Is_UpperCase;
         Is_UpperCase = containsUpperCase(Password);
 
+        //checks if pw >8 chars/ Cap letter and Special Char
         if (Password.length() >= 8 && Is_UpperCase == true && containsSpecialCharacter(Password) == true) {
-            if (Password.equals(Password2)) {
+            if (Password.equals(Password2)) { //check if passwords match
+                //checks for a valid email
                 if(Email.contains("@gmail") || Email.contains("@outlook") || Email.contains("@yahoo") || Email.contains("@student") || Email.contains("@hotmail")){
                     if(Email.equals("@gmail") || Email.equals("@outlook") || Email.equals("@yahoo") || Email.equals("@student") || Email.equals("@hotmail")){
-                        Create_Toast("Invalid Email");
+                        reusableFunctions.Create_Toast(getApplicationContext(), "Invalid Email");
                     }else{
-                        Create_Toast("Valid Login Details. Connecting To Db");
+                        // ------------------------------------------------------------
+                        // -------------------- Creates An Account --------------------
+                        // ------------------------------------------------------------
+                        To_Database(Username,Password,Email,view);
                     }
                 }else{
-                    Create_Toast("Invalid Email");
+                    reusableFunctions.Create_Toast(getApplicationContext(), "Invalid Email");
                 }
             }else {
-                Create_Toast("Your Passwords Don't Match");
+                reusableFunctions.Create_Toast(getApplicationContext(), "Your Passwords Don't Match");
             }
         }else {
-            Create_Toast("Password Requires: 8 characters, special char + uppercase.");
+            reusableFunctions.Create_Toast(getApplicationContext(), "Password Requires: 8 characters, special char + uppercase.");
         }
     }
 
+    private void To_Database(String Username, String Password, String Email, View view){
+        ArrayList Account_Info = new ArrayList();
+        Account_Info.add(Username);
+        Account_Info.add(Password);
+        Account_Info.add(Email);
 
+        Page_Movement_Intent = new Intent(view.getContext(), Create_Account.class);
+        Page_Movement_Intent.putExtra("Sent_Info", Account_Info);
+        // 0 = Create_Account, 1 = login, 2 = Add Product From Db
+        Page_Movement_Intent.putExtra("Location_From",0);
+        startActivity(Page_Movement_Intent);
+    }
 
-    public void Password_Checkbox_Clicked(View view) {
+    private void Password_Checkbox_Clicked() {
         if (binding.PasswordCheckBox.isChecked()) {
             binding.PasswordInput.setInputType(0);
             binding.PasswordInput2.setInputType(0);
@@ -76,20 +96,20 @@ public class Create_Account extends AppCompatActivity {
 
     //          ----------------------- EXTRA FUNCTIONS/ DEPENDENCIES -----------------------
 
-    public void Email_Checkbox_Clicked(View view) {
+    private void Email_Checkbox_Clicked() {
 
     }
 
-    public static boolean containsUpperCase(String str) {
+    private static boolean containsUpperCase(String str) {
         for (int i = 0; i < str.length(); i++) {
             if (Character.isUpperCase(str.charAt(i))) {
                 return true;
             }
         }
         return false;
-    }//checks if uppercase char
+    }
 
-    public static boolean containsSpecialCharacter(String str) {
+    private static boolean containsSpecialCharacter(String str) {
         for (int i = 0; i < str.length(); i++) {
             char ch = str.charAt(i);
             if (!Character.isLetterOrDigit(ch)) {
@@ -99,13 +119,6 @@ public class Create_Account extends AppCompatActivity {
         }
         return false;
     }//checks if special char
-
-    public String Create_Toast(String Toast_Msg) {
-        Toast toast = Toast.makeText(getApplicationContext(), Toast_Msg, Toast.LENGTH_LONG);
-        //toast.setGravity(Gravity.CENTER_VERTICAL,0,250);
-        toast.show();
-        return ("");
-    }
 
 
 }
