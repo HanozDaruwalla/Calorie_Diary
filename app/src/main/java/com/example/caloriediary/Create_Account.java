@@ -25,29 +25,23 @@ public class Create_Account extends AppCompatActivity {
 
     }
 
-    private void Create_Vars_From_Gui(View view){
+    public void Validation_Checks_Not_Null(View view) {
+
         String Username = binding.UsernameInput.getText().toString();
         String Password = binding.PasswordInput.getText().toString();
         String Password2 = binding.PasswordInput2.getText().toString();
         String Email = binding.EmailInput.getText().toString();
-        boolean Email_Checkbox_Ticked = Is_Email_Checkbox_Checked();
-        Validation_Checks_Not_Null(Username, Password, Password2, Email, Email_Checkbox_Ticked);
-    }
 
-    public boolean Validation_Checks_Not_Null(String Username, String Password, String Password2,String Email, boolean Email_Checkbox_Ticked) {
-
-        if(Username.equals("") || Password.equals("") || Password2.equals("") || Email.equals("") || Email_Checkbox_Ticked == false) {
+        if(Username.equals("") || Password.equals("") || Password2.equals("") || Email.equals("") || binding.EmailConfirmationCheckBox.isChecked() == false) {
             Create_Toast("Please Enter data to all fields and tick checkbox.");
-            return false;
         }else {
             Validation_Checks_Valid_Inputs(Password, Password2, Email);
             Create_Toast(Error_Msg);
-            return true;
         }
 
     }
 
-    public boolean Validation_Checks_Valid_Inputs(String Password, String Password2, String Email) {
+    public void Validation_Checks_Valid_Inputs(String Password, String Password2, String Email) {
         boolean Is_UpperCase;
         Is_UpperCase = containsUpperCase(Password);
 
@@ -56,22 +50,17 @@ public class Create_Account extends AppCompatActivity {
                 if(Email.contains("@gmail") || Email.contains("@outlook") || Email.contains("@yahoo") || Email.contains("@student") || Email.contains("@hotmail")){
                     if(Email.equals("@gmail") || Email.equals("@outlook") || Email.equals("@yahoo") || Email.equals("@student") || Email.equals("@hotmail")){
                         Create_Toast("Invalid Email");
-                        return false;
                     }else{
                         Create_Toast("Valid Login Details. Connecting To Db");
-                        return true;
                     }
                 }else{
                     Create_Toast("Invalid Email");
-                    return false;
                 }
             }else {
                 Create_Toast("Your Passwords Don't Match");
-                return false;
             }
         }else {
             Create_Toast("Password Requires: 8 characters, special char + uppercase.");
-            return false;
         }
     }
 
@@ -92,15 +81,6 @@ public class Create_Account extends AppCompatActivity {
     public void Email_Checkbox_Clicked(View view) {
 
     }
-
-    private boolean Is_Email_Checkbox_Checked() {
-        if(binding.EmailConfirmationCheckBox.isChecked() == false){
-            return false;
-        }else{
-            return true;
-        }
-    }
-
 
     public static boolean containsUpperCase(String str) {
         for (int i = 0; i < str.length(); i++) {
@@ -128,4 +108,6 @@ public class Create_Account extends AppCompatActivity {
         toast.show();
         return ("");
     }
+
+
 }

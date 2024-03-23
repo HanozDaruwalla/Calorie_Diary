@@ -227,7 +227,7 @@ and your data is never handed out."
         android:textStyle="bold"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:onClick="Create_Vars_From_Gui"
+        android:onClick="Validation_Checks_Not_Null"
         />
 
 </LinearLayout>
