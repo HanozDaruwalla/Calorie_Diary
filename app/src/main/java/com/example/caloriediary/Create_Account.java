@@ -21,8 +21,6 @@ public class Create_Account extends AppCompatActivity {
         setContentView(R.layout.activity_create_account);
         setContentView(binding.getRoot());
         Default_Password_Input_Type = binding.PasswordInput.getInputType();
-
-
     }
 
     public void Validation_Checks_Not_Null(View view) {
