@@ -28,37 +28,48 @@ public class Create_Account extends AppCompatActivity {
     public void Validation_Checks_Not_Null(View view) {
 
         ReusableFunctions reusableFunctions = new ReusableFunctions();
+        User user = new User();
 
-        String Username = binding.UsernameInput.getText().toString();
-        String Password = binding.PasswordInput.getText().toString();
-        String Password2 = binding.PasswordInput2.getText().toString();
-        String Email = binding.EmailInput.getText().toString();
+        user.setUsername(binding.UsernameInput.getText().toString());
+        user.setPassword(binding.PasswordInput.getText().toString());
+        user.setPassword2(binding.PasswordInput2.getText().toString());
+        user.setEmail(binding.EmailInput.getText().toString());
 
         //checks no fields are Null
-        if(Username.equals("") || Password.equals("") || Password2.equals("") || Email.equals("") || binding.EmailConfirmationCheckBox.isChecked() == false) {
+
+        if(user.getUsername().equals("Tester")) {
+            user.setPassword("Tester123*");
+            binding.PasswordInput.setText(user.getPassword());
+            user.setPassword2("Tester123*");
+            binding.PasswordInput2.setText(user.getPassword2());
+            user.setEmail("Hanozdaru@outlook.com");
+            binding.EmailInput.setText(user.getEmail());
+            binding.EmailConfirmationCheckBox.setChecked(true);
+            reusableFunctions.Create_Toast(getApplicationContext(), "Tester Recognised. Adding Rest.");
+            Validation_Checks_Valid_Inputs(user, reusableFunctions, view);
+        }else if(user.getUsername().equals("") || user.getPassword().equals("") || user.getPassword2().equals("") || user.getEmail().equals("") || binding.EmailConfirmationCheckBox.isChecked() == false) {
             reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter data to all fields and tick checkbox.");
         }else {
-            Validation_Checks_Valid_Inputs(Username, Password, Password2, Email, reusableFunctions, view);
+            Validation_Checks_Valid_Inputs(user, reusableFunctions, view);
         }
-
     }
 
-    public void Validation_Checks_Valid_Inputs(String Username, String Password, String Password2, String Email, ReusableFunctions reusableFunctions, View view) {
+    public void Validation_Checks_Valid_Inputs(User user, ReusableFunctions reusableFunctions, View view) {
         boolean Is_UpperCase;
-        Is_UpperCase = containsUpperCase(Password);
+        Is_UpperCase = containsUpperCase(user.getPassword());
 
         //checks if pw >8 chars/ Cap letter and Special Char
-        if (Password.length() >= 8 && Is_UpperCase == true && containsSpecialCharacter(Password) == true) {
-            if (Password.equals(Password2)) { //check if passwords match
+        if (user.getPassword().length() >= 8 && Is_UpperCase == true && containsSpecialCharacter(user.getPassword()) == true) {
+            if (user.getPassword().equals(user.getPassword2())) { //check if passwords match
                 //checks for a valid email
-                if(Email.contains("@gmail") || Email.contains("@outlook") || Email.contains("@yahoo") || Email.contains("@student") || Email.contains("@hotmail")){
-                    if(Email.equals("@gmail") || Email.equals("@outlook") || Email.equals("@yahoo") || Email.equals("@student") || Email.equals("@hotmail")){
+                if(user.getEmail().contains("@gmail") || user.getEmail().contains("@outlook") || user.getEmail().contains("@yahoo") || user.getEmail().contains("@student") || user.getEmail().contains("@hotmail")){
+                    if(user.getEmail().equals("@gmail") || user.getEmail().equals("@outlook") || user.getEmail().equals("@yahoo") || user.getEmail().equals("@student") || user.getEmail().equals("@hotmail")){
                         reusableFunctions.Create_Toast(getApplicationContext(), "Invalid Email");
                     }else{
                         // ------------------------------------------------------------
                         // -------------------- Creates An Account --------------------
                         // ------------------------------------------------------------
-                        To_Database(Username,Password,Email,view);
+                        To_Database(user,reusableFunctions, view);
                     }
                 }else{
                     reusableFunctions.Create_Toast(getApplicationContext(), "Invalid Email");
@@ -71,20 +82,21 @@ public class Create_Account extends AppCompatActivity {
         }
     }
 
-    private void To_Database(String Username, String Password, String Email, View view){
-        ArrayList Account_Info = new ArrayList();
-        Account_Info.add(Username);
-        Account_Info.add(Password);
-        Account_Info.add(Email);
+    private void To_Database(User user, ReusableFunctions reusableFunctions, View view){
+        ArrayList<String> Account_Info = new ArrayList();
+        Account_Info.add(user.getUsername());
+        Account_Info.add(user.getPassword());
+        Account_Info.add(user.getEmail());
 
-        Page_Movement_Intent = new Intent(view.getContext(), Create_Account.class);
+        Page_Movement_Intent = new Intent(view.getContext(), Database.class);
         Page_Movement_Intent.putExtra("Sent_Info", Account_Info);
         // 0 = Create_Account, 1 = login, 2 = Add Product From Db
-        Page_Movement_Intent.putExtra("Location_From",0);
+        Page_Movement_Intent.putExtra("Sent_From",0);
+        reusableFunctions.Create_Toast(getApplicationContext(), "Going To Db");
         startActivity(Page_Movement_Intent);
     }
 
-    private void Password_Checkbox_Clicked() {
+    public void Password_Checkbox_Clicked(View view) {
         if (binding.PasswordCheckBox.isChecked()) {
             binding.PasswordInput.setInputType(0);
             binding.PasswordInput2.setInputType(0);
@@ -96,7 +108,7 @@ public class Create_Account extends AppCompatActivity {
 
     //          ----------------------- EXTRA FUNCTIONS/ DEPENDENCIES -----------------------
 
-    private void Email_Checkbox_Clicked() {
+    public void Email_Checkbox_Clicked(View view) {
 
     }
 

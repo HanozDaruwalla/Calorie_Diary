@@ -20,6 +20,8 @@
 
         />
 
+
+
     <ProgressBar
         android:id="@+id/Progress_Bar"
         style="?android:attr/progressBarStyle"
@@ -30,8 +32,6 @@
         >
 
     </ProgressBar>
-
-
 
 
 

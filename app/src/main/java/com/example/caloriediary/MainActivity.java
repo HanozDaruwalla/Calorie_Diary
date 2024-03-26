@@ -1,10 +1,10 @@
 package com.example.caloriediary;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.caloriediary.databinding.ActivityMainBinding;
 
@@ -25,4 +25,5 @@ public class MainActivity extends AppCompatActivity {
         Page_Movement_Intent = new Intent(view.getContext(), Create_Account.class);
         startActivity(Page_Movement_Intent);
     }
+
 }
