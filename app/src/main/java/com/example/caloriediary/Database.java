@@ -52,7 +52,6 @@ public class Database extends AppCompatActivity {
 
         // 0 = Create_Account, 1 = login, 2 = Add Product From Db
         if (Sent_From == (int)0) {// says is redundant but crashes without
-            reusableFunctions.Create_Toast(getApplicationContext(), "Sign Up Detected");
             Creation_Type = "Users";
             Db_Node = "Users";
             User Creating_User_Details = new User();
@@ -74,7 +73,6 @@ public class Database extends AppCompatActivity {
     }
 
     private void Validate_Username(User Creating_Users_Details, ReusableFunctions reusableFunctions) {
-        reusableFunctions.Create_Toast(getApplicationContext(),"Validating Username");
         String Username = Creating_Users_Details.getUsername();
         Database_Controller.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -100,6 +98,9 @@ public class Database extends AppCompatActivity {
         reusableFunctions.Create_Toast(getApplicationContext(), "Creating Account");
 
         if (Creation_Type.equals("Users")) {
+
+            Encryption_Decryption_Class Encryption_Class = new Encryption_Decryption_Class();
+            Creating_Users_Details.setPassword(Encryption_Class.encrypt(Creating_Users_Details.getPassword()));
 
             Information_Hashmap.put("Username", Creating_Users_Details.getUsername());
             Information_Hashmap.put("Password", Creating_Users_Details.getPassword());
