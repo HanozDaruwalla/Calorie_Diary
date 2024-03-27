@@ -100,7 +100,12 @@ public class Database extends AppCompatActivity {
         if (Creation_Type.equals("Users")) {
 
             Encryption_Decryption_Class Encryption_Class = new Encryption_Decryption_Class();
-            Creating_Users_Details.setPassword(Encryption_Class.encrypt(Creating_Users_Details.getPassword()));
+            try {
+                Creating_Users_Details.setPassword(Encryption_Class.encrypt(Creating_Users_Details.getPassword()));
+                Creating_Users_Details.setEmail(Encryption_Class.encrypt(Creating_Users_Details.getEmail()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             Information_Hashmap.put("Username", Creating_Users_Details.getUsername());
             Information_Hashmap.put("Password", Creating_Users_Details.getPassword());
