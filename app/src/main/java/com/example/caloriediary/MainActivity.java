@@ -25,5 +25,4 @@ public class MainActivity extends AppCompatActivity {
         Page_Movement_Intent = new Intent(view.getContext(), Create_Account.class);
         startActivity(Page_Movement_Intent);
     }
-
 }

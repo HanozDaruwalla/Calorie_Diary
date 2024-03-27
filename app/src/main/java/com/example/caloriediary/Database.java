@@ -27,7 +27,7 @@ public class Database extends AppCompatActivity {
     HashMap<String, Object> Information_Hashmap = new HashMap<>();
     Intent Page_Movement_Intent;
 
-    private DatabaseReference Database_Controller;
+    private DatabaseReference Database_Controller = null;
     private FirebaseAnalytics mFirebaseAnalytics;
 
     private String Db_Node = "";
@@ -47,11 +47,7 @@ public class Database extends AppCompatActivity {
 
         //FirebaseAuth mAuth = FirebaseAuth.getInstance(); only for reset pw
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        reusableFunctions.Create_Toast(getApplicationContext(),"Firebase Analytics Loaded");
-
-
         Database_Controller = FirebaseDatabase.getInstance().getReference();
-        reusableFunctions.Create_Toast(getApplicationContext(),"Database Controller Initualised");
 
 
         // 0 = Create_Account, 1 = login, 2 = Add Product From Db
