@@ -1,19 +1,13 @@
 package com.example.caloriediary;
 
-public class User {
-
+public class Tester extends User{
     String Username, Password, Password2, Email = "Undeclared";
 
-    public User(String username, String password, String password2, String email) {
-        Username = username;
-        Password = password;
-        Password2 = password2;
-        Email = email;
+    public Tester() {
+        Username = "Tester";
+        Password = "Tester123*";
+        Email = "hanozdaru@outlook.com";
     }
-
-    public User() {
-    }
-
 
     public String getUsername() {
         return Username;
@@ -48,5 +42,7 @@ public class User {
     }
 
 }
+
+
 
 

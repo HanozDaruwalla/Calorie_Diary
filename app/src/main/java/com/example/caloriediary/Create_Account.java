@@ -28,29 +28,36 @@ public class Create_Account extends AppCompatActivity {
     public void Validation_Checks_Not_Null(View view) {
 
         ReusableFunctions reusableFunctions = new ReusableFunctions();
-        User user = new User();
+        User user_entered_details = new User();
+        Tester tester_details = new Tester();
 
-        user.setUsername(binding.UsernameInput.getText().toString());
-        user.setPassword(binding.PasswordInput.getText().toString());
-        user.setPassword2(binding.PasswordInput2.getText().toString());
-        user.setEmail(binding.EmailInput.getText().toString());
+        user_entered_details.setUsername(binding.UsernameInput.getText().toString());
+        user_entered_details.setPassword(binding.PasswordInput.getText().toString());
+        user_entered_details.setPassword2(binding.PasswordInput2.getText().toString());
+        user_entered_details.setEmail(binding.EmailInput.getText().toString());
 
         //checks no fields are Null
 
-        if(user.getUsername().equals("Tester")) {
-            user.setPassword("Tester123*");
-            binding.PasswordInput.setText(user.getPassword());
-            user.setPassword2("Tester123*");
-            binding.PasswordInput2.setText(user.getPassword2());
-            user.setEmail("Hanozdaru@outlook.com");
-            binding.EmailInput.setText(user.getEmail());
+        if(user_entered_details.getUsername().equals(tester_details.getUsername())) {
+            //auto places the rest of tester details from tester class
+            user_entered_details.setPassword(tester_details.getPassword());
+            binding.PasswordInput.setText(tester_details.getPassword());
+
+            user_entered_details.setPassword2(tester_details.getPassword());
+            binding.PasswordInput2.setText(tester_details.getPassword2());
+
+            user_entered_details.setEmail("Hanozdaru@outlook.com");
+            binding.EmailInput.setText(user_entered_details.getEmail());
+
+
             binding.EmailConfirmationCheckBox.setChecked(true);
             reusableFunctions.Create_Toast(getApplicationContext(), "Tester Recognised. Adding Rest.");
-            Validation_Checks_Valid_Inputs(user, reusableFunctions, view);
-        }else if(user.getUsername().equals("") || user.getPassword().equals("") || user.getPassword2().equals("") || user.getEmail().equals("") || binding.EmailConfirmationCheckBox.isChecked() == false) {
+            Validation_Checks_Valid_Inputs(user_entered_details, reusableFunctions, view);
+
+        }else if(user_entered_details.getUsername().equals("") || user_entered_details.getPassword().equals("") || user_entered_details.getPassword2().equals("") || user_entered_details.getEmail().equals("") || binding.EmailConfirmationCheckBox.isChecked() == false) {
             reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter data to all fields and tick checkbox.");
         }else {
-            Validation_Checks_Valid_Inputs(user, reusableFunctions, view);
+            Validation_Checks_Valid_Inputs(user_entered_details, reusableFunctions, view);
         }
     }
 
