@@ -37,6 +37,7 @@ public class Database extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG,"Login: onCreate");
         super.onCreate(savedInstanceState);
         com.example.caloriediary.databinding.ActivityDatabaseBinding binding = ActivityDatabaseBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_database);
@@ -50,23 +51,27 @@ public class Database extends AppCompatActivity {
         FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         DatabaseReference Database_Controller = null;
         Database_Controller = FirebaseDatabase.getInstance().getReference();
+        Log.d(TAG,"Login: onCreate Complete");
 
 
         // 0 = Create_Account, 1 = login, 2 = Add Product From Db
         if (Sent_From == (int)0) {// says is redundant but crashes without
+            Log.d(TAG,"Login: Create Account Section Called");
             Creation_Type = "Users";
             Db_Node = "Users";
 
             Validate_Username(Imported_Data_Arraylist,Database_Controller);
 
         } else if (Sent_From == (int)1) { // says is redundant but crashes without
+            Log.d(TAG,"Login: Login Section Called");
             Creation_Type = "Users";
             Db_Node = "Users";
 
             Login(Imported_Data_Arraylist, Database_Controller);
 
         } else {
-            reusableFunctions.Create_Toast(getApplicationContext(), "Unexpected Page Transfer");
+            Log.d(TAG,"Login: Unexpected Page Transfer");
+            To_Login(Imported_Data_Arraylist.get(0));
         }
     }
 
@@ -76,16 +81,20 @@ public class Database extends AppCompatActivity {
         Creating_User_Details.setUsername(Imported_Data_Arraylist.get(0));
         Creating_User_Details.setPassword(Imported_Data_Arraylist.get(1));
         Creating_User_Details.setEmail(Imported_Data_Arraylist.get(2));
+        Log.d(TAG, "Username = " + Creating_User_Details.getUsername());
+        Log.d(TAG, "Password = " + Creating_User_Details.getPassword());
+        Log.d(TAG, "Email = " + Creating_User_Details.getEmail());
 
-        String Username = Creating_User_Details.getUsername();
 
         Database_Controller.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(!(snapshot.child(Db_Node).child(Username).exists())){
+                if(!(snapshot.child(Db_Node).child(Creating_User_Details.getUsername()).exists())){
                     Creation_Type = "Users";
+                    Log.d(TAG, "Validate_Username: Username doesnt exist. creating account");
                     Add_Account(Creating_User_Details, Creation_Type, Database_Controller);
                 }else{
+                    Log.d(TAG, "Validate_Username: Username exists. Returning user to Create_Account Page");
                     reusableFunctions.Create_Toast(getApplicationContext(),"Change Username");
                     Page_Movement_Intent = new Intent(Database.this, Create_Account.class);
                     startActivity(Page_Movement_Intent);
@@ -94,6 +103,7 @@ public class Database extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 reusableFunctions.Create_Toast(getApplicationContext(),"Database Failure. Calling onCancelled");
+                Log.d(TAG, "!!!!!!! MAY NEED TO UPDATE FIREBASE RULES !!!!!!!");
                 To_Create_Account();
             }
         });
@@ -104,18 +114,22 @@ public class Database extends AppCompatActivity {
 
         if (Creation_Type.equals("Users")) {
 
+            Log.d(TAG, "Add Account: Starting Encryption");
             Encryption_Decryption_Class Encryption_Class = new Encryption_Decryption_Class();
             try {
                 Creating_Users_Details.setPassword(Encryption_Class.encrypt(Creating_Users_Details.getPassword()));
                 Creating_Users_Details.setEmail(Encryption_Class.encrypt(Creating_Users_Details.getEmail()));
+                Log.d(TAG, "Add Account: Encryption Complete");
             } catch (Exception e) {
                 e.printStackTrace();
                 To_Create_Account();
+                Log.d(TAG, "Add Account: Encryption Failed");
             }
 
             Information_Hashmap.put("Username", Creating_Users_Details.getUsername());
             Information_Hashmap.put("Password", Creating_Users_Details.getPassword());
             Information_Hashmap.put("Email", Creating_Users_Details.getEmail());
+            Log.d(TAG, "Add Account: Information packed for finish");
 
             Database_Controller.child(Db_Node).child(Creating_Users_Details.getUsername()).updateChildren(Information_Hashmap)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -124,9 +138,11 @@ public class Database extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 reusableFunctions.Create_Toast(getApplicationContext(), "Please Login");
                                 To_Login(Creating_Users_Details.getUsername());
+                                Log.d(TAG, "Add Account: Account Created");
                             } else {
                                 reusableFunctions.Create_Toast(getApplicationContext(), "Network/ Database Error. Try Again");
                                 To_Create_Account();
+                                Log.d(TAG, "Add Account: Account Faled Creation?");
                             }
                         }
                     });
@@ -188,6 +204,7 @@ public class Database extends AppCompatActivity {
         Log.d(TAG,"Login: Db_Node = " + Db_Node);
         Log.d(TAG,"Login: Username = " + Username);
 
+        //Username Was Null. not set from the Login Class
         Database_Controller.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -204,7 +221,6 @@ public class Database extends AppCompatActivity {
                     try {
                         //incase Username is encrpyted in future.
                         Log.d(TAG,"Starting Decryption");
-                        reusableFunctions.Create_Toast(getApplicationContext(),"Attempting Decryption");
                         //Add is u encrypt Username
                         //Unencrypted_Username = Encryption_Class.decrypt(Gathered_Account_Details.getUsername());
                         //Log.d(TAG,"Login: Username decrypted");
@@ -225,16 +241,19 @@ public class Database extends AppCompatActivity {
                     }else{
                         reusableFunctions.Create_Toast(getApplicationContext(),"Incorrect Username Or Password");
                         Log.d(TAG,"Password Doesnt Exist");
+                        To_Login(Login_User_Details.getUsername());
                     }
                 }else{
                     reusableFunctions.Create_Toast(getApplicationContext(),"Incorrect Username Or Password");
                     Log.d(TAG,"Username Doesnt Exist");
+                    To_Login(Login_User_Details.getUsername());
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 reusableFunctions.Create_Toast(getApplicationContext(),"Database Error. Cancelled");
+                To_Login(Login_User_Details.getUsername());
             }
         });
     }
