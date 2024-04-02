@@ -2,6 +2,7 @@ package com.example.caloriediary;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,8 @@ public class Create_Account extends AppCompatActivity {
     private ActivityCreateAccountBinding binding;
     int Default_Password_Input_Type;
     Intent Page_Movement_Intent;
+    private static final String TAG = "Create_Account_Class";
+    Boolean Gender_Selected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,33 +38,38 @@ public class Create_Account extends AppCompatActivity {
         user_entered_details.setPassword(binding.PasswordInput.getText().toString());
         user_entered_details.setPassword2(binding.PasswordInput2.getText().toString());
         user_entered_details.setEmail(binding.EmailInput.getText().toString());
+        user_entered_details.setSex(Set_Gender_From_Buttons(user_entered_details, Gender_Selected));
 
-        //checks no fields are Null
 
+        //checks if tester details
         if(user_entered_details.getUsername().equals(tester_details.getUsername())) {
             //auto places the rest of tester details from tester class
+
             user_entered_details.setPassword(tester_details.getPassword());
             binding.PasswordInput.setText(tester_details.getPassword());
-
             user_entered_details.setPassword2(tester_details.getPassword());
             binding.PasswordInput2.setText(tester_details.getPassword2());
-
-            user_entered_details.setEmail("Hanozdaru@outlook.com");
-            binding.EmailInput.setText(user_entered_details.getEmail());
-
-
+            binding.EmailInput.setText(tester_details.getEmail());
             binding.EmailConfirmationCheckBox.setChecked(true);
-            reusableFunctions.Create_Toast(getApplicationContext(), "Tester Recognised. Adding Rest.");
-            Validation_Checks_Valid_Inputs(user_entered_details, reusableFunctions, view);
+            Set_Gender_From_Tester(tester_details);
+            Log.d(TAG, "Username = " + tester_details.getUsername());
+            Log.d(TAG, "Password = " + tester_details.getPassword());
+            Log.d(TAG, "Email = " + tester_details.getEmail());
 
-        }else if(user_entered_details.getUsername().equals("") || user_entered_details.getPassword().equals("") || user_entered_details.getPassword2().equals("") || user_entered_details.getEmail().equals("") || binding.EmailConfirmationCheckBox.isChecked() == false) {
+
+            reusableFunctions.Create_Toast(getApplicationContext(), "Tester Recognised. Adding Rest.");
+            Validation_Checks_Valid_Inputs(user_entered_details, reusableFunctions, Gender_Selected, view);
+
+            //checks no fields are Null
+        }else if(user_entered_details.getUsername().equals("") || user_entered_details.getPassword().equals("") || user_entered_details.getPassword2().equals("") || user_entered_details.getEmail().equals("") || binding.EmailConfirmationCheckBox.isChecked() == false || user_entered_details.getSex().equals ("Undeclared")) {
             reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter data to all fields and tick checkbox.");
-        }else {
-            Validation_Checks_Valid_Inputs(user_entered_details, reusableFunctions, view);
+
+        }else {//accept clause
+            Validation_Checks_Valid_Inputs(user_entered_details, reusableFunctions, Gender_Selected, view);
         }
     }
 
-    public void Validation_Checks_Valid_Inputs(User user, ReusableFunctions reusableFunctions, View view) {
+    public void Validation_Checks_Valid_Inputs(User user, ReusableFunctions reusableFunctions,boolean Gender_Selected, View view) {
         boolean Is_UpperCase;
         Is_UpperCase = containsUpperCase(user.getPassword());
 
@@ -94,6 +102,11 @@ public class Create_Account extends AppCompatActivity {
         Account_Info.add(user.getUsername());
         Account_Info.add(user.getPassword());
         Account_Info.add(user.getEmail());
+        Account_Info.add(user.getSex());
+        Account_Info.add(user.getHeight_cm());
+        Account_Info.add(user.getWeight_Kg());
+        Account_Info.add(user.getRmi());
+
 
         Page_Movement_Intent = new Intent(view.getContext(), Database.class);
         Page_Movement_Intent.putExtra("Sent_Info", Account_Info);
@@ -139,5 +152,42 @@ public class Create_Account extends AppCompatActivity {
         return false;
     }//checks if special char
 
+    private String Set_Gender_From_Tester(Tester tester_details){
+        if(tester_details.getSex().equals("Male")){
+            binding.MaleRadioButton.setChecked(true);
+            return("Male");
+        }else if(tester_details.getSex().equals("Female")){
+            binding.FemaleRadioButton.setChecked(true);
+            return("Female");
+        }else{
+            //add other section later
+            return("Na");
+        }
+    }
+
+    private String Set_Gender_From_Buttons(User user_entered_details, Boolean Gender_Selected) {
+        if(binding.MaleRadioButton.isChecked()){
+            user_entered_details.setSex("Male");
+            Gender_Selected = true;
+            return "Male";
+        }else if (binding.FemaleRadioButton.isChecked()){
+            user_entered_details.setSex("Female");
+            return "Female";
+        }else{
+            Log.d(TAG, "No Gender Selected");
+            Gender_Selected = true;
+            return "Na";
+        }
+
+    }
+
+
+    public void Male_RadioButton_Pressed(View view) {
+        binding.MaleRadioButton.setChecked(true);
+    }
+
+    public void Female_RadioButton_Pressed(View view) {
+        binding.FemaleRadioButton.setChecked(true);
+    }
 
 }

@@ -158,6 +158,55 @@
         />
 
     <LinearLayout
+        android:id="@+id/Sex_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="7dp"
+        android:weightSum="7"
+        >
+        <TextView
+            android:id="@+id/Sex_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:text="Sex:"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop ="10dp"
+            android:layout_marginBottom ="10dp"
+            />
+
+        <RadioGroup
+            android:id="@+id/Sex_Radio_Button_Group"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="2"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/Male_Radio_Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Male"
+                android:textColor="@color/black"
+                android:onClick="Male_RadioButton_Pressed"/>
+
+            <RadioButton
+                android:id="@+id/Female_Radio_Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Female"
+                android:textColor="@color/black"
+                android:onClick="Female_RadioButton_Pressed"/>/>
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/Email_Layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

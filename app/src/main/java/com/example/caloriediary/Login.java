@@ -34,7 +34,9 @@ public class Login extends AppCompatActivity {
 
         ReusableFunctions reusableFunctions = new ReusableFunctions();
 
-        if(!(binding.UsernameInput.getText().equals("")) && (!(binding.PasswordInput.getText().equals("")))){
+        if(binding.UsernameInput.getText().toString().equals("") || binding.PasswordInput.getText().toString().equals("")){
+            reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter Your Details");
+        }else{
             ArrayList<String> Account_Info = new ArrayList();
             Account_Info.add(binding.UsernameInput.getText().toString());
             Account_Info.add(binding.PasswordInput.getText().toString());
@@ -46,8 +48,6 @@ public class Login extends AppCompatActivity {
             Page_Movement_Intent.putExtra("Sent_From",1);
             reusableFunctions.Create_Toast(getApplicationContext(), "Going To Db");
             startActivity(Page_Movement_Intent);
-        }else{
-            reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter All Valid Info");
         }
     }
 

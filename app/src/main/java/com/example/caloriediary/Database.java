@@ -30,8 +30,7 @@ public class Database extends AppCompatActivity {
     Intent Page_Movement_Intent;
 
 
-    private String Db_Node = "";
-    String Creation_Type = "";
+    private String Db_Node, Creation_Type = "";
     int Sent_From = -1;
     ArrayList<String> Imported_Data_Arraylist = new ArrayList<>();
 
@@ -67,6 +66,9 @@ public class Database extends AppCompatActivity {
             Creation_Type = "Users";
             Db_Node = "Users";
 
+            Log.d(TAG, "Username = " + Imported_Data_Arraylist.get(0));
+            Log.d(TAG, "Pw = " + Imported_Data_Arraylist.get(1));
+
             Login(Imported_Data_Arraylist, Database_Controller);
 
         } else {
@@ -81,9 +83,18 @@ public class Database extends AppCompatActivity {
         Creating_User_Details.setUsername(Imported_Data_Arraylist.get(0));
         Creating_User_Details.setPassword(Imported_Data_Arraylist.get(1));
         Creating_User_Details.setEmail(Imported_Data_Arraylist.get(2));
+        Creating_User_Details.setSex(Imported_Data_Arraylist.get(3));
+        Creating_User_Details.setHeight_cm(Imported_Data_Arraylist.get(4));
+        Creating_User_Details.setWeight_Kg(Imported_Data_Arraylist.get(5));
+        Creating_User_Details.setRmi(Imported_Data_Arraylist.get(6));
+
         Log.d(TAG, "Username = " + Creating_User_Details.getUsername());
         Log.d(TAG, "Password = " + Creating_User_Details.getPassword());
         Log.d(TAG, "Email = " + Creating_User_Details.getEmail());
+        Log.d(TAG, "Sex = " + Creating_User_Details.getSex());
+        Log.d(TAG, "Height_Cm = " + Creating_User_Details.getHeight_cm());
+        Log.d(TAG, "Weight = " + Creating_User_Details.getWeight_Kg());
+        Log.d(TAG, "Bmi = " + Creating_User_Details.getRmi());
 
 
         Database_Controller.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -91,7 +102,7 @@ public class Database extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(!(snapshot.child(Db_Node).child(Creating_User_Details.getUsername()).exists())){
                     Creation_Type = "Users";
-                    Log.d(TAG, "Validate_Username: Username doesnt exist. creating account");
+                    Log.d(TAG, "Validate_Username: Username doesn't exist. creating account");
                     Add_Account(Creating_User_Details, Creation_Type, Database_Controller);
                 }else{
                     Log.d(TAG, "Validate_Username: Username exists. Returning user to Create_Account Page");
@@ -126,9 +137,15 @@ public class Database extends AppCompatActivity {
                 Log.d(TAG, "Add Account: Encryption Failed");
             }
 
-            Information_Hashmap.put("Username", Creating_Users_Details.getUsername());
-            Information_Hashmap.put("Password", Creating_Users_Details.getPassword());
-            Information_Hashmap.put("Email", Creating_Users_Details.getEmail());
+            Information_Hashmap.put("Username = " , Creating_Users_Details.getUsername());
+            Information_Hashmap.put("Password = " , Creating_Users_Details.getPassword());
+            Information_Hashmap.put("Email = " , Creating_Users_Details.getEmail());
+            Information_Hashmap.put("Sex = " , Creating_Users_Details.getSex());
+            Information_Hashmap.put("Height_Cm = " , Creating_Users_Details.getHeight_cm());
+            Information_Hashmap.put("Weight = " , Creating_Users_Details.getWeight_Kg());
+            Information_Hashmap.put("Bmi = " , Creating_Users_Details.getRmi());
+
+
             Log.d(TAG, "Add Account: Information packed for finish");
 
             Database_Controller.child(Db_Node).child(Creating_Users_Details.getUsername()).updateChildren(Information_Hashmap)
@@ -142,7 +159,7 @@ public class Database extends AppCompatActivity {
                             } else {
                                 reusableFunctions.Create_Toast(getApplicationContext(), "Network/ Database Error. Try Again");
                                 To_Create_Account();
-                                Log.d(TAG, "Add Account: Account Faled Creation?");
+                                Log.d(TAG, "Add Account: Account Filed Creation?");
                             }
                         }
                     });
@@ -198,6 +215,8 @@ public class Database extends AppCompatActivity {
 
         Login_User_Details.setUsername(Imported_Data_Arraylist.get(0));
         Login_User_Details.setPassword(Imported_Data_Arraylist.get(1));
+        Log.d(TAG, "Login Function Username " + Login_User_Details.getUsername());
+        Log.d(TAG, "Login Function Password " + Login_User_Details.getPassword());
 
         String Username = Login_User_Details.getUsername();
         Log.d(TAG,"Login: Username got from GUI");
@@ -212,18 +231,24 @@ public class Database extends AppCompatActivity {
 
                     Encryption_Decryption_Class Encryption_Class = new Encryption_Decryption_Class();
                     Log.d(TAG,"Checking Pw");
-                    String Unencrypted_Username, Unencrypted_Password = "Unassigned";
-                    //Unencrypted Username is kept incase encryption of username is done
+                    String Unencrypted_Username = "Unassigned";
+                    String Unencrypted_Password = "Unassigned";
+                    //Unencrypted Username is kept encase encryption of username is done
 
                     Log.d(TAG,"Gathering User Info From Db");
                     User Gathered_Account_Details = snapshot.child(Db_Node).child(Username).getValue(User.class);//send users username to the Users_Data class
+                    Log.d(TAG,"Gathered Data Username = " + Gathered_Account_Details.getUsername());
+                    Log.d(TAG,"Gathered Data Password = " + Gathered_Account_Details.getPassword());
                     Log.d(TAG,"Attempting Decryption");
                     try {
-                        //incase Username is encrpyted in future.
+                        //encase Username is encrypted in future.
                         Log.d(TAG,"Starting Decryption");
-                        //Add is u encrypt Username
+
+                        //Add if u encrypt Username
                         //Unencrypted_Username = Encryption_Class.decrypt(Gathered_Account_Details.getUsername());
                         //Log.d(TAG,"Login: Username decrypted");
+
+                        Log.d(TAG, "Password = " + Gathered_Account_Details.getPassword());
                         Unencrypted_Password = Encryption_Class.decrypt(Gathered_Account_Details.getPassword());
                         Log.d(TAG,"Decryption Success");
                         Log.d(TAG,"Decrypted_Password = " + Unencrypted_Password );
@@ -240,12 +265,12 @@ public class Database extends AppCompatActivity {
                         //startActivity(Page_Movement_Intent);
                     }else{
                         reusableFunctions.Create_Toast(getApplicationContext(),"Incorrect Username Or Password");
-                        Log.d(TAG,"Password Doesnt Exist");
+                        Log.d(TAG,"Password Doesn't Exist");
                         To_Login(Login_User_Details.getUsername());
                     }
                 }else{
                     reusableFunctions.Create_Toast(getApplicationContext(),"Incorrect Username Or Password");
-                    Log.d(TAG,"Username Doesnt Exist");
+                    Log.d(TAG,"Username Doesn't Exist");
                     To_Login(Login_User_Details.getUsername());
                 }
             }

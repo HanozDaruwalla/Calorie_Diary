@@ -2,18 +2,27 @@ package com.example.caloriediary;
 
 public class User {
 
-    String Username, Password, Password2, Email = "Undeclared";
+    String Username = "Undeclared";
+    String Password = "Undeclared";
+    String Password2 = "Undeclared";
+    String Sex = "Undeclared";
+    String Email = "Undeclared";
+    String Height_cm = "Undeclared";
+    String Weight_Kg = "Undeclared";
+    String Rmi = "Undeclared";
 
-    public User(String username, String password, String password2, String email) {
+
+    //HEIGHT/ WEIGHT @ BMI NOT ADDED TO CONSTRUCTER. (ISNT NEEDED WHEN CREATING ACCOUNT)
+    public User(String username, String password, String password2, String sex, String email) {
         Username = username;
         Password = password;
         Password2 = password2;
+        Sex = sex;
         Email = email;
     }
 
     public User() {
     }
-
 
     public String getUsername() {
         return Username;
@@ -39,6 +48,14 @@ public class User {
         Password2 = password2;
     }
 
+    public String getSex() {
+        return Sex;
+    }
+
+    public void setSex(String sex) {
+        Sex = sex;
+    }
+
     public String getEmail() {
         return Email;
     }
@@ -46,6 +63,31 @@ public class User {
     public void setEmail(String email) {
         Email = email;
     }
+
+    public String getHeight_cm() {
+        return Height_cm;
+    }
+
+    public void setHeight_cm(String height_cm) {
+        Height_cm = height_cm;
+    }
+
+    public String getWeight_Kg() {
+        return Weight_Kg;
+    }
+
+    public void setWeight_Kg(String weight_Kg) {
+        Weight_Kg = weight_Kg;
+    }
+
+    public String getRmi() {
+        return Rmi;
+    }
+
+    public void setRmi(String rmi) {
+        Rmi = rmi;
+    }
+
 
 }
 
