@@ -1,22 +1,36 @@
 package com.example.caloriediary;
 
+import com.google.firebase.database.PropertyName;
+
 public class User {
 
-    String Username = "Undeclared";
-    String Password = "Undeclared";
-    String Password2 = "Undeclared";
-    String Sex = "Undeclared";
+    @PropertyName("Email")
     String Email = "Undeclared";
-    String Height_cm = "Undeclared";
-    String Weight_Kg = "Undeclared";
+
+    @PropertyName("Height_Cm")
+    String Height_Cm = "Undeclared";
+
+    @PropertyName("Password")
+    String Password = "Undeclared";
+
+    @PropertyName("Rmi")
     String Rmi = "Undeclared";
+
+    @PropertyName("Sex")
+    String Sex = "Undeclared";
+
+    @PropertyName("Username")
+    String Username = "Undeclared";
+
+    @PropertyName("Weight")
+    String Weight_Kg = "Undeclared";
+
 
 
     //HEIGHT/ WEIGHT @ BMI NOT ADDED TO CONSTRUCTER. (ISNT NEEDED WHEN CREATING ACCOUNT)
     public User(String username, String password, String password2, String sex, String email) {
         Username = username;
         Password = password;
-        Password2 = password2;
         Sex = sex;
         Email = email;
     }
@@ -40,14 +54,6 @@ public class User {
         Password = password;
     }
 
-    public String getPassword2() {
-        return Password2;
-    }
-
-    public void setPassword2(String password2) {
-        Password2 = password2;
-    }
-
     public String getSex() {
         return Sex;
     }
@@ -64,12 +70,12 @@ public class User {
         Email = email;
     }
 
-    public String getHeight_cm() {
-        return Height_cm;
+    public String getHeight_Cm() {
+        return Height_Cm;
     }
 
-    public void setHeight_cm(String height_cm) {
-        Height_cm = height_cm;
+    public void setHeight_Cm(String height_Cm) {
+        Height_Cm = height_Cm;
     }
 
     public String getWeight_Kg() {

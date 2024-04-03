@@ -36,7 +36,8 @@ public class Create_Account extends AppCompatActivity {
 
         user_entered_details.setUsername(binding.UsernameInput.getText().toString());
         user_entered_details.setPassword(binding.PasswordInput.getText().toString());
-        user_entered_details.setPassword2(binding.PasswordInput2.getText().toString());
+
+        String Password2 = binding.PasswordInput2.getText().toString();
         user_entered_details.setEmail(binding.EmailInput.getText().toString());
         user_entered_details.setSex(Set_Gender_From_Buttons(user_entered_details, Gender_Selected));
 
@@ -47,8 +48,8 @@ public class Create_Account extends AppCompatActivity {
 
             user_entered_details.setPassword(tester_details.getPassword());
             binding.PasswordInput.setText(tester_details.getPassword());
-            user_entered_details.setPassword2(tester_details.getPassword());
-            binding.PasswordInput2.setText(tester_details.getPassword2());
+            //user_entered_details.setPassword2(tester_details.getPassword());
+            binding.PasswordInput2.setText(tester_details.getPassword());
             binding.EmailInput.setText(tester_details.getEmail());
             binding.EmailConfirmationCheckBox.setChecked(true);
             Set_Gender_From_Tester(tester_details);
@@ -58,24 +59,24 @@ public class Create_Account extends AppCompatActivity {
 
 
             reusableFunctions.Create_Toast(getApplicationContext(), "Tester Recognised. Adding Rest.");
-            Validation_Checks_Valid_Inputs(user_entered_details, reusableFunctions, Gender_Selected, view);
+            Validation_Checks_Valid_Inputs(user_entered_details, Password2, reusableFunctions, Gender_Selected, view);
 
             //checks no fields are Null
-        }else if(user_entered_details.getUsername().equals("") || user_entered_details.getPassword().equals("") || user_entered_details.getPassword2().equals("") || user_entered_details.getEmail().equals("") || binding.EmailConfirmationCheckBox.isChecked() == false || user_entered_details.getSex().equals ("Undeclared")) {
+        }else if(user_entered_details.getUsername().equals("") || user_entered_details.getPassword().equals("") || Password2.equals("") || user_entered_details.getEmail().equals("") || binding.EmailConfirmationCheckBox.isChecked() == false || user_entered_details.getSex().equals ("Undeclared")) {
             reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter data to all fields and tick checkbox.");
 
         }else {//accept clause
-            Validation_Checks_Valid_Inputs(user_entered_details, reusableFunctions, Gender_Selected, view);
+            Validation_Checks_Valid_Inputs(user_entered_details, Password2, reusableFunctions, Gender_Selected, view);
         }
     }
 
-    public void Validation_Checks_Valid_Inputs(User user, ReusableFunctions reusableFunctions,boolean Gender_Selected, View view) {
+    public void Validation_Checks_Valid_Inputs(User user,  String Password2, ReusableFunctions reusableFunctions,boolean Gender_Selected, View view) {
         boolean Is_UpperCase;
         Is_UpperCase = containsUpperCase(user.getPassword());
 
         //checks if pw >8 chars/ Cap letter and Special Char
         if (user.getPassword().length() >= 8 && Is_UpperCase == true && containsSpecialCharacter(user.getPassword()) == true) {
-            if (user.getPassword().equals(user.getPassword2())) { //check if passwords match
+            if (user.getPassword().equals(Password2)) { //check if passwords match
                 //checks for a valid email
                 if(user.getEmail().contains("@gmail") || user.getEmail().contains("@outlook") || user.getEmail().contains("@yahoo") || user.getEmail().contains("@student") || user.getEmail().contains("@hotmail")){
                     if(user.getEmail().equals("@gmail") || user.getEmail().equals("@outlook") || user.getEmail().equals("@yahoo") || user.getEmail().equals("@student") || user.getEmail().equals("@hotmail")){
@@ -103,7 +104,7 @@ public class Create_Account extends AppCompatActivity {
         Account_Info.add(user.getPassword());
         Account_Info.add(user.getEmail());
         Account_Info.add(user.getSex());
-        Account_Info.add(user.getHeight_cm());
+        Account_Info.add(user.getHeight_Cm());
         Account_Info.add(user.getWeight_Kg());
         Account_Info.add(user.getRmi());
 

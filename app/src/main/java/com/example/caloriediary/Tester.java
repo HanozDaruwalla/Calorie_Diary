@@ -1,15 +1,47 @@
 package com.example.caloriediary;
 
+import com.google.firebase.database.PropertyName;
+
 public class Tester extends User{
+    /*
+    @PropertyName("Username")
     String Username = "Undeclared";
+    @PropertyName("Password")
     String Password = "Undeclared";
+
     String Password2 = "Undeclared";
+    @PropertyName("Sex")
     String Sex = "Undeclared";
+    @PropertyName("Email")
     String Email = "Undeclared";
+    @PropertyName("Height_Cm")
     String Height_cm = "Undeclared";
+    @PropertyName("Weight")
     String Weight_Kg = "Undeclared";
+    @PropertyName("Rmi")
+    String Rmi = "Undeclared";
+    */
+
+    @PropertyName("Email")
+    String Email = "Undeclared";
+
+    @PropertyName("Height_Cm")
+    String Height_Cm = "Undeclared";
+
+    @PropertyName("Password")
+    String Password = "Undeclared1";
+
+    @PropertyName("Rmi")
     String Rmi = "Undeclared";
 
+    @PropertyName("Sex")
+    String Sex = "Undeclared";
+
+    @PropertyName("Username")
+    String Username = "Undeclared1";
+
+    @PropertyName("Weight")
+    String Weight_Kg = "Undeclared";
 
 
     public Tester() {
@@ -20,7 +52,6 @@ public class Tester extends User{
         String Height_cm = "Undeclared";
         String Weight_Kg = "Undeclared";
         String Bmi = "Undeclared";
-
     }
 
     public String getUsername() {
@@ -37,14 +68,6 @@ public class Tester extends User{
 
     public void setPassword(String password) {
         Password = password;
-    }
-
-    public String getPassword2() {
-        return Password2;
-    }
-
-    public void setPassword2(String password2) {
-        Password2 = password2;
     }
 
     public String getSex() {
@@ -64,13 +87,13 @@ public class Tester extends User{
     }
 
     @Override
-    public String getHeight_cm() {
-        return Height_cm;
+    public String getHeight_Cm() {
+        return Height_Cm;
     }
 
     @Override
-    public void setHeight_cm(String height_cm) {
-        Height_cm = height_cm;
+    public void setHeight_Cm(String height_Cm) {
+        Height_Cm = height_Cm;
     }
 
     @Override
