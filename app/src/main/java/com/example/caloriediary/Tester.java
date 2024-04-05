@@ -43,7 +43,6 @@ public class Tester extends User{
     @PropertyName("Weight")
     String Weight_Kg = "Undeclared";
 
-
     public Tester() {
         Username = "Tester";
         Password = "Tester123*";

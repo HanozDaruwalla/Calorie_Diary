@@ -255,6 +255,7 @@ public class Database extends AppCompatActivity {
                     if(Unencrypted_Password.equals((Login_User_Details.getPassword()))){
                         reusableFunctions.Create_Toast(getApplicationContext(),"Login Successful");
                         Log.d(TAG,"Successful Login");
+                        Login_Success(Gathered_Account_Details, reusableFunctions);
                         //Page_Movement_Intent = new Intent(Database2.this, Menu.class);//
                         //startActivity(Page_Movement_Intent);
                     }else{
@@ -277,16 +278,25 @@ public class Database extends AppCompatActivity {
     }
 
     private void To_Login(String Username){
-        reusableFunctions.Create_Toast(getApplicationContext(),"Going To Login");
         Page_Movement_Intent = new Intent(getApplicationContext(), Login.class);//
         Page_Movement_Intent.putExtra("Username",Username);
         startActivity(Page_Movement_Intent);
     }
 
     private void To_Create_Account() {
-        reusableFunctions.Create_Toast(getApplicationContext(), "Going To Login");
         Page_Movement_Intent = new Intent(Database.this, Create_Account.class);//
         startActivity(Page_Movement_Intent);
+    }
+
+    private void Login_Success(User Gathered_Account_Details, ReusableFunctions reusableFunctions){
+        if(Gathered_Account_Details.getHeight_Cm().equals("Undeclared") || Gathered_Account_Details.getWeight_Kg().equals("Undeclared")){
+            Page_Movement_Intent = new Intent(Database.this, User_Enter_Height.class);//
+            startActivity(Page_Movement_Intent);
+
+        }else{
+            reusableFunctions.Create_Toast(getApplicationContext(), "Go To Main App Section");
+        }
+
     }
 }
 
