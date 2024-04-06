@@ -154,7 +154,6 @@ public class Database extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                reusableFunctions.Create_Toast(getApplicationContext(), "Please Login");
                                 To_Login(Creating_Users_Details.getUsername());
                                 Log.d(TAG, "Add Account: Account Created");
                             } else {
@@ -298,7 +297,7 @@ public class Database extends AppCompatActivity {
     private void Login_Success(User Gathered_Account_Details, ReusableFunctions reusableFunctions){
         Log.d(TAG, "Login_Success_Function");
         if(Gathered_Account_Details.getHeight_Cm().equals("Undeclared") || Gathered_Account_Details.getWeight_Kg().equals("Undeclared")){
-            Page_Movement_Intent = new Intent(Database.this, User_Enter_Height.class);//
+            Page_Movement_Intent = new Intent(Database.this, Rm_Calc.class);//
             Log.d(TAG, "putting extra in Login Success");
             Page_Movement_Intent.putExtra("User_Data", dataToArrayList(Gathered_Account_Details));
             Log.d(TAG, "Moving to Rmi calcs");

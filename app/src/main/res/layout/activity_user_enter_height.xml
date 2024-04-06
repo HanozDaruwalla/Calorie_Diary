@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".User_Enter_Height"
+    tools:context=".Rm_Calc"
     android:background="@color/background_color"
     android:orientation="vertical"
     android:gravity="top"
@@ -131,44 +131,6 @@
             android:textColor="@color/black"
             android:textColorHint="@color/Hint_Color"
             android:layout_weight="1"
-            android:layout_marginRight="10dp"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/Age_Layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="7dp"
-        android:weightSum="3"
-        >
-        <TextView
-            android:id="@+id/Age_TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Age:"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textAlignment="center"
-            android:paddingRight="40dp"
-            android:paddingLeft="10dp"
-            />
-
-        <EditText
-            android:id="@+id/AgeInput"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            android:text=""
-            android:hint="Enter Your Age"
-            android:textSize="22sp"
-            android:background="@color/white"
-            android:textColor="@color/black"
-            android:textColorHint="@color/Hint_Color"
             android:layout_marginRight="10dp"
             />
     </LinearLayout>

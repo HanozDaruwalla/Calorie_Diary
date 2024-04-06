@@ -10,7 +10,7 @@ import com.example.caloriediary.databinding.ActivityUserEnterHeightBinding;
 
 import java.util.ArrayList;
 
-public class User_Enter_Height extends AppCompatActivity {
+public class Rm_Calc extends AppCompatActivity {
 
     private ActivityUserEnterHeightBinding binding;
     ReusableFunctions reusableFunctions = new ReusableFunctions();
@@ -28,6 +28,33 @@ public class User_Enter_Height extends AppCompatActivity {
         Log.d(TAG, "Loaded");
     }
 
+    public void Not_Null_Checks(){
+        if(binding.HeightInput.getText().toString().equals("") || binding.WeightInput.getText().toString().equals("")){
+            reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter All Data");
+
+        }else{
+            //start calcs
+            Rmi_Calcs();
+        }
+    }
+
+    private void Rmi_Calcs(){
+            reusableFunctions.Create_Toast(getApplicationContext(), "Starting calcs");
+
+        Log.d(TAG, "String = " + binding.HeightInput.getText().toString());
+        String[] height_Array = binding.HeightInput.getText().toString().split("\\.");
+
+        Log.d("TAG", "after rejex");
+        int Foot = reusableFunctions.To_Int(height_Array[0]);
+        int Inches = reusableFunctions.To_Int(height_Array[1]);
+
+        Log.d("TAG", "after type cast");
+        Log.d(TAG, "Foot = " + Foot);
+        Log.d(TAG, "Inches = " + Inches);
+        feetInchesToCm(Foot, Inches);
+
+    }
+
     public void feetInchesToCm(int feet, int inches) {
         // 1 foot = 30.48 centimeters
         // 1 inch = 2.54 centimeters
@@ -35,44 +62,12 @@ public class User_Enter_Height extends AppCompatActivity {
         double cm = totalInches * 2.54;
         String formattedCm = String.format("%.2f", cm);
         Log.d(TAG, "Cm = " + formattedCm);
+
+        reusableFunctions.Create_Toast(getApplicationContext(), "Cm = " + formattedCm);
     }
 
     public void Add_Button_Pressed(View view) {
-
-        Log.d(TAG, "YASS");
-
-        //String height_Inputted_By_User = "Undefined";
-        //height_Inputted_By_User = binding.HeightInput.getText().toString();
-
-        Log.d(TAG, "YASS2");
-        Log.d(TAG, "String = " + binding.HeightInput.getText().toString());
-        //String[] height_Array = binding.HeightInput.getText().toString().split(".");
-        String[] height_Array = binding.HeightInput.getText().toString().split("\\.");
-
-        Log.d("TAG", "after rejex");
-
-        int Foot = reusableFunctions.To_Int(height_Array[0]);
-        int Inches = reusableFunctions.To_Int(height_Array[1]);
-
-        Log.d("TAG", "after type cast");
-
-        Log.d(TAG, "Foot = " + Foot);
-        Log.d(TAG, "Inches = " + Inches);
-
-        reusableFunctions.Create_Toast(getApplicationContext(), "Wahoo");
-        feetInchesToCm(Foot, Inches);
-
-
-        /*
-        Log.d(TAG, "Button Clicked");
-        reusableFunctions.Create_Toast(getApplicationContext(), "Wahoo");
-
-        int Foot = reusableFunctions.To_Int(binding.HeightFootInput.getText().toString());
-        int Inches = reusableFunctions.To_Int(binding.HeightInchesInput.getText().toString());
-        Log.d(TAG, "Foot = " + Foot);
-        Log.d(TAG, "Inches = " + Inches);
-        feetInchesToCm(Foot, Inches);
-
-         */
+        Not_Null_Checks();
     }
+
 }
