@@ -14,6 +14,7 @@ public class Login extends AppCompatActivity {
 
     private ActivityLoginBinding binding;
     Intent Page_Movement_Intent;
+    int Default_Password_Input_Type = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,7 @@ public class Login extends AppCompatActivity {
         String Imported_Username;
         Imported_Username = getIntent().getExtras().getString("Username");
         binding.UsernameInput.setText(Imported_Username);
+        Default_Password_Input_Type = binding.PasswordInput.getInputType();
     }
 
     public void Login_Button_Clicked(View view) {
@@ -52,7 +54,6 @@ public class Login extends AppCompatActivity {
     }
 
     public void Password_Checkbox_Clicked(View view) {
-        int Default_Password_Input_Type = binding.PasswordInput.getInputType();
 
         if (binding.PasswordCheckBox.isChecked()) {
             binding.PasswordInput.setInputType(0);

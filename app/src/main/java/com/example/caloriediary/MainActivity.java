@@ -33,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
         Intent Page_Movement_Intent = new Intent(MainActivity.this, Login.class);//
         Page_Movement_Intent.putExtra("Username","");
         startActivity(Page_Movement_Intent);
-
-
     }
 
     public void signin_Label_Clicked(View view) {

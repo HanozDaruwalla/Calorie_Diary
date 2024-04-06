@@ -11,5 +11,34 @@ public class ReusableFunctions {
         toast.show();
     }
 
+    public double To_Double(String Imported_String) {
+        try {
+            double doubleNumber = Double.parseDouble(Imported_String);
+            return doubleNumber;
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid double value: " + Imported_String);
+            e.printStackTrace();
+            return -0.0;
+
+        }
+    }
+
+    public int To_Int(String Imported_String) {
+        try {
+            int intNumber = Integer.parseInt(Imported_String);
+            return intNumber;
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid double value: " + Imported_String);
+            e.printStackTrace();
+            return 0;
+
+        }
+    }
+
+    public String doubleToString(double doubleValue) {
+        return String.valueOf(doubleValue);
+    }
+
+
 
 }

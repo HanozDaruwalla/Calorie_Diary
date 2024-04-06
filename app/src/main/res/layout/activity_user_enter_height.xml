@@ -30,10 +30,22 @@
         android:textStyle="bold"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="30dp"
         />
 
+    <TextView
+
+        android:id="@+id/Title2_Label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Height:"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:layout_marginBottom="5dp"
+        />
     <LinearLayout
         android:id="@+id/Height_Layout"
         android:layout_width="match_parent"
@@ -41,63 +53,128 @@
         android:orientation="horizontal"
         android:layout_margin="7dp"
         android:weightSum="3"
+
         >
+
         <TextView
-            android:id="@+id/Height_TextView"
+            android:id="@+id/Height_Foot_TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Height Cm:"
+            android:text="Foot:"
             android:textColor="@color/black"
             android:textSize="20sp"
+            android:layout_weight="2"
+            android:textAlignment="center"
             />
 
         <EditText
-            android:id="@+id/Height_Input"
+            android:id="@+id/HeightInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:text=""
-            android:hint="Enter Height In Cm"
+            android:hint="Enter Foot @ Inches e.g. 5.7"
             android:textSize="22sp"
             android:background="@color/white"
             android:textColor="@color/black"
             android:textColorHint="@color/Hint_Color"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            />
+
+    </LinearLayout>
+
+    <TextView
+
+        android:id="@+id/Title3_Label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Weight:"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp"
+        />
+
+    <LinearLayout
+        android:id="@+id/Weight_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="7dp"
+        android:weightSum="3"
+        >
+        <TextView
+            android:id="@+id/Weight_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Weight Kg:"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            />
+
+        <EditText
+            android:id="@+id/WeightInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:text=""
+            android:hint="Enter Weight In KG"
+            android:textSize="22sp"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:textColorHint="@color/Hint_Color"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
             />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/Age_Layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="2"
-        android:layout_gravity="center"
-        android:layout_margin="10dp">
-
-        <Button
-            android:id="@+id/Cm_Button"
+        android:orientation="horizontal"
+        android:layout_margin="7dp"
+        android:weightSum="3"
+        >
+        <TextView
+            android:id="@+id/Age_TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cm"
-            android:layout_weight="1"
-            android:layout_marginRight="5dp"
+            android:layout_weight="2"
+            android:text="Age:"
             android:textColor="@color/black"
-            android:backgroundTint="@color/interface_color"/>
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:paddingRight="40dp"
+            android:paddingLeft="10dp"
+            />
 
-        <Button
-            android:id="@+id/Inches_Button"
+        <EditText
+            android:id="@+id/AgeInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Inches"
             android:layout_weight="1"
-            android:layout_marginLeft="5dp"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:text=""
+            android:hint="Enter Your Age"
+            android:textSize="22sp"
+            android:background="@color/white"
             android:textColor="@color/black"
-            android:backgroundTint="@color/interface_color"/>
+            android:textColorHint="@color/Hint_Color"
+            android:layout_marginRight="10dp"
+            />
     </LinearLayout>
 
     <Button
-        android:id="@+id/Sign_Up_Button"
+        android:id="@+id/Add_Data_Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Data"
@@ -107,6 +184,7 @@
         android:textStyle="bold"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:onClick="Add_Button_Pressed"
         />
 
     <ImageView
@@ -116,7 +194,4 @@
         android:layout_margin="10dp"
         app:srcCompat="@drawable/caloriecounter"
         />
-
-
-
 </LinearLayout>
