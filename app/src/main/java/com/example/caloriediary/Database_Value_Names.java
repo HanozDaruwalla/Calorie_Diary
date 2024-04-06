@@ -12,6 +12,8 @@ public class Database_Value_Names {
     private String Db_Username_Name = "Username";
     private String Db_Weight_Name = "Weight_Kg";
 
+    private String Db_Age_Name = "Age";
+
     public Database_Value_Names(String db_Email_Name, String db_Height_Name, String db_Password_Name, String db_Rmi_Name, String db_Sex_Name, String db_Username_Name, String db_Weight_Name) {
         Db_Email_Name = db_Email_Name;
         Db_Height_Name = db_Height_Name;
@@ -88,5 +90,13 @@ public class Database_Value_Names {
 
     public void setDb_Weight_Name(String db_Weight_Name) {
         Db_Weight_Name = db_Weight_Name;
+    }
+
+    public String getDb_Age_Name() {
+        return Db_Age_Name;
+    }
+
+    public void setDb_Age_Name(String db_Age_Name) {
+        Db_Age_Name = db_Age_Name;
     }
 }

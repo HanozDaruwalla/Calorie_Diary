@@ -39,6 +39,14 @@ public class ReusableFunctions {
         return String.valueOf(doubleValue);
     }
 
+    // Convert integer to string in Java
+
+    public static String intToString(int number) {
+        // Convert the integer to a string
+        return String.valueOf(number);
+    }
+
+
 
 
 }

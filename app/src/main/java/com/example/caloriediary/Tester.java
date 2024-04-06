@@ -21,6 +21,8 @@ public class Tester extends User{
     @PropertyName("Rmi")
     String Rmi = "Undeclared";
     */
+    @PropertyName("Age")
+    int Age = -1;
 
     @PropertyName("Email")
     String Email = "Undeclared";
@@ -53,34 +55,22 @@ public class Tester extends User{
         String Bmi = "Undeclared";
     }
 
-    public String getUsername() {
-        return Username;
+    @Override
+    public int getAge() {
+        return Age;
     }
 
-    public void setUsername(String username) {
-        Username = username;
+    @Override
+    public void setAge(int age) {
+        Age = age;
     }
 
-    public String getPassword() {
-        return Password;
-    }
-
-    public void setPassword(String password) {
-        Password = password;
-    }
-
-    public String getSex() {
-        return Sex;
-    }
-
-    public void setSex(String sex) {
-        Sex = sex;
-    }
-
+    @Override
     public String getEmail() {
         return Email;
     }
 
+    @Override
     public void setEmail(String email) {
         Email = email;
     }
@@ -96,6 +86,46 @@ public class Tester extends User{
     }
 
     @Override
+    public String getPassword() {
+        return Password;
+    }
+
+    @Override
+    public void setPassword(String password) {
+        Password = password;
+    }
+
+    @Override
+    public String getRmi() {
+        return Rmi;
+    }
+
+    @Override
+    public void setRmi(String rmi) {
+        Rmi = rmi;
+    }
+
+    @Override
+    public String getSex() {
+        return Sex;
+    }
+
+    @Override
+    public void setSex(String sex) {
+        Sex = sex;
+    }
+
+    @Override
+    public String getUsername() {
+        return Username;
+    }
+
+    @Override
+    public void setUsername(String username) {
+        Username = username;
+    }
+
+    @Override
     public String getWeight_Kg() {
         return Weight_Kg;
     }
@@ -103,14 +133,6 @@ public class Tester extends User{
     @Override
     public void setWeight_Kg(String weight_Kg) {
         Weight_Kg = weight_Kg;
-    }
-
-    public String getRmi() {
-        return Rmi;
-    }
-
-    public void setRmi(String rmi) {
-        Rmi = rmi;
     }
 
 

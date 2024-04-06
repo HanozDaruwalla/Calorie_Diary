@@ -207,6 +207,43 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/Age_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="7dp"
+        android:weightSum="3"
+        >
+        <TextView
+            android:id="@+id/Age_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Age:"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_marginRight="5dp"
+            android:paddingRight="90dp"
+            />
+
+        <EditText
+            android:id="@+id/Age_Input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="number"
+            android:text=""
+            android:hint="Enter Age"
+            android:textSize="22sp"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:textColorHint="@color/Hint_Color"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/Email_Layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

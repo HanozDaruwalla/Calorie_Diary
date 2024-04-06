@@ -81,17 +81,20 @@ public class Database extends AppCompatActivity {
         Creating_User_Details.setPassword(Imported_Data_Arraylist.get(1));
         Creating_User_Details.setEmail(Imported_Data_Arraylist.get(2));
         Creating_User_Details.setSex(Imported_Data_Arraylist.get(3));
-        Creating_User_Details.setHeight_Cm(Imported_Data_Arraylist.get(4));
-        Creating_User_Details.setWeight_Kg(Imported_Data_Arraylist.get(5));
-        Creating_User_Details.setRmi(Imported_Data_Arraylist.get(6));
+        Creating_User_Details.setAge(reusableFunctions.To_Int(Imported_Data_Arraylist.get(4)));
+        Creating_User_Details.setHeight_Cm(Imported_Data_Arraylist.get(5));
+        Creating_User_Details.setWeight_Kg(Imported_Data_Arraylist.get(6));
+        Creating_User_Details.setRmi(Imported_Data_Arraylist.get(7));
 
         Log.d(TAG, "Username = " + Creating_User_Details.getUsername());
         Log.d(TAG, "Password = " + Creating_User_Details.getPassword());
         Log.d(TAG, "Email = " + Creating_User_Details.getEmail());
         Log.d(TAG, "Sex = " + Creating_User_Details.getSex());
+        Log.d(TAG, "Age = " + Creating_User_Details.getAge());
         Log.d(TAG, "Height_Cm = " + Creating_User_Details.getHeight_Cm());
         Log.d(TAG, "Weight_Kg = " + Creating_User_Details.getWeight_Kg());
         Log.d(TAG, "Rmi = " + Creating_User_Details.getRmi());
+        Log.d(TAG, "Rmi = " + Creating_User_Details.getAge());
 
 
         Database_Controller.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -135,6 +138,7 @@ public class Database extends AppCompatActivity {
             }
             //These names must be the same as the User/ Tester classes (they go into the DB)
 
+            Information_Hashmap.put(Db_Value_Names.getDb_Age_Name(), Creating_Users_Details.getAge());
             Information_Hashmap.put(Db_Value_Names.getDb_Email_Name() , Creating_Users_Details.getEmail());
             Information_Hashmap.put(Db_Value_Names.getDb_Height_Name() , Creating_Users_Details.getHeight_Cm());
             Information_Hashmap.put(Db_Value_Names.getDb_Password_Name() , Creating_Users_Details.getPassword());
@@ -278,8 +282,11 @@ public class Database extends AppCompatActivity {
     }
 
     private void To_Login(String Username){
+        Log.d(TAG, "To_Login_Called");
         Page_Movement_Intent = new Intent(getApplicationContext(), Login.class);//
+        Log.d(TAG, "Putting extra");
         Page_Movement_Intent.putExtra("Username",Username);
+        Log.d(TAG, "Moving to login");
         startActivity(Page_Movement_Intent);
     }
 
@@ -289,15 +296,39 @@ public class Database extends AppCompatActivity {
     }
 
     private void Login_Success(User Gathered_Account_Details, ReusableFunctions reusableFunctions){
+        Log.d(TAG, "Login_Success_Function");
         if(Gathered_Account_Details.getHeight_Cm().equals("Undeclared") || Gathered_Account_Details.getWeight_Kg().equals("Undeclared")){
             Page_Movement_Intent = new Intent(Database.this, User_Enter_Height.class);//
+            Log.d(TAG, "putting extra in Login Success");
+            Page_Movement_Intent.putExtra("User_Data", dataToArrayList(Gathered_Account_Details));
+            Log.d(TAG, "Moving to Rmi calcs");
             startActivity(Page_Movement_Intent);
 
         }else{
             reusableFunctions.Create_Toast(getApplicationContext(), "Go To Main App Section");
         }
-
     }
+
+    private ArrayList<String> dataToArrayList(User Gathered_User_Data) {
+
+        Log.d(TAG, "Data to Arraylist called");
+        String Str_Age = reusableFunctions.intToString(Gathered_User_Data.getAge());
+        ArrayList<String> User_Data_Arraylist = new ArrayList<>();
+
+        Log.d(TAG, "Addign Data");
+        User_Data_Arraylist.add(Str_Age);
+        User_Data_Arraylist.add(Gathered_User_Data.getEmail());
+        User_Data_Arraylist.add(Gathered_User_Data.getHeight_Cm());
+        User_Data_Arraylist.add(Gathered_User_Data.getPassword());
+        User_Data_Arraylist.add(Gathered_User_Data.getRmi());
+        User_Data_Arraylist.add(Gathered_User_Data.getSex());
+        User_Data_Arraylist.add(Gathered_User_Data.getUsername());
+        User_Data_Arraylist.add(Gathered_User_Data.getWeight_Kg());
+
+        Log.d(TAG, "Returning");
+        return User_Data_Arraylist;
+    }
+
 }
 
 

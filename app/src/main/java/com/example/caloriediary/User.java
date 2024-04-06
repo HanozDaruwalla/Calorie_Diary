@@ -4,6 +4,9 @@ import com.google.firebase.database.PropertyName;
 
 public class User {
 
+    @PropertyName(("Age"))
+    int Age = -1;
+
     @PropertyName("Email")
     String Email = "Undeclared";
 
@@ -92,6 +95,14 @@ public class User {
 
     public void setRmi(String rmi) {
         Rmi = rmi;
+    }
+
+    public int getAge() {
+        return Age;
+    }
+
+    public void setAge(int age) {
+        Age = age;
     }
 
 

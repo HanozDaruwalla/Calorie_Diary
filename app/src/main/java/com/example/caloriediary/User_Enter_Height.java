@@ -8,10 +8,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.caloriediary.databinding.ActivityUserEnterHeightBinding;
 
+import java.util.ArrayList;
+
 public class User_Enter_Height extends AppCompatActivity {
 
     private ActivityUserEnterHeightBinding binding;
-    Double Value = 0.0;
     ReusableFunctions reusableFunctions = new ReusableFunctions();
     public static final String TAG = "ExtraInfoPickup";
 
@@ -21,6 +22,9 @@ public class User_Enter_Height extends AppCompatActivity {
         binding = ActivityUserEnterHeightBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_user_enter_height);
         setContentView(binding.getRoot());
+
+        ArrayList<String> User_Data = new ArrayList<>();
+        User_Data = getIntent().getExtras().getStringArrayList("User_Data");
         Log.d(TAG, "Loaded");
     }
 

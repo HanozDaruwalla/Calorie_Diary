@@ -40,6 +40,7 @@ public class Create_Account extends AppCompatActivity {
         String Password2 = binding.PasswordInput2.getText().toString();
         user_entered_details.setEmail(binding.EmailInput.getText().toString());
         user_entered_details.setSex(Set_Gender_From_Buttons(user_entered_details, Gender_Selected));
+        user_entered_details.setAge(reusableFunctions.To_Int(binding.AgeInput.getText().toString()));
 
 
         //checks if tester details
@@ -57,14 +58,12 @@ public class Create_Account extends AppCompatActivity {
             Log.d(TAG, "Password = " + tester_details.getPassword());
             Log.d(TAG, "Email = " + tester_details.getEmail());
 
-
             reusableFunctions.Create_Toast(getApplicationContext(), "Tester Recognised. Adding Rest.");
             Validation_Checks_Valid_Inputs(user_entered_details, Password2, reusableFunctions, Gender_Selected, view);
 
             //checks no fields are Null
-        }else if(user_entered_details.getUsername().equals("") || user_entered_details.getPassword().equals("") || Password2.equals("") || user_entered_details.getEmail().equals("") || binding.EmailConfirmationCheckBox.isChecked() == false || user_entered_details.getSex().equals ("Undeclared")) {
+        }else if(user_entered_details.getUsername().equals("") || user_entered_details.getPassword().equals("") || Password2.equals("") || user_entered_details.getEmail().equals("") || binding.EmailConfirmationCheckBox.isChecked() == false || user_entered_details.getSex().equals("Undeclared") || binding.AgeInput.getText().equals("")) {
             reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter data to all fields and tick checkbox.");
-
         }else {//accept clause
             Validation_Checks_Valid_Inputs(user_entered_details, Password2, reusableFunctions, Gender_Selected, view);
         }
@@ -81,6 +80,10 @@ public class Create_Account extends AppCompatActivity {
                 if(user.getEmail().contains("@gmail") || user.getEmail().contains("@outlook") || user.getEmail().contains("@yahoo") || user.getEmail().contains("@student") || user.getEmail().contains("@hotmail")){
                     if(user.getEmail().equals("@gmail") || user.getEmail().equals("@outlook") || user.getEmail().equals("@yahoo") || user.getEmail().equals("@student") || user.getEmail().equals("@hotmail")){
                         reusableFunctions.Create_Toast(getApplicationContext(), "Invalid Email");
+
+                    }else if(user.getAge() <18){
+                        reusableFunctions.Create_Toast(getApplicationContext(), "You must be over 18 to participate in this App..");
+
                     }else{
                         // ------------------------------------------------------------
                         // -------------------- Creates An Account --------------------
@@ -104,6 +107,7 @@ public class Create_Account extends AppCompatActivity {
         Account_Info.add(user.getPassword());
         Account_Info.add(user.getEmail());
         Account_Info.add(user.getSex());
+        Account_Info.add(ReusableFunctions.intToString(user.getAge()));
         Account_Info.add(user.getHeight_Cm());
         Account_Info.add(user.getWeight_Kg());
         Account_Info.add(user.getRmi());
