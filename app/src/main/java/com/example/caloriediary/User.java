@@ -19,8 +19,8 @@ public class User {
     @PropertyName("Rmi")
     String Rmi = "Undeclared";
 
-    @PropertyName("Sex")
-    String Sex = "Undeclared";
+    @PropertyName("isMale")
+    boolean isMale = true; //default
 
     @PropertyName("Username")
     String Username = "Undeclared";
@@ -31,10 +31,10 @@ public class User {
 
 
     //HEIGHT/ WEIGHT @ BMI NOT ADDED TO CONSTRUCTER. (ISNT NEEDED WHEN CREATING ACCOUNT)
-    public User(String username, String password, String password2, String sex, String email) {
+    public User(String username, String password, String password2, Boolean is_male, String email) {
         Username = username;
         Password = password;
-        Sex = sex;
+        isMale = is_male;
         Email = email;
     }
 
@@ -55,14 +55,6 @@ public class User {
 
     public void setPassword(String password) {
         Password = password;
-    }
-
-    public String getSex() {
-        return Sex;
-    }
-
-    public void setSex(String sex) {
-        Sex = sex;
     }
 
     public String getEmail() {
@@ -105,6 +97,13 @@ public class User {
         Age = age;
     }
 
+    public boolean isMale() {
+        return isMale;
+    }
+
+    public void setMale(boolean male) {
+        isMale = male;
+    }
 
 }
 

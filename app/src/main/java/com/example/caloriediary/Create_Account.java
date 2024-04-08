@@ -39,7 +39,7 @@ public class Create_Account extends AppCompatActivity {
 
         String Password2 = binding.PasswordInput2.getText().toString();
         user_entered_details.setEmail(binding.EmailInput.getText().toString());
-        user_entered_details.setSex(Set_Gender_From_Buttons(user_entered_details, Gender_Selected));
+        user_entered_details.setMale(Set_Gender_From_Buttons(user_entered_details, Gender_Selected));
         user_entered_details.setAge(reusableFunctions.To_Int(binding.AgeInput.getText().toString()));
 
 
@@ -53,6 +53,8 @@ public class Create_Account extends AppCompatActivity {
             binding.PasswordInput2.setText(tester_details.getPassword());
             binding.EmailInput.setText(tester_details.getEmail());
             binding.EmailConfirmationCheckBox.setChecked(true);
+            binding.MaleRadioButton.setChecked(true);
+            binding.AgeInput.setText("21");
             Set_Gender_From_Tester(tester_details);
             Log.d(TAG, "Username = " + tester_details.getUsername());
             Log.d(TAG, "Password = " + tester_details.getPassword());
@@ -62,7 +64,7 @@ public class Create_Account extends AppCompatActivity {
             Validation_Checks_Valid_Inputs(user_entered_details, Password2, reusableFunctions, Gender_Selected, view);
 
             //checks no fields are Null
-        }else if(user_entered_details.getUsername().equals("") || user_entered_details.getPassword().equals("") || Password2.equals("") || user_entered_details.getEmail().equals("") || binding.EmailConfirmationCheckBox.isChecked() == false || user_entered_details.getSex().equals("Undeclared") || binding.AgeInput.getText().equals("")) {
+        }else if(user_entered_details.getUsername().equals("") || user_entered_details.getPassword().equals("") || Password2.equals("") || user_entered_details.getEmail().equals("") || binding.EmailConfirmationCheckBox.isChecked() == false || (binding.FemaleRadioButton.isChecked() == false && binding.MaleRadioButton.isChecked() == false) || binding.AgeInput.getText().equals("")) {
             reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter data to all fields and tick checkbox.");
         }else {//accept clause
             Validation_Checks_Valid_Inputs(user_entered_details, Password2, reusableFunctions, Gender_Selected, view);
@@ -106,7 +108,7 @@ public class Create_Account extends AppCompatActivity {
         Account_Info.add(user.getUsername());
         Account_Info.add(user.getPassword());
         Account_Info.add(user.getEmail());
-        Account_Info.add(user.getSex());
+        Account_Info.add(String.valueOf(user.isMale()));
         Account_Info.add(ReusableFunctions.intToString(user.getAge()));
         Account_Info.add(user.getHeight_Cm());
         Account_Info.add(user.getWeight_Kg());
@@ -157,34 +159,28 @@ public class Create_Account extends AppCompatActivity {
         return false;
     }//checks if special char
 
-    private String Set_Gender_From_Tester(Tester tester_details){
-        if(tester_details.getSex().equals("Male")){
+    private void Set_Gender_From_Tester(Tester tester_details) {
+        if (binding.MaleRadioButton.isChecked()) {
             binding.MaleRadioButton.setChecked(true);
-            return("Male");
-        }else if(tester_details.getSex().equals("Female")){
+            tester_details.setMale(true);
+            Gender_Selected = true;
+        } else {
             binding.FemaleRadioButton.setChecked(true);
-            return("Female");
-        }else{
-            //add other section later
-            return("Na");
+            tester_details.setMale(false);
         }
     }
 
-    private String Set_Gender_From_Buttons(User user_entered_details, Boolean Gender_Selected) {
-        if(binding.MaleRadioButton.isChecked()){
-            user_entered_details.setSex("Male");
+    private boolean Set_Gender_From_Buttons(User user_entered_details, Boolean Gender_Selected) {
+        if (binding.MaleRadioButton.isChecked()) {
+            user_entered_details.setMale(true);
             Gender_Selected = true;
-            return "Male";
-        }else if (binding.FemaleRadioButton.isChecked()){
-            user_entered_details.setSex("Female");
-            return "Female";
-        }else{
-            Log.d(TAG, "No Gender Selected");
-            Gender_Selected = true;
-            return "Na";
-        }
+        } else {
+            user_entered_details.setMale(false);
 
+        }
+        return user_entered_details.isMale();
     }
+
 
 
     public void Male_RadioButton_Pressed(View view) {

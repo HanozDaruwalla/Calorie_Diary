@@ -80,7 +80,9 @@ public class Database extends AppCompatActivity {
         Creating_User_Details.setUsername(Imported_Data_Arraylist.get(0));
         Creating_User_Details.setPassword(Imported_Data_Arraylist.get(1));
         Creating_User_Details.setEmail(Imported_Data_Arraylist.get(2));
-        Creating_User_Details.setSex(Imported_Data_Arraylist.get(3));
+
+        Creating_User_Details.setMale(Set_Gender(Imported_Data_Arraylist.get(3)));
+
         Creating_User_Details.setAge(reusableFunctions.To_Int(Imported_Data_Arraylist.get(4)));
         Creating_User_Details.setHeight_Cm(Imported_Data_Arraylist.get(5));
         Creating_User_Details.setWeight_Kg(Imported_Data_Arraylist.get(6));
@@ -89,7 +91,7 @@ public class Database extends AppCompatActivity {
         Log.d(TAG, "Username = " + Creating_User_Details.getUsername());
         Log.d(TAG, "Password = " + Creating_User_Details.getPassword());
         Log.d(TAG, "Email = " + Creating_User_Details.getEmail());
-        Log.d(TAG, "Sex = " + Creating_User_Details.getSex());
+        Log.d(TAG, "Sex = " + Creating_User_Details.isMale());
         Log.d(TAG, "Age = " + Creating_User_Details.getAge());
         Log.d(TAG, "Height_Cm = " + Creating_User_Details.getHeight_Cm());
         Log.d(TAG, "Weight_Kg = " + Creating_User_Details.getWeight_Kg());
@@ -120,6 +122,14 @@ public class Database extends AppCompatActivity {
         });
     }
 
+    private boolean Set_Gender(String string){
+        if(string.equals("true")){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public void Add_Account(User Creating_Users_Details, Database_Value_Names Db_Value_Names, String Creation_Type, DatabaseReference Database_Controller) {
         reusableFunctions.Create_Toast(getApplicationContext(), "Creating Account");
 
@@ -143,7 +153,7 @@ public class Database extends AppCompatActivity {
             Information_Hashmap.put(Db_Value_Names.getDb_Height_Name() , Creating_Users_Details.getHeight_Cm());
             Information_Hashmap.put(Db_Value_Names.getDb_Password_Name() , Creating_Users_Details.getPassword());
             Information_Hashmap.put(Db_Value_Names.getDb_Rmi_Name() , Creating_Users_Details.getRmi());
-            Information_Hashmap.put(Db_Value_Names.getDb_Sex_Name() , Creating_Users_Details.getSex());
+            Information_Hashmap.put(Db_Value_Names.getDb_isMale_Name() , Creating_Users_Details.isMale());
             Information_Hashmap.put(Db_Value_Names.getDb_Username_Name() , Creating_Users_Details.getUsername());
             Information_Hashmap.put(Db_Value_Names.getDb_Weight_Name() , Creating_Users_Details.getWeight_Kg());
 
@@ -320,7 +330,7 @@ public class Database extends AppCompatActivity {
         User_Data_Arraylist.add(Gathered_User_Data.getHeight_Cm());
         User_Data_Arraylist.add(Gathered_User_Data.getPassword());
         User_Data_Arraylist.add(Gathered_User_Data.getRmi());
-        User_Data_Arraylist.add(Gathered_User_Data.getSex());
+        User_Data_Arraylist.add(String.valueOf(Gathered_User_Data.isMale()));
         User_Data_Arraylist.add(Gathered_User_Data.getUsername());
         User_Data_Arraylist.add(Gathered_User_Data.getWeight_Kg());
 

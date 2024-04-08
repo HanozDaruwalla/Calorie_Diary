@@ -8,18 +8,18 @@ public class Database_Value_Names {
     private String Db_Height_Name = "Height_Cm";
     private String Db_Password_Name = "Password";
     private String Db_Rmi_Name = "Rmi";
-    private String Db_Sex_Name = "Sex";
+    private String Db_isMale_Name = "isMale";
     private String Db_Username_Name = "Username";
     private String Db_Weight_Name = "Weight_Kg";
 
     private String Db_Age_Name = "Age";
 
-    public Database_Value_Names(String db_Email_Name, String db_Height_Name, String db_Password_Name, String db_Rmi_Name, String db_Sex_Name, String db_Username_Name, String db_Weight_Name) {
+    public Database_Value_Names(String db_Email_Name, String db_Height_Name, String db_Password_Name, String db_Rmi_Name, String db_isMale_Name, String db_Username_Name, String db_Weight_Name) {
         Db_Email_Name = db_Email_Name;
         Db_Height_Name = db_Height_Name;
         Db_Password_Name = db_Password_Name;
         Db_Rmi_Name = db_Rmi_Name;
-        Db_Sex_Name = db_Sex_Name;
+        Db_isMale_Name = db_isMale_Name;
         Db_Username_Name = db_Username_Name;
         Db_Weight_Name = db_Weight_Name;
     }
@@ -68,12 +68,12 @@ public class Database_Value_Names {
         Db_Rmi_Name = db_Rmi_Name;
     }
 
-    public String getDb_Sex_Name() {
-        return Db_Sex_Name;
+    public String getDb_isMale_Name() {
+        return Db_isMale_Name;
     }
 
-    public void setDb_Sex_Name(String db_Sex_Name) {
-        Db_Sex_Name = db_Sex_Name;
+    public void setDb_isMale_Name(String db_isMale_Name) {
+        Db_isMale_Name = db_isMale_Name;
     }
 
     public String getDb_Username_Name() {

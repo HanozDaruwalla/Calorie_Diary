@@ -36,8 +36,8 @@ public class Tester extends User{
     @PropertyName("Rmi")
     String Rmi = "Undeclared";
 
-    @PropertyName("Sex")
-    String Sex = "Undeclared";
+    @PropertyName("isMale")
+    boolean isMale = false; //default
 
     @PropertyName("Username")
     String Username = "Undeclared1";
@@ -49,7 +49,7 @@ public class Tester extends User{
         Username = "Tester";
         Password = "Tester123*";
         Email = "Hanozdaru@outlook.com";
-        Sex = "Male";
+        isMale = true; // default
         String Height_cm = "Undeclared";
         String Weight_Kg = "Undeclared";
         String Bmi = "Undeclared";
@@ -106,13 +106,13 @@ public class Tester extends User{
     }
 
     @Override
-    public String getSex() {
-        return Sex;
+    public boolean isMale() {
+        return isMale;
     }
 
     @Override
-    public void setSex(String sex) {
-        Sex = sex;
+    public void setMale(boolean male) {
+        isMale = male;
     }
 
     @Override
