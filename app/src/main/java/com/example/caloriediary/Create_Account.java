@@ -83,8 +83,8 @@ public class Create_Account extends AppCompatActivity {
                     if(user.getEmail().equals("@gmail") || user.getEmail().equals("@outlook") || user.getEmail().equals("@yahoo") || user.getEmail().equals("@student") || user.getEmail().equals("@hotmail")){
                         reusableFunctions.Create_Toast(getApplicationContext(), "Invalid Email");
 
-                    }else if(user.getAge() <18){
-                        reusableFunctions.Create_Toast(getApplicationContext(), "You must be over 18 to participate in this App..");
+                    }else if(user.getAge() <18 && user.getAge()<100){
+                        reusableFunctions.Create_Toast(getApplicationContext(), "You must be over 18 to participate in this App.");
 
                     }else{
                         // ------------------------------------------------------------

@@ -81,7 +81,7 @@ public class Database extends AppCompatActivity {
         Creating_User_Details.setPassword(Imported_Data_Arraylist.get(1));
         Creating_User_Details.setEmail(Imported_Data_Arraylist.get(2));
 
-        Creating_User_Details.setMale(Set_Gender(Imported_Data_Arraylist.get(3)));
+        Creating_User_Details.setMale(reusableFunctions.Set_Gender(Imported_Data_Arraylist.get(3)));
 
         Creating_User_Details.setAge(reusableFunctions.To_Int(Imported_Data_Arraylist.get(4)));
         Creating_User_Details.setHeight_Cm(Imported_Data_Arraylist.get(5));
@@ -122,13 +122,7 @@ public class Database extends AppCompatActivity {
         });
     }
 
-    private boolean Set_Gender(String string){
-        if(string.equals("true")){
-            return true;
-        }else{
-            return false;
-        }
-    }
+
 
     public void Add_Account(User Creating_Users_Details, Database_Value_Names Db_Value_Names, String Creation_Type, DatabaseReference Database_Controller) {
         reusableFunctions.Create_Toast(getApplicationContext(), "Creating Account");

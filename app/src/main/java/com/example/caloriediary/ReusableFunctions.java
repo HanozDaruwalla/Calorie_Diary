@@ -11,6 +11,12 @@ public class ReusableFunctions {
         toast.show();
     }
 
+    public String Decimal_Place_2(double number){
+        String formatted_decimal = String.format("%.2f", number);
+
+        return formatted_decimal;
+    }
+
     public double To_Double(String Imported_String) {
         try {
             double doubleNumber = Double.parseDouble(Imported_String);
@@ -35,6 +41,18 @@ public class ReusableFunctions {
         }
     }
 
+    public float To_Float(String Imported_String) {
+        try {
+            float floatValue = Float.parseFloat(Imported_String);
+            return floatValue;
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid float value: " + Imported_String);
+            e.printStackTrace();
+            return 0.0f; // or throw an exception if appropriate
+        }
+    }
+
+
     public String doubleToString(double doubleValue) {
         return String.valueOf(doubleValue);
     }
@@ -44,6 +62,14 @@ public class ReusableFunctions {
     public static String intToString(int number) {
         // Convert the integer to a string
         return String.valueOf(number);
+    }
+
+    public boolean Set_Gender(String string){
+        if(string.equals("true")){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 

@@ -56,46 +56,49 @@ public class Rm_Calc extends AppCompatActivity {
 
         //Variables to be passed
 
-        heightInCm = feetInchesToCm(Foot, Inches);
-
         // Index 0: Age (in years), Index 1: Email address, Index 2: Height (in centimeters)
         // Index 3: Password, Index 4: Resting Metabolic Rate (RMR), Index 5: Sex
         // Index 6: Username, Index 7: Weight (in kilograms)
 
+        weightInKg = reusableFunctions.To_Float(binding.WeightInput.getText().toString());
+        heightInCm = reusableFunctions.To_Float(feetInchesToCm(Foot, Inches));
         int Age = reusableFunctions.To_Int(User_Data.get(0));
-        String Sex = User_Data.get(5);
+        boolean isMale = reusableFunctions.Set_Gender(User_Data.get(5));
 
-
-
-        calculateBMR(weightInKg,heightInCm, Age, Sex);
+        calculateBMR(weightInKg,heightInCm, Age, isMale);
     }
 
-    public static double calculateBMR(double weightInKg, double heightInCm, int age, String isMale) {
+    public String calculateBMR(double weightInKg, double heightInCm, int age, boolean isMale) {
         final double MALE_CONST = 10;
         final double FEMALE_CONST = 161;
         final double WEIGHT_MULT = 6.25;
         final double HEIGHT_MULT = 5;
         final double AGE_MULT = 5;
 
+        String Formatted_bmr = "";
+
         double bmr;
-        if (isMale.equals("Male")) {
+        if (isMale == true) {
             bmr = (MALE_CONST * weightInKg) + (WEIGHT_MULT * heightInCm) - (AGE_MULT * age) + FEMALE_CONST;
         } else {
             bmr = (MALE_CONST * weightInKg) + (WEIGHT_MULT * heightInCm) - (AGE_MULT * age) - FEMALE_CONST;
         }
-        return bmr;
+        Formatted_bmr = reusableFunctions.Decimal_Place_2(bmr);
+        Log.d(TAG, "bmr = " + Formatted_bmr);
+        reusableFunctions.Create_Toast(getApplicationContext(), "BMR = " + Formatted_bmr);
+        return Formatted_bmr;
     }
 
-    public float feetInchesToCm(int feet, int inches) {
+    public String feetInchesToCm(int feet, int inches) {
         // 1 foot = 30.48 centimeters
         // 1 inch = 2.54 centimeters
         int totalInches = feet * 12 + inches;
         float cm = totalInches * 2.54f;
-        String formattedCm = String.format("%.2f", cm);
+        String formattedCm = reusableFunctions.Decimal_Place_2(cm);
         Log.d(TAG, "Cm = " + formattedCm);
 
         reusableFunctions.Create_Toast(getApplicationContext(), "Cm = " + formattedCm);
-        return cm;
+        return formattedCm;
     }
 
     public void Add_Button_Pressed(View view) {
