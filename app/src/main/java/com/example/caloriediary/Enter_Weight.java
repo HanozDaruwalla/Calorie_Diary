@@ -98,7 +98,7 @@ public class Enter_Weight extends AppCompatActivity {
     private void Pack_Data_To_Arraylist_For_Bmr(View view){
         //Variables to be passed
 
-        //age = 0
+        //age = 0.
         //isMale = 1
 
         ArrayList<String> Data_For_Bmr = new ArrayList<String>();
