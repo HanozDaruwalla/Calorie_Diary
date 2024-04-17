@@ -80,10 +80,6 @@ public class Enter_Weight extends AppCompatActivity {
         Num1 = reusableFunctions.To_Int(weight_Array[0]);
         Num2 = reusableFunctions.To_Int(weight_Array[1]);
 
-        // 1 Stone = 30.48 centimeters
-        // 1 inch = 2.54 centimeters
-
-
         try {
             weightInStone = Float.parseFloat(weightInput);
             // 1 stone is approximately equal to 6.35029 kilograms
