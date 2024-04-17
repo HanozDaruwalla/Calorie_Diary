@@ -81,7 +81,7 @@ public class Database extends AppCompatActivity {
         Creating_User_Details.setPassword(Imported_Data_Arraylist.get(1));
         Creating_User_Details.setEmail(Imported_Data_Arraylist.get(2));
 
-        Creating_User_Details.setMale(reusableFunctions.Set_Gender(Imported_Data_Arraylist.get(3)));
+        Creating_User_Details.setMale(reusableFunctions.String_To_Bool(Imported_Data_Arraylist.get(3)));
 
         Creating_User_Details.setAge(reusableFunctions.To_Int(Imported_Data_Arraylist.get(4)));
         Creating_User_Details.setHeight_Cm(Imported_Data_Arraylist.get(5));
@@ -301,7 +301,7 @@ public class Database extends AppCompatActivity {
     private void Login_Success(User Gathered_Account_Details, ReusableFunctions reusableFunctions){
         Log.d(TAG, "Login_Success_Function");
         if(Gathered_Account_Details.getHeight_Cm().equals("Undeclared") || Gathered_Account_Details.getWeight_Kg().equals("Undeclared")){
-            Page_Movement_Intent = new Intent(Database.this, Rm_Calc.class);//
+            Page_Movement_Intent = new Intent(Database.this, Enter_Height.class);//
             Log.d(TAG, "putting extra in Login Success");
             Page_Movement_Intent.putExtra("User_Data", dataToArrayList(Gathered_Account_Details));
             Log.d(TAG, "Moving to Rmi calcs");

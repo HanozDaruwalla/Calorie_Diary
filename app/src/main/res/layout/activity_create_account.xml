@@ -223,7 +223,7 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:layout_marginRight="5dp"
-            android:paddingRight="90dp"
+            android:paddingRight="5dp"
             />
 
         <EditText

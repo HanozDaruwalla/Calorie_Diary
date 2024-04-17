@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Enter_Height"
+    tools:context=".Enter_Weight"
     android:background="@color/background_color"
     android:orientation="vertical"
     android:gravity="top"
@@ -62,7 +62,7 @@
             android:id="@+id/Height_Foot_TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Height:"
+            android:text="Weight:"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:layout_weight="2"
@@ -70,20 +70,19 @@
             />
 
         <EditText
-            android:id="@+id/HeightInput"
+            android:id="@+id/WeightInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="numberDecimal"
             android:text=""
-            android:hint="Enter Height In Cm"
+            android:hint="Enter Weight In Stone"
             android:textSize="22sp"
             android:background="@color/white"
             android:textColor="@color/black"
             android:textColorHint="@color/Hint_Color"
             android:layout_weight="1"
             android:layout_marginRight="10dp"
-            android:maxLength="6"
             />
 
 
@@ -97,26 +96,25 @@
         android:layout_marginTop="10dp"
         >
         <Button
-            android:id="@+id/Foot_Button"
+            android:id="@+id/Kg_Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Foot"
+            android:text="Kg"
             android:backgroundTint="@color/interface_color"
             android:textColor="@color/black"
-            android:onClick="Foot_Button_Pressed"
-
+            android:onClick="Kg_Button_Pressed"
             android:layout_marginRight="10dp"
             >
         </Button>
 
         <Button
-            android:id="@+id/Cm_Button"
+            android:id="@+id/Stone_Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cm"
+            android:text="Stone"
             android:backgroundTint="@color/interface_color_clicked"
             android:textColor="@color/black"
-            android:onClick="Cm_Button_Pressed"
+            android:onClick="Stone_Button_Pressed"
             android:layout_marginLeft="10dp"
             >
         </Button>

@@ -17,7 +17,7 @@ public class ReusableFunctions {
         return formatted_decimal;
     }
 
-    public double To_Double(String Imported_String) {
+    public double String_To_Double(String Imported_String) {
         try {
             double doubleNumber = Double.parseDouble(Imported_String);
             return doubleNumber;
@@ -64,15 +64,12 @@ public class ReusableFunctions {
         return String.valueOf(number);
     }
 
-    public boolean Set_Gender(String string){
+    public boolean String_To_Bool(String string){
         if(string.equals("true")){
             return true;
         }else{
             return false;
         }
     }
-
-
-
 
 }

@@ -7,8 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="background_color">#ADD8E6</color>
-    <color name="interface_color">#90AAFF</color>
+    <color name="background_color">#FFDFF6FD</color>
+    <color name="interface_color">#B5C5F6</color>
+    <color name="interface_color_clicked">#5A80F5</color>
     <color name="Dark_Blue">#000080</color>
     <color name="Hint_Color">#6F7371</color>
 </resources>
