@@ -39,7 +39,7 @@
         android:id="@+id/Title2_Label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Height:"
+        android:text="Weight:"
         android:textSize="22sp"
         android:textStyle="bold"
         android:textAlignment="center"

@@ -1,6 +1,5 @@
 package com.example.caloriediary;
 
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +17,7 @@ public class Enter_Weight extends AppCompatActivity {
     private ActivityEnterWeightBinding binding;
     ReusableFunctions reusableFunctions = new ReusableFunctions();
     public static final String TAG = "Enter_Weight_Section";
-    ArrayList<String> User_Data = new ArrayList<>();
+    ArrayList<String> Data_For_Bmr = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +25,14 @@ public class Enter_Weight extends AppCompatActivity {
         binding = ActivityEnterWeightBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_enter_weight);
         setContentView(binding.getRoot());
-        User_Data = getIntent().getExtras().getStringArrayList("Data_For_Bmr");
+        Data_For_Bmr = getIntent().getExtras().getStringArrayList("Data_For_Bmr");
 
         Log.d(TAG, "Loaded");
     }
 
     public void Not_Null_Checks(View view) {
         boolean measurementInStone = Is_Stone_Selected(view);
+        String New_Weight_In_Kg = "";
         Log.d(TAG, "Measurement Saved = " + measurementInStone);
 
         String weightInput = binding.WeightInput.getText().toString();
@@ -47,7 +47,9 @@ public class Enter_Weight extends AppCompatActivity {
 
                 Log.d(TAG, "Valid Stone Entry");
                 reusableFunctions.Create_Toast(getApplicationContext(), "Stone = " + weightInput);
-                //Pack_Data_To_Arraylist_For_Bmr(view);
+
+                New_Weight_In_Kg = Stone_To_Kg(weightInput);
+                Pack_Data_To_Arraylist_For_Bmr(New_Weight_In_Kg, view);
             }else{
                 Log.d(TAG, "Invalid Stone Entry");
                 reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter Your weight Correctly in Stone. e.g., 11.9 or 11.0");
@@ -58,8 +60,8 @@ public class Enter_Weight extends AppCompatActivity {
                 //if condition met
 
                 Log.d(TAG, "Valid Weight Kg Entry");
-                Stone_To_Kg(weightInput);
-                //Pack_Data_To_Arraylist_For_Bmr(view);
+                //New_Weight_In_Kg = Stone_To_Kg(weightInput);
+                Pack_Data_To_Arraylist_For_Bmr(New_Weight_In_Kg, view);
             } else {
                 Log.d(TAG, "Invalid Weight Kg Entry");
                 reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter Your weight Correctly in Kg. e.g, 67.5");
@@ -67,9 +69,10 @@ public class Enter_Weight extends AppCompatActivity {
         }
     }
 
-    private void Stone_To_Kg(String weightInput){
+    private String Stone_To_Kg(String weightInput){
         int Num1, Num2;
         float weightInStone, weightInKg;
+        String formattedKg = "";
 
         Log.d(TAG, "Starting Calcs");
 
@@ -84,32 +87,29 @@ public class Enter_Weight extends AppCompatActivity {
             weightInStone = Float.parseFloat(weightInput);
             // 1 stone is approximately equal to 6.35029 kilograms
             weightInKg = weightInStone * 6.35f;
-            String formattedKg = reusableFunctions.Decimal_Place_2(weightInKg);
+            formattedKg = reusableFunctions.Decimal_Place_2(weightInKg);
             Log.d(TAG, "Kg = " + formattedKg);
 
-            reusableFunctions.Create_Toast(getApplicationContext(), "Kg = " + formattedKg);
+            reusableFunctions.Create_Toast(getApplicationContext(), "Converted Kg = " + formattedKg);
+
+            return formattedKg;
+
+
         } catch (NumberFormatException e) {
             Log.e(TAG, "Invalid input: " + weightInput);
             reusableFunctions.Create_Toast(getApplicationContext(), "Invalid input. Please enter a valid number.");
         }
 
+        return "Error in Stone_To_Kg Convert";
+
+
     }
 
-    private void Pack_Data_To_Arraylist_For_Bmr(View view){
-        //Variables to be passed
+    private void Pack_Data_To_Arraylist_For_Bmr(String Weight, View view){
 
-        //age = 0.
-        //isMale = 1
-
-        ArrayList<String> Data_For_Bmr = new ArrayList<String>();
-
-        int Age = reusableFunctions.To_Int(User_Data.get(0));
-        boolean isMale = reusableFunctions.String_To_Bool(User_Data.get(5));
-
-        Data_For_Bmr.add(ReusableFunctions.intToString(Age));
-        Data_For_Bmr.add(String.valueOf(isMale));
-
-        To_Enter_Weight(Data_For_Bmr);
+        // 0 = age 1 = isMale 2 = height 3 = weight
+        Data_For_Bmr.add(Weight);
+        Calculate_Bmr_From_Class(Data_For_Bmr, view);
     }
 
     private boolean Is_Stone_Selected(View view) {
@@ -127,42 +127,47 @@ public class Enter_Weight extends AppCompatActivity {
         }
     }
 
-    private void To_Enter_Weight(ArrayList<String> dataForBmr) {
-        //CHANGE!!!!!
-        Intent pageMovementIntent = new Intent(Enter_Weight.this, Enter_Weight.class);
-        pageMovementIntent.putExtra("Data_For_Bmr", dataForBmr);
+    private void Calculate_Bmr_From_Class(ArrayList<String> dataForBmr, View view) {
+        String Bmr = "";
 
-        reusableFunctions.Create_Toast(getApplicationContext(), "Kg Class Complete");
-        startActivity(pageMovementIntent);
+        Bmr_Calcs bmr_calcs = new Bmr_Calcs();
+
+        Bmr = bmr_calcs.calculateBMR(dataForBmr, view);
+
+        reusableFunctions.Create_Toast(getApplicationContext(), "Bmr = " + Bmr);
+        Log.d(TAG, "Bmr = " + Bmr);
+
     }
 
     //----------------------------------------------------------------------//
     //---------------------------------- UI --------------------------------//
     //----------------------------------------------------------------------//
 
-    public void Kg_Button_Pressed(View view) {
+    public void Stone_Button_Pressed(View view) {
         binding.WeightInput.setText("");
         binding.WeightInput.setHint("Enter Weight In Stone");
 
         int Resource_Interface_Color_Clicked = ContextCompat.getColor(view.getContext(), R.color.interface_color_clicked);
         int Resource_Interface_Color = ContextCompat.getColor(view.getContext(), R.color.interface_color);
 
-        binding.KgButton.setBackgroundTintList(ColorStateList.valueOf(Resource_Interface_Color_Clicked));
-        binding.StoneButton.setBackgroundTintList(ColorStateList.valueOf(Resource_Interface_Color));
+        binding.StoneButton.setBackgroundTintList(ColorStateList.valueOf(Resource_Interface_Color_Clicked));
+        binding.KgButton.setBackgroundTintList(ColorStateList.valueOf(Resource_Interface_Color));
+
     }
 
-    public void Stone_Button_Pressed(View view) {
+    public void Kg_Button_Pressed(View view) {
         binding.WeightInput.setText("");
         binding.WeightInput.setHint("Enter Weight In Kg");
 
         int Resource_Interface_Color_Clicked = ContextCompat.getColor(view.getContext(), R.color.interface_color_clicked);
         int Resource_Interface_Color = ContextCompat.getColor(view.getContext(), R.color.interface_color);
 
-        binding.StoneButton.setBackgroundTintList(ColorStateList.valueOf(Resource_Interface_Color_Clicked));
-        binding.KgButton.setBackgroundTintList(ColorStateList.valueOf(Resource_Interface_Color));
+        binding.KgButton.setBackgroundTintList(ColorStateList.valueOf(Resource_Interface_Color_Clicked));
+        binding.StoneButton.setBackgroundTintList(ColorStateList.valueOf(Resource_Interface_Color));
+
     }
 
-    public void Add_Button_Pressed(View view) {
+        public void Add_Button_Pressed(View view) {
         Not_Null_Checks(view);
     }
 

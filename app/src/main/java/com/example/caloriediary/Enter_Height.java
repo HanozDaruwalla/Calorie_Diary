@@ -33,6 +33,7 @@ public class Enter_Height extends AppCompatActivity {
 
     public void Not_Null_Checks(View view) {
         boolean measurementInFoot = Is_Feet_Selected(view);
+        String Cm_Height = "";
         Log.d(TAG, "Measurement Saved = " + measurementInFoot);
 
         String heightInput = binding.HeightInput.getText().toString();
@@ -47,8 +48,8 @@ public class Enter_Height extends AppCompatActivity {
                 //if condition met
 
                 Log.d(TAG, "Valid Height Foot Entry");
-                Foot_Inches_To_Cm(heightInput);
-                Pack_Data_To_Arraylist_For_Bmr(view);
+                Cm_Height = Foot_Inches_To_Cm(heightInput);
+                Pack_Data_To_Arraylist_For_Bmr(Cm_Height, view);
             } else {
                 Log.d(TAG, "Invalid Height Foot Entry");
                 reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter Your Height Correctly in Feet. e.g., 5.8 or '5.0'");
@@ -59,7 +60,7 @@ public class Enter_Height extends AppCompatActivity {
                 reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter Your Height Correctly in Cm. e.g., 170.78 or 170");
             }else{
                 Log.d(TAG, "Valid Cm Entry");
-                Pack_Data_To_Arraylist_For_Bmr(view);
+                Pack_Data_To_Arraylist_For_Bmr(heightInput, view);
             }
         }
     }
@@ -67,7 +68,7 @@ public class Enter_Height extends AppCompatActivity {
 
 
 
-    private void Foot_Inches_To_Cm(String heightInput){
+    private String Foot_Inches_To_Cm(String heightInput){
         int Foot, Inches;
         float heightInCm;
 
@@ -88,9 +89,10 @@ public class Enter_Height extends AppCompatActivity {
         Log.d(TAG, "Cm = " + formattedCm);
 
         reusableFunctions.Create_Toast(getApplicationContext(), "Cm = " + formattedCm);
+        return formattedCm;
     }
 
-    private void Pack_Data_To_Arraylist_For_Bmr(View view){
+    private void Pack_Data_To_Arraylist_For_Bmr(String Height, View view){
         //Variables to be passed
 
         // Index 0: Age (in years), Index 1: Email address, Index 2: Height (in centimeters)
@@ -104,6 +106,7 @@ public class Enter_Height extends AppCompatActivity {
 
         Data_For_Bmr.add(ReusableFunctions.intToString(Age));
         Data_For_Bmr.add(String.valueOf(isMale));
+        Data_For_Bmr.add(Height);
 
         To_Enter_Weight(Data_For_Bmr);
     }
