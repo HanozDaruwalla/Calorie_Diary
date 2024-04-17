@@ -98,9 +98,8 @@ public class Enter_Weight extends AppCompatActivity {
     private void Pack_Data_To_Arraylist_For_Bmr(View view){
         //Variables to be passed
 
-        // Index 0: Age (in years), Index 1: Email address, Index 2: Weight (in centimeters)
-        // Index 3: Password, Index 4: Resting Metabolic Rate (RMR), Index 5: Sex
-        // Index 6: Username, Index 7: Weight (in kilograms)
+        //age = 0
+        //isMale = 1
 
         ArrayList<String> Data_For_Bmr = new ArrayList<String>();
 
