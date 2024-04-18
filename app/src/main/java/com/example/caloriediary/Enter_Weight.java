@@ -61,7 +61,7 @@ public class Enter_Weight extends AppCompatActivity {
 
                 Log.d(TAG, "Valid Weight Kg Entry");
                 //New_Weight_In_Kg = Stone_To_Kg(weightInput);
-                Pack_Data_To_Arraylist_For_Bmr(New_Weight_In_Kg, view);
+                Pack_Data_To_Arraylist_For_Bmr(weightInput, view);
             } else {
                 Log.d(TAG, "Invalid Weight Kg Entry");
                 reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter Your weight Correctly in Kg. e.g, 67.5");
@@ -133,8 +133,6 @@ public class Enter_Weight extends AppCompatActivity {
         Bmr_Calcs bmr_calcs = new Bmr_Calcs();
 
         Bmr = bmr_calcs.calculateBMR(dataForBmr, view);
-
-        reusableFunctions.Create_Toast(getApplicationContext(), "Bmr = " + Bmr);
         Log.d(TAG, "Bmr = " + Bmr);
 
     }
