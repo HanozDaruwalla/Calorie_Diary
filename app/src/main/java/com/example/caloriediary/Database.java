@@ -34,7 +34,7 @@ public class Database extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG,"Login: onCreate");
+        Log.d(TAG, "Login: onCreate");
         super.onCreate(savedInstanceState);
         com.example.caloriediary.databinding.ActivityDatabaseBinding binding = ActivityDatabaseBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_database);
@@ -48,18 +48,18 @@ public class Database extends AppCompatActivity {
         FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         DatabaseReference Database_Controller = null;
         Database_Controller = FirebaseDatabase.getInstance().getReference();
-        Log.d(TAG,"Login: onCreate Complete");
+        Log.d(TAG, "Login: onCreate Complete");
 
 
         // 0 = Create_Account, 1 = login, 2 = Add Product From Db
-        if (Sent_From == (int)0) {// says is redundant but crashes without
-            Log.d(TAG,"Login: Create Account Section Called");
+        if (Sent_From == (int) 0) {// says is redundant but crashes without
+            Log.d(TAG, "Login: Create Account Section Called");
             Creation_Type = "Users";
 
-            Validate_Username(Imported_Data_Arraylist,Database_Controller);
+            Validate_Username(Imported_Data_Arraylist, Database_Controller);
 
-        } else if (Sent_From == (int)1) { // says is redundant but crashes without
-            Log.d(TAG,"Login: Login Section Called");
+        } else if (Sent_From == (int) 1) { // says is redundant but crashes without
+            Log.d(TAG, "Login: Login Section Called");
             Creation_Type = "Users";
 
             Log.d(TAG, "Username = " + Imported_Data_Arraylist.get(0));
@@ -67,8 +67,10 @@ public class Database extends AppCompatActivity {
 
             Login(Imported_Data_Arraylist, Database_Controller);
 
+        }else if (Sent_From == (int) 2) {
+            Log.d(TAG, "Add Data Editing");
         } else {
-            Log.d(TAG,"Login: Unexpected Page Transfer");
+            Log.d(TAG, "Login: Unexpected Page Transfer");
             To_Login(Imported_Data_Arraylist.get(0));
         }
     }
@@ -102,26 +104,26 @@ public class Database extends AppCompatActivity {
         Database_Controller.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(!(snapshot.child(Db_Value_Names.getDb_Users_Db_Name()).child(Creating_User_Details.getUsername()).exists())){
+                if (!(snapshot.child(Db_Value_Names.getDb_Users_Db_Name()).child(Creating_User_Details.getUsername()).exists())) {
                     Creation_Type = "Users";
                     Log.d(TAG, "Validate_Username: Username doesn't exist. creating account");
                     Add_Account(Creating_User_Details, Db_Value_Names, Creation_Type, Database_Controller);
-                }else{
+                } else {
                     Log.d(TAG, "Validate_Username: Username exists. Returning user to Create_Account Page");
-                    reusableFunctions.Create_Toast(getApplicationContext(),"Change Username");
+                    reusableFunctions.Create_Toast(getApplicationContext(), "Change Username");
                     Page_Movement_Intent = new Intent(Database.this, Create_Account.class);
                     startActivity(Page_Movement_Intent);
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                reusableFunctions.Create_Toast(getApplicationContext(),"Database Failure. Calling onCancelled");
+                reusableFunctions.Create_Toast(getApplicationContext(), "Database Failure. Calling onCancelled");
                 Log.d(TAG, "!!!!!!! MAY NEED TO UPDATE FIREBASE RULES !!!!!!!");
                 To_Create_Account();
             }
         });
     }
-
 
 
     public void Add_Account(User Creating_Users_Details, Database_Value_Names Db_Value_Names, String Creation_Type, DatabaseReference Database_Controller) {
@@ -143,13 +145,13 @@ public class Database extends AppCompatActivity {
             //These names must be the same as the User/ Tester classes (they go into the DB)
 
             Information_Hashmap.put(Db_Value_Names.getDb_Age_Name(), Creating_Users_Details.getAge());
-            Information_Hashmap.put(Db_Value_Names.getDb_Email_Name() , Creating_Users_Details.getEmail());
-            Information_Hashmap.put(Db_Value_Names.getDb_Height_Name() , Creating_Users_Details.getHeight_Cm());
-            Information_Hashmap.put(Db_Value_Names.getDb_Password_Name() , Creating_Users_Details.getPassword());
-            Information_Hashmap.put(Db_Value_Names.getDb_Rmi_Name() , Creating_Users_Details.getRmi());
-            Information_Hashmap.put(Db_Value_Names.getDb_isMale_Name() , Creating_Users_Details.isMale());
-            Information_Hashmap.put(Db_Value_Names.getDb_Username_Name() , Creating_Users_Details.getUsername());
-            Information_Hashmap.put(Db_Value_Names.getDb_Weight_Name() , Creating_Users_Details.getWeight_Kg());
+            Information_Hashmap.put(Db_Value_Names.getDb_Email_Name(), Creating_Users_Details.getEmail());
+            Information_Hashmap.put(Db_Value_Names.getDb_Height_Name(), Creating_Users_Details.getHeight_Cm());
+            Information_Hashmap.put(Db_Value_Names.getDb_Password_Name(), Creating_Users_Details.getPassword());
+            Information_Hashmap.put(Db_Value_Names.getDb_Rmi_Name(), Creating_Users_Details.getRmi());
+            Information_Hashmap.put(Db_Value_Names.getDb_isMale_Name(), Creating_Users_Details.isMale());
+            Information_Hashmap.put(Db_Value_Names.getDb_Username_Name(), Creating_Users_Details.getUsername());
+            Information_Hashmap.put(Db_Value_Names.getDb_Weight_Name(), Creating_Users_Details.getWeight_Kg());
 
             Log.d(TAG, "Add Account: Information packed for finish");
 
@@ -214,7 +216,7 @@ public class Database extends AppCompatActivity {
         }
     }
 
-    private void Login(ArrayList<String> Imported_Data_Arraylist, DatabaseReference Database_Controller){
+    private void Login(ArrayList<String> Imported_Data_Arraylist, DatabaseReference Database_Controller) {
         User Login_User_Details = new User();
         Database_Value_Names Db_Value_Names = new Database_Value_Names();
 
@@ -223,28 +225,28 @@ public class Database extends AppCompatActivity {
         Log.d(TAG, "Login Function Username " + Login_User_Details.getUsername());
         Log.d(TAG, "Login Function Password " + Login_User_Details.getPassword());
         String Username = Login_User_Details.getUsername();
-        Log.d(TAG, "Get Username = " + Username );
-        Log.d(TAG,"Login: Username got from GUI");
+        Log.d(TAG, "Get Username = " + Username);
+        Log.d(TAG, "Login: Username got from GUI");
 
         //Username Was Null. not set from the Login Class
         Database_Controller.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.child(Db_Value_Names.getDb_Users_Db_Name()).child(Username).exists()){//was dataSnapshot
+                if (snapshot.child(Db_Value_Names.getDb_Users_Db_Name()).child(Username).exists()) {//was dataSnapshot
                     Encryption_Decryption_Class Encryption_Class = new Encryption_Decryption_Class();
-                    Log.d(TAG,"Checking Pw");
+                    Log.d(TAG, "Checking Pw");
                     String Unencrypted_Username = "N/A";
                     String Unencrypted_Password = "N/A";
                     //Unencrypted Username is kept encase encryption of username is done
 
-                    Log.d(TAG,"Gathering User Info From Db");
+                    Log.d(TAG, "Gathering User Info From Db");
                     User Gathered_Account_Details = snapshot.child(Db_Value_Names.getDb_Users_Db_Name()).child(Username).getValue(User.class);//send users username to the Users_Data class
-                    Log.d(TAG,"Gathered Data Username = " + Gathered_Account_Details.getUsername());
-                    Log.d(TAG,"Gathered Data Password = " + Gathered_Account_Details.getPassword());
-                    Log.d(TAG,"Attempting Decryption");
+                    Log.d(TAG, "Gathered Data Username = " + Gathered_Account_Details.getUsername());
+                    Log.d(TAG, "Gathered Data Password = " + Gathered_Account_Details.getPassword());
+                    Log.d(TAG, "Attempting Decryption");
                     try {
                         //encase Username is encrypted in future.
-                        Log.d(TAG,"Starting Decryption");
+                        Log.d(TAG, "Starting Decryption");
 
                         //Add if u encrypt Username
                         //Unencrypted_Username = Encryption_Class.decrypt(Gathered_Account_Details.getUsername());
@@ -252,43 +254,44 @@ public class Database extends AppCompatActivity {
 
                         Log.d(TAG, "Password = " + Gathered_Account_Details.getPassword());
                         Unencrypted_Password = Encryption_Class.decrypt(Gathered_Account_Details.getPassword());
-                        Log.d(TAG,"Decryption Success");
-                        Log.d(TAG,"Decrypted_Password = " + Unencrypted_Password );
+                        Log.d(TAG, "Decryption Success");
+                        Log.d(TAG, "Decrypted_Password = " + Unencrypted_Password);
                     } catch (Exception e) {
-                        reusableFunctions.Create_Toast(getApplicationContext(),"Decryption Failed. Crashing");
-                        Log.d(TAG,"Decryption Failed");
+                        reusableFunctions.Create_Toast(getApplicationContext(), "Decryption Failed. Crashing");
+                        Log.d(TAG, "Decryption Failed");
                         e.printStackTrace();
                     }
-                    if(Unencrypted_Password.equals((Login_User_Details.getPassword()))){
-                        reusableFunctions.Create_Toast(getApplicationContext(),"Login Successful");
-                        Log.d(TAG,"Successful Login");
+                    if (Unencrypted_Password.equals((Login_User_Details.getPassword()))) {
+                        reusableFunctions.Create_Toast(getApplicationContext(), "Login Successful");
+                        Log.d(TAG, "Successful Login");
                         Login_Success(Gathered_Account_Details, reusableFunctions);
                         //Page_Movement_Intent = new Intent(Database2.this, Menu.class);//
                         //startActivity(Page_Movement_Intent);
-                    }else{
-                        reusableFunctions.Create_Toast(getApplicationContext(),"Incorrect Username Or Password");
-                        Log.d(TAG,"Password Doesn't Exist");
+                    } else {
+                        reusableFunctions.Create_Toast(getApplicationContext(), "Incorrect Username Or Password");
+                        Log.d(TAG, "Password Doesn't Exist");
                         To_Login(Login_User_Details.getUsername());
                     }
-                }else{
-                    reusableFunctions.Create_Toast(getApplicationContext(),"Incorrect Username Or Password");
-                    Log.d(TAG,"Username Doesn't Exist");
+                } else {
+                    reusableFunctions.Create_Toast(getApplicationContext(), "Incorrect Username Or Password");
+                    Log.d(TAG, "Username Doesn't Exist");
                     To_Login(Login_User_Details.getUsername());
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                reusableFunctions.Create_Toast(getApplicationContext(),"Database Error. Cancelled");
+                reusableFunctions.Create_Toast(getApplicationContext(), "Database Error. Cancelled");
                 To_Login(Login_User_Details.getUsername());
             }
         });
     }
 
-    private void To_Login(String Username){
+    private void To_Login(String Username) {
         Log.d(TAG, "To_Login_Called");
         Page_Movement_Intent = new Intent(getApplicationContext(), Login.class);//
         Log.d(TAG, "Putting extra");
-        Page_Movement_Intent.putExtra("Username",Username);
+        Page_Movement_Intent.putExtra("Username", Username);
         Log.d(TAG, "Moving to login");
         startActivity(Page_Movement_Intent);
     }
@@ -298,16 +301,16 @@ public class Database extends AppCompatActivity {
         startActivity(Page_Movement_Intent);
     }
 
-    private void Login_Success(User Gathered_Account_Details, ReusableFunctions reusableFunctions){
+    private void Login_Success(User Gathered_Account_Details, ReusableFunctions reusableFunctions) {
         Log.d(TAG, "Login_Success_Function");
-        if(Gathered_Account_Details.getHeight_Cm().equals("Undeclared") || Gathered_Account_Details.getWeight_Kg().equals("Undeclared")){
+        if (Gathered_Account_Details.getHeight_Cm().equals("Undeclared") || Gathered_Account_Details.getWeight_Kg().equals("Undeclared")) {
             Page_Movement_Intent = new Intent(Database.this, Enter_Height.class);//
             Log.d(TAG, "putting extra in Login Success");
             Page_Movement_Intent.putExtra("User_Data", dataToArrayList(Gathered_Account_Details));
             Log.d(TAG, "Moving to Rmi calcs");
             startActivity(Page_Movement_Intent);
 
-        }else{
+        } else {
             reusableFunctions.Create_Toast(getApplicationContext(), "Go To Main App Section");
         }
     }
@@ -329,14 +332,25 @@ public class Database extends AppCompatActivity {
         User_Data_Arraylist.add(Gathered_User_Data.getWeight_Kg());
 
         Log.d(TAG, "Returning");
+
         return User_Data_Arraylist;
     }
 
+
+
+    private void updateUserDetails(String username, HashMap<String, Object> updates) {
+        DatabaseReference databaseController = FirebaseDatabase.getInstance().getReference("Users");
+
+        databaseController.child(username).updateChildren(updates)
+                .addOnSuccessListener(aVoid -> {
+                    Log.d(TAG, "User details updated successfully for " + username);
+                    reusableFunctions.Create_Toast(getApplicationContext(), "User details updated successfully.");
+                    // Optionally redirect or perform further actions on success
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Failed to update user details for " + username + ": " + e.getMessage());
+                    reusableFunctions.Create_Toast(getApplicationContext(), "Failed to update user details. Try again.");
+                    // Optionally handle failures, such as retrying the operation or reporting to a monitoring service
+                });
+    }
 }
-
-
-
-
-
-
-

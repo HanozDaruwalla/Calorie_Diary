@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="background_color">#E2F3F8</color>
     <color name="interface_color">#B5C5F6</color>
+    <color name="panel_color">#8493C1</color>
     <color name="interface_color_clicked">#5A80F5</color>
     <color name="Dark_Blue">#000080</color>
     <color name="Hint_Color">#6F7371</color>

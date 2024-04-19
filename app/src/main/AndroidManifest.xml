@@ -13,6 +13,13 @@
         android:theme="@style/Theme.CalorieDiary"
         tools:targetApi="31">
         <activity
+            android:name=".Calorie_Homepage"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Enter_Weight"
             android:exported="false">
             <meta-data

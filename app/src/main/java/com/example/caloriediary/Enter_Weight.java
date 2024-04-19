@@ -1,5 +1,6 @@
 package com.example.caloriediary;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
@@ -135,7 +136,20 @@ public class Enter_Weight extends AppCompatActivity {
         Bmr = bmr_calcs.calculateBMR(dataForBmr, view);
         Log.d(TAG, "Bmr = " + Bmr);
 
+        To_Calorie_Homepage();
+
+
+
     }
+
+    private void To_Calorie_Homepage() {
+        //This needs to be replaced with database to data data to db
+        Intent pageMovementIntent = new Intent(Enter_Weight.this, Calorie_Homepage.class);
+        //pageMovementIntent.putExtra("Data_For_Bmr", dataForBmr);
+
+        startActivity(pageMovementIntent);
+    }
+
 
     //----------------------------------------------------------------------//
     //---------------------------------- UI --------------------------------//
