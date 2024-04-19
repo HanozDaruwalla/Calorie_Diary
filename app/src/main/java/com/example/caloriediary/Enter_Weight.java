@@ -92,9 +92,7 @@ public class Enter_Weight extends AppCompatActivity {
             Log.d(TAG, "Kg = " + formattedKg);
 
             reusableFunctions.Create_Toast(getApplicationContext(), "Converted Kg = " + formattedKg);
-
             return formattedKg;
-
 
         } catch (NumberFormatException e) {
             Log.e(TAG, "Invalid input: " + weightInput);
@@ -107,7 +105,6 @@ public class Enter_Weight extends AppCompatActivity {
     }
 
     private void Pack_Data_To_Arraylist_For_Bmr(String Weight, View view){
-
         // 0 = age 1 = isMale 2 = height 3 = weight
         Data_For_Bmr.add(Weight);
         Calculate_Bmr_From_Class(Data_For_Bmr, view);
@@ -130,15 +127,11 @@ public class Enter_Weight extends AppCompatActivity {
 
     private void Calculate_Bmr_From_Class(ArrayList<String> dataForBmr, View view) {
         String Bmr = "";
-
         Bmr_Calcs bmr_calcs = new Bmr_Calcs();
 
         Bmr = bmr_calcs.calculateBMR(dataForBmr, view);
         Log.d(TAG, "Bmr = " + Bmr);
-
         To_Calorie_Homepage();
-
-
 
     }
 
@@ -178,10 +171,8 @@ public class Enter_Weight extends AppCompatActivity {
         binding.StoneButton.setBackgroundTintList(ColorStateList.valueOf(Resource_Interface_Color));
 
     }
-
         public void Add_Button_Pressed(View view) {
         Not_Null_Checks(view);
     }
-
 }
 
