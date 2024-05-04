@@ -1,18 +1,26 @@
 package com.example.caloriediary;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link fragment_Nav_Bar#newInstance} factory method to
+ * Use the {@link Nav_Bar#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class fragment_Nav_Bar extends Fragment {
+public class Nav_Bar extends Fragment {
+
+    private static final String TAG = "Nav_Bar_Fragment";
+    private TextView Info_Text_View;
+    private ImageView Info_Img;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,7 +31,7 @@ public class fragment_Nav_Bar extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public fragment_Nav_Bar() {
+    public Nav_Bar() {
         // Required empty public constructor
     }
 
@@ -36,8 +44,8 @@ public class fragment_Nav_Bar extends Fragment {
      * @return A new instance of fragment Nav_Bar.
      */
     // TODO: Rename and change types and number of parameters
-    public static fragment_Nav_Bar newInstance(String param1, String param2) {
-        fragment_Nav_Bar fragment = new fragment_Nav_Bar();
+    public static Nav_Bar newInstance(String param1, String param2) {
+        Nav_Bar fragment = new Nav_Bar();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -52,12 +60,44 @@ public class fragment_Nav_Bar extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_nav__bar, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View rootView = inflater.inflate(R.layout.fragment_nav__bar, container, false);
+
+        //interface
+        Info_Text_View = rootView.findViewById(R.id.Info_Text);
+        Info_Img = rootView.findViewById(R.id.Info_Img);
+
+        //Info Section
+        Info_Text_View.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Info_Section_Clicked();
+            }
+        });
+
+        Info_Img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Info_Section_Clicked();
+            }
+        });
+
+        return rootView;
     }
+
+    private void Info_Section_Clicked(){
+        Log.d(TAG, "Info Clicked");
+        Intent pageMovementIntent = new Intent(getContext(), Info.class);
+
+        startActivity(pageMovementIntent);
+
+    }
+
+
+
 }

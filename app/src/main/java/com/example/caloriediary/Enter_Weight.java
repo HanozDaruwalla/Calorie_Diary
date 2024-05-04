@@ -39,21 +39,40 @@ public class Enter_Weight extends AppCompatActivity {
         String weightInput = binding.WeightInput.getText().toString();
         Log.d(TAG, "Checking If Weight Valid");
 
+        try{
+            if(!(weightInput.contains("."))){
+                Log.d(TAG, "Added decimal to weight");
+                weightInput = weightInput + ".0";
+
+            }else{
+                Log.d(TAG, "decimal already in weight");
+            }
+
+        }catch(Exception IndexOutOfBoundsException){
+            Log.d(TAG, "Decimal check exception caught");
+        }
+
+
         if (weightInput.isEmpty()) {
             Log.d(TAG, "Weight Empty");
             reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter All Data");
         } else if (measurementInStone) { //Stone Checks
             Log.d(TAG, "Weight In Stone Found at Not Null Checks");
-            if (((weightInput.charAt(1) == '.' || weightInput.charAt(2) == '.') && weightInput.length()<6)){
+            try{
+                if (((weightInput.charAt(1) == '.' || weightInput.charAt(2) == '.') && weightInput.length()<6)){
 
-                Log.d(TAG, "Valid Stone Entry");
-                reusableFunctions.Create_Toast(getApplicationContext(), "Stone = " + weightInput);
+                    Log.d(TAG, "Valid Stone Entry");
+                    reusableFunctions.Create_Toast(getApplicationContext(), "Stone = " + weightInput);
 
-                New_Weight_In_Kg = Stone_To_Kg(weightInput);
-                Pack_Data_To_Arraylist_For_Bmr(New_Weight_In_Kg, view);
-            }else{
-                Log.d(TAG, "Invalid Stone Entry");
-                reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter Your weight Correctly in Stone. e.g., 11.9 or 11.0");
+                    New_Weight_In_Kg = Stone_To_Kg(weightInput);
+                    Pack_Data_To_Arraylist_For_Bmr(New_Weight_In_Kg, view);
+                }else{
+                    Log.d(TAG, "Invalid Stone Entry");
+                    reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter Your weight Correctly in Stone. e.g., 11.9 or 11.0");
+                }
+            }catch(Exception E){
+                weightInput = weightInput + .0;
+
             }
         }else{// Kg CHECKS
             Log.d(TAG, "Weight In Kg Found at Not Null Checks");
@@ -94,10 +113,13 @@ public class Enter_Weight extends AppCompatActivity {
             reusableFunctions.Create_Toast(getApplicationContext(), "Converted Kg = " + formattedKg);
             return formattedKg;
 
+
         } catch (NumberFormatException e) {
             Log.e(TAG, "Invalid input: " + weightInput);
             reusableFunctions.Create_Toast(getApplicationContext(), "Invalid input. Please enter a valid number.");
         }
+
+
 
         return "Error in Stone_To_Kg Convert";
 
@@ -138,7 +160,7 @@ public class Enter_Weight extends AppCompatActivity {
     private void To_Calorie_Homepage() {
         //This needs to be replaced with database to data data to db
         Intent pageMovementIntent = new Intent(Enter_Weight.this, Calorie_Homepage.class);
-        //pageMovementIntent.putExtra("Data_For_Bmr", dataForBmr);
+        //pageMovementIntent.putExtra("Data_For_Bmr", Data_For_Bmr);
 
         startActivity(pageMovementIntent);
     }

@@ -37,6 +37,7 @@ public class Enter_Height extends AppCompatActivity {
         Log.d(TAG, "Measurement Saved = " + measurementInFoot);
 
         String heightInput = binding.HeightInput.getText().toString();
+
         Log.d(TAG, "Checking If Height Valid");
 
         if (heightInput.isEmpty()) {
