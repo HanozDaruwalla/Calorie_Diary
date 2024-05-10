@@ -113,7 +113,6 @@ public class Enter_Weight extends AppCompatActivity {
             reusableFunctions.Create_Toast(getApplicationContext(), "Converted Kg = " + formattedKg);
             return formattedKg;
 
-
         } catch (NumberFormatException e) {
             Log.e(TAG, "Invalid input: " + weightInput);
             reusableFunctions.Create_Toast(getApplicationContext(), "Invalid input. Please enter a valid number.");
@@ -122,8 +121,6 @@ public class Enter_Weight extends AppCompatActivity {
 
 
         return "Error in Stone_To_Kg Convert";
-
-
     }
 
     private void Pack_Data_To_Arraylist_For_Bmr(String Weight, View view){

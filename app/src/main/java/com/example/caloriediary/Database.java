@@ -50,7 +50,6 @@ public class Database extends AppCompatActivity {
         Database_Controller = FirebaseDatabase.getInstance().getReference();
         Log.d(TAG, "Login: onCreate Complete");
 
-
         // 0 = Create_Account, 1 = login, 2 = Add Product From Db
         if (Sent_From == (int) 0) {// says is redundant but crashes without
             Log.d(TAG, "Login: Create Account Section Called");
@@ -125,7 +124,6 @@ public class Database extends AppCompatActivity {
         });
     }
 
-
     public void Add_Account(User Creating_Users_Details, Database_Value_Names Db_Value_Names, String Creation_Type, DatabaseReference Database_Controller) {
         reusableFunctions.Create_Toast(getApplicationContext(), "Creating Account");
 
@@ -136,6 +134,10 @@ public class Database extends AppCompatActivity {
             try {
                 Creating_Users_Details.setPassword(Encryption_Class.encrypt(Creating_Users_Details.getPassword()));
                 Creating_Users_Details.setEmail(Encryption_Class.encrypt(Creating_Users_Details.getEmail()));
+                Creating_Users_Details.setRmi(Encryption_Class.encrypt(Creating_Users_Details.getRmi()));
+                Creating_Users_Details.setHeight_Cm(Encryption_Class.encrypt(Creating_Users_Details.getHeight_Cm()));
+                Creating_Users_Details.setWeight_Kg(Encryption_Class.encrypt(Creating_Users_Details.getWeight_Kg()));
+
                 Log.d(TAG, "Add Account: Encryption Complete");
             } catch (Exception e) {
                 e.printStackTrace();

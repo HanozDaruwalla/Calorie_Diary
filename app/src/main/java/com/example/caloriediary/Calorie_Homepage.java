@@ -22,5 +22,6 @@ public class Calorie_Homepage extends AppCompatActivity {
 
         //User_Data = getIntent().getExtras().getStringArrayList("User_Data");
         //binding.TitleLabel.setText("Welcome " + username );
+
     }
 }

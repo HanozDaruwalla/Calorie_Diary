@@ -22,8 +22,8 @@ public class Login extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate((getLayoutInflater()));
         setContentView(R.layout.activity_login);
         setContentView(binding.getRoot());
-        String Imported_Username;
-        Imported_Username = getIntent().getExtras().getString("Username");
+
+        String Imported_Username = getIntent().getExtras().getString("Username");
         binding.UsernameInput.setText(Imported_Username);
         Default_Password_Input_Type = binding.PasswordInput.getInputType();
     }

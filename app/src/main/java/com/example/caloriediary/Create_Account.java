@@ -31,43 +31,42 @@ public class Create_Account extends AppCompatActivity {
     public void Validation_Checks_Not_Null(View view) {
 
         ReusableFunctions reusableFunctions = new ReusableFunctions();
-        User user_entered_details = new User();
-        Tester tester_details = new Tester();
+        User User_Entered_Details = new User();
+        Tester Tester_Details = new Tester();
 
-        user_entered_details.setUsername(binding.UsernameInput.getText().toString());
-        user_entered_details.setPassword(binding.PasswordInput.getText().toString());
+        User_Entered_Details.setUsername(binding.UsernameInput.getText().toString());
+        User_Entered_Details.setPassword(binding.PasswordInput.getText().toString());
 
         String Password2 = binding.PasswordInput2.getText().toString();
-        user_entered_details.setEmail(binding.EmailInput.getText().toString());
-        user_entered_details.setMale(Set_Gender_From_Buttons(user_entered_details, Gender_Selected));
-        user_entered_details.setAge(reusableFunctions.To_Int(binding.AgeInput.getText().toString()));
+        User_Entered_Details.setEmail(binding.EmailInput.getText().toString());
+        User_Entered_Details.setMale(Set_Gender_From_Buttons(User_Entered_Details, Gender_Selected));
+        User_Entered_Details.setAge(reusableFunctions.To_Int(binding.AgeInput.getText().toString()));
 
-
-        //checks if tester details
-        if(user_entered_details.getUsername().equals(tester_details.getUsername())) {
+        //checks if tester details fill in rest
+        if(User_Entered_Details.getUsername().equals(Tester_Details.getUsername())) {
             //auto places the rest of tester details from tester class
 
-            user_entered_details.setPassword(tester_details.getPassword());
-            binding.PasswordInput.setText(tester_details.getPassword());
-            //user_entered_details.setPassword2(tester_details.getPassword());
-            binding.PasswordInput2.setText(tester_details.getPassword());
-            binding.EmailInput.setText(tester_details.getEmail());
+            User_Entered_Details.setPassword(Tester_Details.getPassword());
+            binding.PasswordInput.setText(Tester_Details.getPassword());
+            //User_Entered_Details.setPassword2(Tester_Details.getPassword());
+            binding.PasswordInput2.setText(Tester_Details.getPassword());
+            binding.EmailInput.setText(Tester_Details.getEmail());
             binding.EmailConfirmationCheckBox.setChecked(true);
             binding.MaleRadioButton.setChecked(true);
             binding.AgeInput.setText("21");
-            Set_Gender_From_Tester(tester_details);
-            Log.d(TAG, "Username = " + tester_details.getUsername());
-            Log.d(TAG, "Password = " + tester_details.getPassword());
-            Log.d(TAG, "Email = " + tester_details.getEmail());
+            Set_Gender_From_Tester(Tester_Details);
+            Log.d(TAG, "Username = " + Tester_Details.getUsername());
+            Log.d(TAG, "Password = " + Tester_Details.getPassword());
+            Log.d(TAG, "Email = " + Tester_Details.getEmail());
 
             reusableFunctions.Create_Toast(getApplicationContext(), "Tester Recognised. Adding Rest.");
-            Validation_Checks_Valid_Inputs(user_entered_details, Password2, reusableFunctions, Gender_Selected, view);
+            Validation_Checks_Valid_Inputs(User_Entered_Details, Password2, reusableFunctions, Gender_Selected, view);
 
             //checks no fields are Null
-        }else if(user_entered_details.getUsername().equals("") || user_entered_details.getPassword().equals("") || Password2.equals("") || user_entered_details.getEmail().equals("") || binding.EmailConfirmationCheckBox.isChecked() == false || (binding.FemaleRadioButton.isChecked() == false && binding.MaleRadioButton.isChecked() == false) || binding.AgeInput.getText().equals("")) {
+        }else if(User_Entered_Details.getUsername().equals("") || User_Entered_Details.getPassword().equals("") || Password2.equals("") || User_Entered_Details.getEmail().equals("") || binding.EmailConfirmationCheckBox.isChecked() == false || (binding.FemaleRadioButton.isChecked() == false && binding.MaleRadioButton.isChecked() == false) || binding.AgeInput.getText().equals("")) {
             reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter data to all fields and tick checkbox.");
         }else {//accept clause
-            Validation_Checks_Valid_Inputs(user_entered_details, Password2, reusableFunctions, Gender_Selected, view);
+            Validation_Checks_Valid_Inputs(User_Entered_Details, Password2, reusableFunctions, Gender_Selected, view);
         }
     }
 
@@ -78,21 +77,21 @@ public class Create_Account extends AppCompatActivity {
         //checks if pw >8 chars/ Cap letter and Special Char
         if (user.getPassword().length() >= 8 && Is_UpperCase == true && containsSpecialCharacter(user.getPassword()) == true) {
             if (user.getPassword().equals(Password2)) { //check if passwords match
+
                 //checks for a valid email
                 if(user.getEmail().contains("@gmail") || user.getEmail().contains("@outlook") || user.getEmail().contains("@yahoo") || user.getEmail().contains("@student") || user.getEmail().contains("@hotmail")){
                     if(user.getEmail().equals("@gmail") || user.getEmail().equals("@outlook") || user.getEmail().equals("@yahoo") || user.getEmail().equals("@student") || user.getEmail().equals("@hotmail")){
                         reusableFunctions.Create_Toast(getApplicationContext(), "Invalid Email");
 
+                        //checks if age >18
                     }else if(user.getAge() <18 && user.getAge()<100){
                         reusableFunctions.Create_Toast(getApplicationContext(), "You must be over 18 to participate in this App.");
 
                     }else{
-                        // ------------------------------------------------------------
                         // -------------------- Creates An Account --------------------
-                        // ------------------------------------------------------------
                         To_Database(user,reusableFunctions, view);
                     }
-                }else{
+                }else{//Incorrect Details Messages
                     reusableFunctions.Create_Toast(getApplicationContext(), "Invalid Email");
                 }
             }else {
@@ -114,9 +113,9 @@ public class Create_Account extends AppCompatActivity {
         Account_Info.add(user.getWeight_Kg());
         Account_Info.add(user.getRmi());
 
-
         Page_Movement_Intent = new Intent(view.getContext(), Database.class);
         Page_Movement_Intent.putExtra("Sent_Info", Account_Info);
+
         // 0 = Create_Account, 1 = login, 2 = Add Product From Db
         Page_Movement_Intent.putExtra("Sent_From",0);
         reusableFunctions.Create_Toast(getApplicationContext(), "Going To Db");
@@ -136,52 +135,48 @@ public class Create_Account extends AppCompatActivity {
     //          ----------------------- EXTRA FUNCTIONS/ DEPENDENCIES -----------------------
 
     public void Email_Checkbox_Clicked(View view) {
-
     }
 
-    private static boolean containsUpperCase(String str) {
-        for (int i = 0; i < str.length(); i++) {
-            if (Character.isUpperCase(str.charAt(i))) {
+    private static boolean containsUpperCase(String Str) {
+        for (int i = 0; i < Str.length(); i++) {
+            if (Character.isUpperCase(Str.charAt(i))) {
                 return true;
             }
         }
         return false;
     }
 
-    private static boolean containsSpecialCharacter(String str) {
-        for (int i = 0; i < str.length(); i++) {
-            char ch = str.charAt(i);
-            if (!Character.isLetterOrDigit(ch)) {
-                // If the character is neither a letter nor a digit, it's a special character
+    private static boolean containsSpecialCharacter(String Str) {
+        for (int i = 0; i < Str.length(); i++) {
+            char Current_Character = Str.charAt(i);
+            if (!Character.isLetterOrDigit(Current_Character)) {
+                //if it isnt a char of digit. then its a special char
                 return true;
             }
         }
         return false;
     }//checks if special char
 
-    private void Set_Gender_From_Tester(Tester tester_details) {
+    private void Set_Gender_From_Tester(Tester Passed_Tester_Details) {
         if (binding.MaleRadioButton.isChecked()) {
             binding.MaleRadioButton.setChecked(true);
-            tester_details.setMale(true);
+            Passed_Tester_Details.setMale(true);
             Gender_Selected = true;
         } else {
             binding.FemaleRadioButton.setChecked(true);
-            tester_details.setMale(false);
+            Passed_Tester_Details.setMale(false);
         }
     }
 
-    private boolean Set_Gender_From_Buttons(User user_entered_details, Boolean Gender_Selected) {
+    private boolean Set_Gender_From_Buttons(User Passed_User_Entered_Details, Boolean Gender_Selected) {
         if (binding.MaleRadioButton.isChecked()) {
-            user_entered_details.setMale(true);
+            Passed_User_Entered_Details.setMale(true);
             Gender_Selected = true;
         } else {
-            user_entered_details.setMale(false);
-
+            Passed_User_Entered_Details.setMale(false);
         }
-        return user_entered_details.isMale();
+        return Passed_User_Entered_Details.isMale();
     }
-
-
 
     public void Male_RadioButton_Pressed(View view) {
         binding.MaleRadioButton.setChecked(true);
