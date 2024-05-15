@@ -48,10 +48,9 @@ public class Enter_Weight extends AppCompatActivity {
                 Log.d(TAG, "decimal already in weight");
             }
 
-        }catch(Exception IndexOutOfBoundsException){
+        }catch(NumberFormatException e){// was index out of bounds exception
             Log.d(TAG, "Decimal check exception caught");
         }
-
 
         if (weightInput.isEmpty()) {
             Log.d(TAG, "Weight Empty");
@@ -136,7 +135,7 @@ public class Enter_Weight extends AppCompatActivity {
         int currentColor = currentColorStateList.getDefaultColor();
 
         if (currentColor == clickedColor) {
-            //Stone_Inches_To_Kg();
+            Stone_To_Kg(binding.WeightInput.getText().toString());
             return true;
         } else {
             Log.d(TAG, "Weight Entered In Kg");
