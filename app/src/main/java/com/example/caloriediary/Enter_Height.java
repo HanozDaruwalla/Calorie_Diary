@@ -19,6 +19,8 @@ public class Enter_Height extends AppCompatActivity {
     ReusableFunctions reusableFunctions = new ReusableFunctions();
     public static final String TAG = "Enter_Height_Section";
     ArrayList<String> User_Data = new ArrayList<>();
+    boolean Is_Cm_Pressed = false;
+    boolean Is_Inches_Pressed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +148,8 @@ public class Enter_Height extends AppCompatActivity {
         int Resource_Interface_Color_Clicked = ContextCompat.getColor(view.getContext(), R.color.interface_color_clicked);
         int Resource_Interface_Color = ContextCompat.getColor(view.getContext(), R.color.interface_color);
 
+        Is_Cm_Pressed = false;
+        Is_Inches_Pressed = true;
         binding.FootButton.setBackgroundTintList(ColorStateList.valueOf(Resource_Interface_Color_Clicked));
         binding.CmButton.setBackgroundTintList(ColorStateList.valueOf(Resource_Interface_Color));
     }
@@ -157,13 +161,24 @@ public class Enter_Height extends AppCompatActivity {
         int Resource_Interface_Color_Clicked = ContextCompat.getColor(view.getContext(), R.color.interface_color_clicked);
         int Resource_Interface_Color = ContextCompat.getColor(view.getContext(), R.color.interface_color);
 
+
+        Is_Cm_Pressed = true;
+        Is_Inches_Pressed = false;
         binding.CmButton.setBackgroundTintList(ColorStateList.valueOf(Resource_Interface_Color_Clicked));
         binding.FootButton.setBackgroundTintList(ColorStateList.valueOf(Resource_Interface_Color));
+
+
     }
 
     public void Add_Button_Pressed(View view) {
-        Not_Null_Checks(view);
+        if(Is_Cm_Pressed == false && Is_Inches_Pressed == false){
+            reusableFunctions.Create_Toast(getApplicationContext(), "Please Choose Cm Or Inches");
+        }else{
+            Not_Null_Checks(view);
+        }
     }
+
+
 
 
 

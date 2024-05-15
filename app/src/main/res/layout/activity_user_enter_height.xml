@@ -114,7 +114,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cm"
-            android:backgroundTint="@color/interface_color_clicked"
+            android:backgroundTint="@color/interface_color"
             android:textColor="@color/black"
             android:onClick="Cm_Button_Pressed"
             android:layout_marginLeft="10dp"

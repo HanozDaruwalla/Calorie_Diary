@@ -11,4 +11,12 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string-array name="Physical_Activity_Level_Array">
+        <item>Stationary</item>
+        <item>Lightly Active</item>
+        <item>Moderately Active</item>
+        <item>Very Active</item>
+        <item>Super Active</item>
+    </string-array>
 </resources>

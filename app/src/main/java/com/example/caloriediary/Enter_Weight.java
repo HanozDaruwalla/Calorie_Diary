@@ -20,6 +20,9 @@ public class Enter_Weight extends AppCompatActivity {
     public static final String TAG = "Enter_Weight_Section";
     ArrayList<String> Data_For_Bmr = new ArrayList<>();
 
+    boolean Is_Kg_Button_Pressed = false;
+    boolean Is_Stone_Button_Pressed = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +31,16 @@ public class Enter_Weight extends AppCompatActivity {
         setContentView(binding.getRoot());
         Data_For_Bmr = getIntent().getExtras().getStringArrayList("Data_For_Bmr");
 
+/*
+        Spinner Physical_Activity_Spinner = binding.PhysicalActivityLevelSpnner;
+        // Create an ArrayAdapter using the string array and a default spinner layout.
+        ArrayAdapter<CharSequence> ArrayList_Adapter = ArrayAdapter.createFromResource(this, R.array.Physical_Activity_Level_Array, android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears.
+        ArrayList_Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the ArrayList_Adapter to the spinner.
+        Physical_Activity_Spinner.setAdapter(ArrayList_Adapter);
+*/
         Log.d(TAG, "Loaded");
     }
 
@@ -117,8 +130,6 @@ public class Enter_Weight extends AppCompatActivity {
             reusableFunctions.Create_Toast(getApplicationContext(), "Invalid input. Please enter a valid number.");
         }
 
-
-
         return "Error in Stone_To_Kg Convert";
     }
 
@@ -148,7 +159,7 @@ public class Enter_Weight extends AppCompatActivity {
         Bmr_Calcs bmr_calcs = new Bmr_Calcs();
 
         Bmr = bmr_calcs.calculateBMR(dataForBmr, view);
-        Log.d(TAG, "Bmr = " + Bmr);
+
         To_Calorie_Homepage();
 
     }
@@ -173,9 +184,11 @@ public class Enter_Weight extends AppCompatActivity {
         int Resource_Interface_Color_Clicked = ContextCompat.getColor(view.getContext(), R.color.interface_color_clicked);
         int Resource_Interface_Color = ContextCompat.getColor(view.getContext(), R.color.interface_color);
 
+        Is_Kg_Button_Pressed = false;
+        Is_Stone_Button_Pressed = true;
+
         binding.StoneButton.setBackgroundTintList(ColorStateList.valueOf(Resource_Interface_Color_Clicked));
         binding.KgButton.setBackgroundTintList(ColorStateList.valueOf(Resource_Interface_Color));
-
     }
 
     public void Kg_Button_Pressed(View view) {
@@ -185,12 +198,18 @@ public class Enter_Weight extends AppCompatActivity {
         int Resource_Interface_Color_Clicked = ContextCompat.getColor(view.getContext(), R.color.interface_color_clicked);
         int Resource_Interface_Color = ContextCompat.getColor(view.getContext(), R.color.interface_color);
 
+        Is_Kg_Button_Pressed = true;
+        Is_Stone_Button_Pressed = false;
+
         binding.KgButton.setBackgroundTintList(ColorStateList.valueOf(Resource_Interface_Color_Clicked));
         binding.StoneButton.setBackgroundTintList(ColorStateList.valueOf(Resource_Interface_Color));
-
     }
-        public void Add_Button_Pressed(View view) {
-        Not_Null_Checks(view);
+
+    public void Add_Button_Pressed(View view) {
+        if(Is_Kg_Button_Pressed == false && Is_Stone_Button_Pressed == false){
+            reusableFunctions.Create_Toast(getApplicationContext(), "Please Choose Kg Or Stones");
+        }else{
+            Not_Null_Checks(view);
+        }
     }
 }
-
