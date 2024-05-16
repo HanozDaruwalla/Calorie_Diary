@@ -68,9 +68,6 @@ public class Enter_Height extends AppCompatActivity {
         }
     }
 
-
-
-
     private String Foot_Inches_To_Cm(String heightInput){
         int Foot, Inches;
         float heightInCm;
@@ -161,13 +158,10 @@ public class Enter_Height extends AppCompatActivity {
         int Resource_Interface_Color_Clicked = ContextCompat.getColor(view.getContext(), R.color.interface_color_clicked);
         int Resource_Interface_Color = ContextCompat.getColor(view.getContext(), R.color.interface_color);
 
-
         Is_Cm_Pressed = true;
         Is_Inches_Pressed = false;
         binding.CmButton.setBackgroundTintList(ColorStateList.valueOf(Resource_Interface_Color_Clicked));
         binding.FootButton.setBackgroundTintList(ColorStateList.valueOf(Resource_Interface_Color));
-
-
     }
 
     public void Add_Button_Pressed(View view) {
@@ -177,12 +171,5 @@ public class Enter_Height extends AppCompatActivity {
             Not_Null_Checks(view);
         }
     }
-
-
-
-
-
-
-
 
 }
