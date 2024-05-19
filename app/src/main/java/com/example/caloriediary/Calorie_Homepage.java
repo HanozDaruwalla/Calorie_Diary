@@ -35,7 +35,7 @@ public class Calorie_Homepage extends AppCompatActivity {
         startActivity(intent);
 
         HomePage homepage  = new HomePage();
-        homepage.dialogBuilder().create().show();
+        //homepage.dialogBuilder().create().show();
 
     }
 
