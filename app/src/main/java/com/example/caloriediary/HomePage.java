@@ -111,6 +111,7 @@ public class HomePage extends AppCompatActivity {
                                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                     if (!setGalleryPermissionsRequest()) {
                                         startGalleryChooser();
+                                        //remove later
                                     }
                                 } else {
                                     startGalleryChooser();
