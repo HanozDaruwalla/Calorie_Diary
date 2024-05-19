@@ -29,10 +29,9 @@ public class MainActivity extends AppCompatActivity {
     private void To_Login_Page(){
         //Note on error: When intent var is global. can only be assigned once. so causes an error when variable is used more than once e.g. to Create Account and login
         ReusableFunctions reusableFunctions = new ReusableFunctions();
-        //Declared Intent Here
-        //Intent Page_Movement_Intent = new Intent(MainActivity.this, Login.class);//
-        Intent Page_Movement_Intent = new Intent(MainActivity.this, HomePage.class);
-        //Page_Movement_Intent.putExtra("Username","");
+
+        Intent Page_Movement_Intent = new Intent(MainActivity.this, Login.class);//
+        Page_Movement_Intent.putExtra("Username","");
         startActivity(Page_Movement_Intent);
     }
 
