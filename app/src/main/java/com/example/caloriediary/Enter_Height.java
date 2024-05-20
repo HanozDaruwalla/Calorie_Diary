@@ -34,58 +34,65 @@ public class Enter_Height extends AppCompatActivity {
     }
 
     public void Not_Null_Checks(View view) {
-        boolean measurementInFoot = Is_Feet_Selected(view);
+        boolean Measurement_In_Foot = Is_Feet_Selected(view);
         String Cm_Height = "";
-        Log.d(TAG, "Measurement Saved = " + measurementInFoot);
+        Log.d(TAG, "Measurement Saved = " + Measurement_In_Foot);
 
-        String heightInput = binding.HeightInput.getText().toString();
+        String Height_Input = binding.HeightInput.getText().toString();
 
         Log.d(TAG, "Checking If Height Valid");
 
-        if (heightInput.isEmpty()) {
+
+        if (Height_Input.isEmpty()) {
             Log.d(TAG, "Height Empty");
             reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter All Data");
-        } else if (measurementInFoot) { //Foot Checks
+        } else if (Measurement_In_Foot) { //Foot Checks
             Log.d(TAG, "Height In Foot Found at Not Null Checks");
-            if (heightInput.length() == 1 || heightInput.charAt(1) == '.'){
+            if (Height_Input.length() == 1 || Height_Input.charAt(1) == '.'){
                 //if condition met
 
                 Log.d(TAG, "Valid Height Foot Entry");
-                Cm_Height = Foot_Inches_To_Cm(heightInput);
+                Cm_Height = Foot_Inches_To_Cm(Height_Input);
                 Pack_Data_To_Arraylist_For_Bmr(Cm_Height, view);
             } else {
                 Log.d(TAG, "Invalid Height Foot Entry");
                 reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter Your Height Correctly in Feet. e.g., 5.8 or '5.0'");
             }
         }else{// CM CHECKS
-            if (!(heightInput.length() > 4 && heightInput.charAt(3) == '.') && !(heightInput.length() == 3)) {
+            if (!(Height_Input.length() > 4 && Height_Input.charAt(3) == '.') && !(Height_Input.length() == 3)) {
                 Log.d(TAG, "Invalid Cm Entry");
                 reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter Your Height Correctly in Cm. e.g., 170.78 or 170");
             }else{
                 Log.d(TAG, "Valid Cm Entry");
-                Pack_Data_To_Arraylist_For_Bmr(heightInput, view);
+                Pack_Data_To_Arraylist_For_Bmr(Height_Input, view);
             }
         }
     }
 
-    private String Foot_Inches_To_Cm(String heightInput){
+    private String Foot_Inches_To_Cm(String Passed_Height_Input){
+        //converts FOOT to CM
         int Foot, Inches;
-        float heightInCm;
+        float Height_In_Cm;
 
         Log.d(TAG, "Starting Calcs");
 
-        Log.d(TAG, "String Height = " + heightInput);
-        //seperates the string to an int from the char "."
-        String[] height_Array = heightInput.split("\\.");
+        Log.d(TAG, "String Height = " + Passed_Height_Input);
 
-        Foot = reusableFunctions.To_Int(height_Array[0]);
-        Inches = reusableFunctions.To_Int(height_Array[1]);
+        //seperates the string to an int from the char "."
+        String[] Height_Array = Passed_Height_Input.split("\\.");
+
+        Foot = reusableFunctions.To_Int(Height_Array[0]);
+        Inches = reusableFunctions.To_Int(Height_Array[1]);
 
         // 1 foot = 30.48 centimeters
         // 1 inch = 2.54 centimeters
-        int totalInches = Foot * 12 + Inches;
-        heightInCm = totalInches * 2.54f;
-        String formattedCm = reusableFunctions.Decimal_Place_2(heightInCm);
+
+        //Calculation
+        int Calculated_Inches = Foot * 12 + Inches;
+
+        Height_In_Cm = Calculated_Inches * 2.54f;
+        String formattedCm = reusableFunctions.Two_Decimal_Place(Height_In_Cm);
+
         Log.d(TAG, "Cm = " + formattedCm);
 
         reusableFunctions.Create_Toast(getApplicationContext(), "Cm = " + formattedCm);
@@ -93,10 +100,11 @@ public class Enter_Height extends AppCompatActivity {
     }
 
     private void Pack_Data_To_Arraylist_For_Bmr(String Height, View view){
+        //Packs data to arraylist so t can be calculated later
         //Variables to be passed
 
         // Index 0: Age (in years), Index 1: Email address, Index 2: Height (in centimeters)
-        // Index 3: Password, Index 4: Resting Metabolic Rate (RMR), Index 5: Sex
+        // Index 3: Password, Index 4: Bmr, Index 5: Sex
         // Index 6: Username, Index 7: Weight (in kilograms)
 
         ArrayList<String> Data_For_Bmr = new ArrayList<String>();
@@ -104,7 +112,7 @@ public class Enter_Height extends AppCompatActivity {
         int Age = reusableFunctions.To_Int(User_Data.get(0));
         boolean isMale = reusableFunctions.String_To_Bool(User_Data.get(5));
 
-        Data_For_Bmr.add(ReusableFunctions.intToString(Age));
+        Data_For_Bmr.add(ReusableFunctions.Int_To_Strng(Age));
         Data_For_Bmr.add(String.valueOf(isMale));
         Data_For_Bmr.add(Height);
 
@@ -112,12 +120,14 @@ public class Enter_Height extends AppCompatActivity {
     }
 
     private boolean Is_Feet_Selected(View view) {
-        int clickedColor = ContextCompat.getColor(view.getContext(), R.color.interface_color_clicked);
+        //Checks if Feet or Inches Selected.
+        int Resource_Interface_Color_Clicked_Color = ContextCompat.getColor(view.getContext(), R.color.interface_color_clicked);
 
-        ColorStateList currentColorStateList = binding.FootButton.getBackgroundTintList();
-        int currentColor = currentColorStateList.getDefaultColor();
+        ColorStateList Foot_Button_Color = binding.FootButton.getBackgroundTintList();
+        int Int_Foot_Button_Current_Color = Foot_Button_Color.getDefaultColor();
 
-        if (currentColor == clickedColor) {
+        //if Foot button is colored. then true, else false.
+        if (Int_Foot_Button_Current_Color == Resource_Interface_Color_Clicked_Color) {
             //Foot_Inches_To_Cm();
             return true;
         } else {
@@ -126,12 +136,13 @@ public class Enter_Height extends AppCompatActivity {
         }
     }
 
-    private void To_Enter_Weight(ArrayList<String> dataForBmr) {
-        Intent pageMovementIntent = new Intent(Enter_Height.this, Enter_Weight.class);
-        pageMovementIntent.putExtra("Data_For_Bmr", dataForBmr);
+    private void To_Enter_Weight(ArrayList<String> Arraylist_For_Bmr){
+        //Go To Enter Weight Function and pass arraylist
+        Intent Page_Movement_Intent = new Intent(Enter_Height.this, Enter_Weight.class);
+        Page_Movement_Intent.putExtra("Data_For_Bmr", Arraylist_For_Bmr);
 
         reusableFunctions.Create_Toast(getApplicationContext(), "Cm Class Complete");
-        startActivity(pageMovementIntent);
+        startActivity(Page_Movement_Intent);
     }
 
     //----------------------------------------------------------------------//

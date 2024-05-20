@@ -168,10 +168,9 @@ mScrollView.setOnTouchListener(new OnSwipeTouchListener(this){
                     public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                         Log.d("Healthier", "Success" + response.toString());
                         mProgressBar.setVisibility(View.INVISIBLE);
-                        data = NutritionData.fromJson(response);
+                        data = NutritionData.Gather_Data_From_Json(response);
                         mEditText.setCursorVisible(false);
-                        new DownloadImageTask(foodPic)
-                                .execute(data.getPhotoUrl());
+                        new DownloadImageTask(foodPic).execute(data.getUrl_Of_Photo());
                         foodPic.setVisibility(View.VISIBLE);
 
                         updateUI(data);
@@ -218,7 +217,7 @@ mScrollView.setOnTouchListener(new OnSwipeTouchListener(this){
                     public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                         Log.d("Healthier", "Success" + response.toString());
                         mProgressBar.setVisibility(View.INVISIBLE);
-                        data = NutritionData.fromJson(response);
+                        data = NutritionData.Gather_Data_From_Json(response);
                         mEditText.setCursorVisible(false);
                         foodPic.setImageBitmap(mBitmap);
                         foodPic.setVisibility(View.VISIBLE);
@@ -248,19 +247,19 @@ mScrollView.setOnTouchListener(new OnSwipeTouchListener(this){
     }
 
     private void updateUI(NutritionData nutritionData) {
-        foodName.setText(nutritionData.getFoodName());
+        foodName.setText(nutritionData.getName_Of_Food());
 
         calories.setText(String.valueOf(nutritionData.getCalories()));
 
         protein.setText(String.valueOf(nutritionData.getProtein()) + "g");
-        totalfat.setText(String.valueOf(nutritionData.getTotalfat()) + "g");
+        totalfat.setText(String.valueOf(nutritionData.getTotal_Fat()) + "g");
         sugar.setText(String.valueOf(nutritionData.getSugar()) + "g");
-        servingSize.setText(nutritionData.getServingSize());
-        totalCarbonhydrate.setText(String.valueOf(nutritionData.getTotalCarbonhydrate() + "g"));
+        servingSize.setText(nutritionData.getServing_Size());
+        totalCarbonhydrate.setText(String.valueOf(nutritionData.getTotal_Carbs() + "G"));
         sodium.setText(String.valueOf(nutritionData.getSodium()) + "mg");
         cholesterol.setText(String.valueOf(nutritionData.getCholesterol()) + "mg");
         potassium.setText(String.valueOf(nutritionData.getPotassium()) + "mg");
-        diertaryFiber.setText(nutritionData.getDiertaryFiber() + "g");
+        diertaryFiber.setText(nutritionData.getFiber() + "g");
         mRelativeLayout.setVisibility(View.VISIBLE);
 
     }

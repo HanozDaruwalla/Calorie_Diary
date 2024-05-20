@@ -2,52 +2,58 @@ package com.example.caloriediary;
 
 import android.util.Log;
 
-import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by yjj781265 on 7/27/2017.
+ * Api Created by yjj781265 on 7/27/2017.
  */
 
 public class NutritionData {
-    private String foodName, photoUrl, servingSize;
-    private int calories, protein, totalfat, sugar, totalCarbonhydrate, sodium,
-            cholesterol, potassium, diertaryFiber;
-    private static final int NULL_VALUE =0;
+    private String Name_Of_Food, Url_Of_Photo, Serving_Size;
+    private int Calories, Protein, Total_Fat, Sugar, Total_Carbs, Sodium, Cholesterol, Potassium, Fiber;
+    private static final int NULL_VALUE = 0;
 
 
-
-
-    public static NutritionData fromJson(JSONObject jsonObject) {
-        NutritionData data = new NutritionData();
+    public static NutritionData Gather_Data_From_Json(JSONObject Json_Obj) {
+        NutritionData nutritional_data = new NutritionData();
         try {
-            JSONObject foods = jsonObject.getJSONArray("foods").getJSONObject(0);
-            data.foodName = foods.getString("food_name");
-            data.servingSize = servingSizeMaker(foods);
-            if(foods.get("nf_calories")== null){
-                data.calories =NULL_VALUE;
-            }else {
-                data.calories = foods.getInt("nf_calories");
+            JSONObject foods = Json_Obj.getJSONArray("foods").getJSONObject(0);
+            nutritional_data.Name_Of_Food = foods.getString("Name_Of_Food");
+            nutritional_data.Serving_Size = Serving_Size_Maker(foods);
+            if (foods.get("nf_Calories") == null) {//was nf_calories
+                nutritional_data.Calories = NULL_VALUE;
+            } else {
+                nutritional_data.Calories = foods.getInt("nf_Calories"); //was nf_calories
             }
-            data.protein = foods.getInt("nf_protein");
+            nutritional_data.Protein = foods.getInt("nf_Protein");// was nf_protein
 
-            data.totalfat = foods.getInt("nf_total_fat");
+            nutritional_data.Total_Fat = foods.getInt("nf_Total_Fat");//was nf_total_fat
 
-            if( foods.getString("nf_sugars").equals("null")){
-                data.sugar =NULL_VALUE;
-            }else{
-                data.sugar = foods.getInt("nf_sugars");
+            if (foods.getString("nf_Sugar").equals("null")) {//was nf_sugars
+                nutritional_data.Sugar = NULL_VALUE;
+            } else {
+                nutritional_data.Sugar = foods.getInt("nf_Sugar");//was nf_sugars
             }
 
-            data.totalCarbonhydrate = foods.getInt("nf_total_carbohydrate");
-            data.sodium = foods.getInt("nf_sodium");
-            data.cholesterol = foods.getInt("nf_cholesterol");
-            data.potassium = foods.getInt("nf_potassium");
-            data.diertaryFiber = foods.getInt("nf_dietary_fiber");
-            data.photoUrl = foods.getJSONObject("photo").getString("highres");
+            //check below for old values
+            nutritional_data.Total_Carbs = foods.getInt("nf_Total_Carbs");
+            nutritional_data.Sodium = foods.getInt("nf_Sodium");
+            nutritional_data.Cholesterol = foods.getInt("nf_cholesterol");
+            nutritional_data.Potassium = foods.getInt("nf_Potassium");
+            nutritional_data.Fiber = foods.getInt("nf_fiber");
+            nutritional_data.Url_Of_Photo = foods.getJSONObject("photo").getString("highres");
 
-            Log.d("Success JSON", data.foodName + " " + data.servingSize);
+            /*
+            nutritional_data.Total_Carbs = foods.getInt("nf_total_carbohydrate");
+            nutritional_data.Sodium = foods.getInt("nf_sodium");
+            nutritional_data.Cholesterol = foods.getInt("nf_cholesterol");
+            nutritional_data.Potassium = foods.getInt("nf_potassium");
+            nutritional_data.Fiber = foods.getInt("nf_dietary_fiber");
+            nutritional_data.Url_Of_Photo = foods.getJSONObject("photo").getString("highres");
+             */
+
+            Log.d("Success JSON", nutritional_data.Name_Of_Food + " " + nutritional_data.Serving_Size);
 
         } catch (JSONException e) {
 
@@ -55,104 +61,125 @@ public class NutritionData {
 
         }
 
-        return data;
+        return nutritional_data;
 
     }
 
-    private static String servingSizeMaker(JSONObject foods) {
-        String servingSize;
-        String servingQty, servingUnit, servingWeight;
+    private static String Serving_Size_Maker(JSONObject foods) {
+        String Serving_Size;
+        String Serving_Qty, Serving_Unit, Serving_Weight;
 
 
         try {
-            servingQty = String.valueOf(foods.getInt("serving_qty"));
-            servingUnit = foods.getString("serving_unit");
-            servingWeight = String.valueOf(foods.getString("serving_weight_grams"));
+            Serving_Qty = String.valueOf(foods.getInt("Serving_Qty"));//was serving_qty
+            Serving_Unit = foods.getString("Serving_Unit"); // was serving_unit
+            Serving_Weight = String.valueOf(foods.getString("Serving_Weight_Grams"));// was serving_weight_grams
 
         } catch (JSONException e) {
-            e.printStackTrace();
-            servingSize = "not found";
-            return servingSize;
+            Serving_Size = "Not Found!";
+            return Serving_Size;
         }
-        servingSize = servingQty + " " + servingUnit + "(" + servingWeight + "g" + ")";
-        return servingSize;
+        Serving_Size = Serving_Qty + " " + Serving_Unit + "(" + Serving_Weight + "G" + ")";
+        return Serving_Size;
 
     }
 
-    public String getFoodName() {
-        return WordUtils.capitalizeFully(foodName, new char[]{'.'});
+    public String getName_Of_Food() {
+        return Name_Of_Food;
+    }
+
+    public void setName_Of_Food(String name_Of_Food) {
+        Name_Of_Food = name_Of_Food;
+    }
+
+    public String getUrl_Of_Photo() {
+        return Url_Of_Photo;
+    }
+
+    public void setUrl_Of_Photo(String url_Of_Photo) {
+        Url_Of_Photo = url_Of_Photo;
+    }
+
+    public String getServing_Size() {
+        return Serving_Size;
+    }
+
+    public void setServing_Size(String serving_Size) {
+        Serving_Size = serving_Size;
     }
 
     public int getCalories() {
-        return calories;
+        return Calories;
+    }
+
+    public void setCalories(int calories) {
+        Calories = calories;
     }
 
     public int getProtein() {
-
-        return protein;
-
+        return Protein;
     }
 
-    public int getTotalfat() {
+    public void setProtein(int protein) {
+        Protein = protein;
+    }
 
-        return totalfat;
+    public int getTotal_Fat() {
+        return Total_Fat;
+    }
 
+    public void setTotal_Fat(int total_Fat) {
+        Total_Fat = total_Fat;
     }
 
     public int getSugar() {
-
-        return sugar;
+        return Sugar;
     }
 
-
-    public String getServingSize() {
-
-        return servingSize;
-
-
+    public void setSugar(int sugar) {
+        Sugar = sugar;
     }
 
-    public int getTotalCarbonhydrate() {
-
-        return totalCarbonhydrate;
-
+    public int getTotal_Carbs() {
+        return Total_Carbs;
     }
 
+    public void setTotal_Carbs(int total_Carbs) {
+        Total_Carbs = total_Carbs;
+    }
 
     public int getSodium() {
-
-        return sodium;
-
+        return Sodium;
     }
 
+    public void setSodium(int sodium) {
+        Sodium = sodium;
+    }
 
     public int getCholesterol() {
-
-        return cholesterol;
-
+        return Cholesterol;
     }
 
+    public void setCholesterol(int cholesterol) {
+        Cholesterol = cholesterol;
+    }
 
     public int getPotassium() {
-
-        return potassium;
-
+        return Potassium;
     }
 
-
-    public int getDiertaryFiber() {
-
-        return diertaryFiber;
-
+    public void setPotassium(int potassium) {
+        Potassium = potassium;
     }
 
-
-    public String getPhotoUrl() {
-
-        return photoUrl;
-
+    public int getFiber() {
+        return Fiber;
     }
+
+    public void setFiber(int fiber) {
+        Fiber = fiber;
+    }
+
 }
-
 
 

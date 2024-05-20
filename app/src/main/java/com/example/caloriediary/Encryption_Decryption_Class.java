@@ -10,34 +10,34 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class Encryption_Decryption_Class {
 
-    final static String key = "jMLWNSIs2CJtpMpKxmr1rQ=="; // Replace this with your secret key;
+    final static String Encrypt_Decrypt_Key = "jMLWNSIs2CJtpMpKxmr1rQ==";
 
-    private static final String ALGORITHM = "AES";
+    private static final String Name_Of_Algorithm = "AES";
     private static final String TRANSFORMATION = "AES/ECB/PKCS5Padding";
 
-    public static String encrypt(String plainText) throws Exception {
-        Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-        cipher.init(Cipher.ENCRYPT_MODE, generateKey(key));
-        byte[] encryptedBytes = cipher.doFinal(plainText.getBytes());
+    public static String Encryption_Function(String Inputted_String) throws Exception {
+        Cipher Cipher_Object = Cipher.getInstance(TRANSFORMATION);
+        Cipher_Object.init(Cipher.ENCRYPT_MODE, Generate_Encryption_Decryption_Key(Encrypt_Decrypt_Key));
+        byte[] Encrypted_Bytes = Cipher_Object.doFinal(Inputted_String.getBytes());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            return Base64.getEncoder().encodeToString(encryptedBytes);
+            return Base64.getEncoder().encodeToString(Encrypted_Bytes);
         }
-        return "If Statement Failed";
+        return "Encryption Failed At If Statement";
     }
 
-    public static String decrypt(String encryptedText) throws Exception {
-        Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-        cipher.init(Cipher.DECRYPT_MODE, generateKey(key));
-        byte[] encryptedBytes = new byte[0];
+    public static String Decryption_Function(String Inputted_Encrypted_String) throws Exception {
+        Cipher Cipher_Object = Cipher.getInstance(TRANSFORMATION);
+        Cipher_Object.init(Cipher.DECRYPT_MODE, Generate_Encryption_Decryption_Key(Encrypt_Decrypt_Key));
+        byte[] Encrypted_Bytes = new byte[0];
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            encryptedBytes = Base64.getDecoder().decode(encryptedText);
+            Encrypted_Bytes = Base64.getDecoder().decode(Inputted_Encrypted_String);
         }
-        byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
+        byte[] decryptedBytes = Cipher_Object.doFinal(Encrypted_Bytes);
         return new String(decryptedBytes);
     }
 
-    private static Key generateKey(String key) throws Exception {
-        byte[] keyBytes = key.getBytes();
-        return new SecretKeySpec(keyBytes, ALGORITHM);
+    private static Key Generate_Encryption_Decryption_Key(String Key) throws Exception {
+        byte[] Bytes_Key = Key.getBytes();
+        return new SecretKeySpec(Bytes_Key, Name_Of_Algorithm);
     }
 }

@@ -1,14 +1,11 @@
 package com.example.caloriediary;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -47,6 +44,8 @@ import cz.msebera.android.httpclient.HttpEntity;
 
 public class HomePage extends AppCompatActivity {
 
+
+    private static String TAG = "Homepage";
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int GALLERY_PERMISSIONS_REQUEST =2;
     static  final String CLOUD_VISION_REQUEST_URL ="https://vision.googleapis.com/v1/images:annotate?key=AIzaSyDnbrka7qti5lc6z_DZ3_Rb9wELod_Jvb0";
@@ -56,6 +55,8 @@ public class HomePage extends AppCompatActivity {
     Bitmap bitmap;
     Uri photoUri;
     ArrayList<String> arrayList;
+
+    ReusableFunctions reusableFunctions = new ReusableFunctions();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,15 +78,22 @@ public class HomePage extends AppCompatActivity {
     }
 
     private void openCamera() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Log.d(TAG, "Camera Open Function");
+        Intent Picture_Intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Log.d(TAG, "Camera Intent Made");
         // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+        if (Picture_Intent.resolveActivity(getPackageManager()) != null) {
             // Create the File where the photo should go
+            Log.d(TAG, "Making File for photo");
             File photoFile = null;
+            Log.d(TAG, "Made Fle");
             try {
+                Log.d(TAG, "calling createImageFile");
                 photoFile = createImageFile();
+                Log.d(TAG, "called createImageFile");
             } catch (IOException ex) {
                 // Error occurred while creating the File
+                Log.d(TAG, "Input Output exception error");
 
             }
             // Continue only if the File was successfully created
@@ -93,46 +101,23 @@ public class HomePage extends AppCompatActivity {
                 Uri photoURI = FileProvider.getUriForFile(this,
                         getApplicationContext().getPackageName() + ".provider",
                         photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                Picture_Intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(Picture_Intent, REQUEST_IMAGE_CAPTURE);
+            }else{
+                Log.d(TAG, "File Not Successfully Made");
             }
+        }else{
+            Log.d(TAG, "No Camera Activity To Hold Intent");
         }
     }
 
 
     // Picture source from camera or gallery dialog
-    public AlertDialog createDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(HomePage.this);
-        builder.setMessage(getResources().getString(R.string.dialog_select_prompt))
-                .setPositiveButton(getResources().getString(R.string.dialog_select_gallery),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                    if (!setGalleryPermissionsRequest()) {
-                                        startGalleryChooser();
 
-                                    }
-                                } else {
-                                    startGalleryChooser();
-                                }
-                            }
-                        })
-                .setNegativeButton(getResources().getString(R.string.dialog_select_camera),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                    if (!setRequestImageCapture()) {
-                                        openCamera();
-                                    }
-                                } else {
-                                    openCamera();
-                                }
-                            }
-                        });
+    public void Call_Camera() {
+        Log.d(TAG, "Call_Camera opened");
 
-        return builder.create(); // Create the dialog instead of returning the builder
+        openCamera();
     }
 
     public void startGalleryChooser() {
@@ -249,6 +234,7 @@ public class HomePage extends AppCompatActivity {
 
     private File createImageFile() throws IOException {
         // Create an image file name
+        Log.d(TAG, "in createImageFile");
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);

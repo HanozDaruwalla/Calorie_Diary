@@ -14,7 +14,7 @@ public class Login extends AppCompatActivity {
 
     private ActivityLoginBinding binding;
     Intent Page_Movement_Intent;
-    int Default_Password_Input_Type = 0;
+    int Int_Value_Of_Masked_Pw_Format = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +25,7 @@ public class Login extends AppCompatActivity {
 
         String Imported_Username = getIntent().getExtras().getString("Username");
         binding.UsernameInput.setText(Imported_Username);
-        Default_Password_Input_Type = binding.PasswordInput.getInputType();
+        Int_Value_Of_Masked_Pw_Format = binding.PasswordInput.getInputType();
     }
 
     public void Login_Button_Clicked(View view) {
@@ -35,7 +35,7 @@ public class Login extends AppCompatActivity {
     private void Null_Checks(View view){
 
         ReusableFunctions reusableFunctions = new ReusableFunctions();
-
+//if username and password null. then redo else Add username and pw to array and pas to db Login();
         if(binding.UsernameInput.getText().toString().equals("") || binding.PasswordInput.getText().toString().equals("")){
             reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter Your Details");
         }else{
@@ -58,7 +58,7 @@ public class Login extends AppCompatActivity {
         if (binding.PasswordCheckBox.isChecked()) {
             binding.PasswordInput.setInputType(0);
         } else {
-            binding.PasswordInput.setInputType(Default_Password_Input_Type);
+            binding.PasswordInput.setInputType(Int_Value_Of_Masked_Pw_Format);
         }
     }
 }

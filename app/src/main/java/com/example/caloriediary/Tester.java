@@ -3,24 +3,7 @@ package com.example.caloriediary;
 import com.google.firebase.database.PropertyName;
 
 public class Tester extends User{
-    /*
-    @PropertyName("Username")
-    String Username = "Undeclared";
-    @PropertyName("Password")
-    String Password = "Undeclared";
 
-    String Password2 = "Undeclared";
-    @PropertyName("Sex")
-    String Sex = "Undeclared";
-    @PropertyName("Email")
-    String Email = "Undeclared";
-    @PropertyName("Height_Cm")
-    String Height_cm = "Undeclared";
-    @PropertyName("Weight")
-    String Weight_Kg = "Undeclared";
-    @PropertyName("Rmi")
-    String Rmi = "Undeclared";
-    */
     @PropertyName("Age")
     int Age = -1;
 

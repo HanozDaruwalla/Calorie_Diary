@@ -19,8 +19,8 @@ import androidx.fragment.app.Fragment;
 public class Nav_Bar extends Fragment {
 
     private static final String TAG = "Nav_Bar_Fragment";
-    private TextView Info_Text_View;
-    private ImageView Info_Img;
+    private TextView Info_Text_View, Calorie_Counter_View, Weight_Monitor_View;
+    private ImageView Info_Img, Calorie_Counter_Img, Weight_Monitor_Image;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,6 +72,12 @@ public class Nav_Bar extends Fragment {
         Info_Text_View = rootView.findViewById(R.id.Info_Text);
         Info_Img = rootView.findViewById(R.id.Info_Img);
 
+        Calorie_Counter_View = rootView.findViewById(R.id.Calorie_Counter_Text);
+        Calorie_Counter_Img = rootView.findViewById(R.id.Calorie_Counter_Image);
+
+        Weight_Monitor_View = rootView.findViewById((R.id.Weight_Text));
+        Weight_Monitor_Image = rootView.findViewById((R.id.Weight_Image));
+
         //Info Section
         Info_Text_View.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,17 +93,59 @@ public class Nav_Bar extends Fragment {
             }
         });
 
+        //Calorie Counter Img Section
+        Calorie_Counter_View.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calorie_Diary_Button_Pressed();
+            }
+        });
+
+        Calorie_Counter_Img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calorie_Diary_Button_Pressed();
+            }
+        });
+
+
+        //Weight_Monitor_Section
+        Weight_Monitor_View.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Weight_Monitor_Pressed();
+            }
+        });
+
+        Weight_Monitor_Image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Weight_Monitor_Pressed();
+            }
+        });
+
         return rootView;
     }
 
+//Functions Taking User To other Pages
     private void Info_Section_Clicked(){
         Log.d(TAG, "Info Clicked");
-        Intent pageMovementIntent = new Intent(getContext(), Info.class);
+        Intent Page_Movement_Intent = new Intent(getContext(), Info.class);
 
-        startActivity(pageMovementIntent);
-
+        startActivity(Page_Movement_Intent);
     }
 
+    private void Calorie_Diary_Button_Pressed(){
+        Log.d(TAG, "Calorie Diary Clicked");
+        Intent Page_Movement_Intent = new Intent(getContext(), Calorie_Homepage.class);
 
+        startActivity(Page_Movement_Intent);
+    }
 
+    private void Weight_Monitor_Pressed(){
+        Log.d(TAG, "Weight Monitor Clicked");
+        Intent Page_Movement_Intent = new Intent(getContext(), Coming_Soon.class);
+
+        startActivity(Page_Movement_Intent);
+    }
 }

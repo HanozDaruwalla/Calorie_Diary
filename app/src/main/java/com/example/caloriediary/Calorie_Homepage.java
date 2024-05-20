@@ -1,6 +1,5 @@
 package com.example.caloriediary;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,11 +30,13 @@ public class Calorie_Homepage extends AppCompatActivity {
 
     public void Camera_Button_Pressed(View view) {
         Log.d(TAG, "Camera Button Pressed");
-        Intent intent = new Intent(Calorie_Homepage.this,MainActivity2.class);
+        /*Intent intent = new Intent(Calorie_Homepage.this,MainActivity2.class);
         startActivity(intent);
 
+         */
+
         HomePage homepage  = new HomePage();
-        homepage.dialogBuilder().create().show();
+        homepage.Call_Camera();
 
     }
 

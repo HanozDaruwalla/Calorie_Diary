@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import java.io.InputStream;
 
 /**
- * Created by yjj781265 on 8/3/2017.
+ * Api Created by yjj781265 on 8/3/2017.
  * Make bitmap from given Url in the background thread
  */
 
@@ -28,8 +28,6 @@ class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
             mIcon11 = BitmapFactory.decodeStream(in);
         } catch (Exception e) {
             Log.e("NO image found", e.getMessage());
-
-
         }
         return mIcon11;
     }

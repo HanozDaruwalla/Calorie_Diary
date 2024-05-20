@@ -11,10 +11,10 @@ public class ReusableFunctions {
         toast.show();
     }
 
-    public String Decimal_Place_2(double number){
-        String formatted_decimal = String.format("%.2f", number);
+    public String Two_Decimal_Place(double Decimal_Number){
+        String Formatted_Decimal_Number = String.format("%.2f", Decimal_Number);
 
-        return formatted_decimal;
+        return Formatted_Decimal_Number;
     }
 
     public double String_To_Double(String Imported_String) {
@@ -23,7 +23,6 @@ public class ReusableFunctions {
             return doubleNumber;
         } catch (NumberFormatException e) {
             System.out.println("Invalid double value: " + Imported_String);
-            e.printStackTrace();
             return -0.0;
 
         }
@@ -31,11 +30,10 @@ public class ReusableFunctions {
 
     public int To_Int(String Imported_String) {
         try {
-            int intNumber = Integer.parseInt(Imported_String);
-            return intNumber;
+            int Int_Number = Integer.parseInt(Imported_String);
+            return Int_Number;
         } catch (NumberFormatException e) {
-            System.out.println("Invalid double value: " + Imported_String);
-            e.printStackTrace();
+            System.out.println("Invalid Value " + Imported_String);
             return 0;
 
         }
@@ -43,23 +41,22 @@ public class ReusableFunctions {
 
     public float To_Float(String Imported_String) {
         try {
-            float floatValue = Float.parseFloat(Imported_String);
-            return floatValue;
+            float Float_Number = Float.parseFloat(Imported_String);
+            return Float_Number;
         } catch (NumberFormatException e) {
             System.out.println("Invalid float value: " + Imported_String);
-            e.printStackTrace();
             return 0.0f; // or throw an exception if appropriate
         }
     }
 
 
-    public String doubleToString(double doubleValue) {
+    public String Double_To_String(double doubleValue) {
         return String.valueOf(doubleValue);
     }
 
     // Convert integer to string in Java
 
-    public static String intToString(int number) {
+    public static String Int_To_Strng(int number) {
         // Convert the integer to a string
         return String.valueOf(number);
     }

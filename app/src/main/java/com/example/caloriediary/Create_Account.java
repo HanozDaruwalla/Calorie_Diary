@@ -14,10 +14,12 @@ import java.util.ArrayList;
 public class Create_Account extends AppCompatActivity {
 
     private ActivityCreateAccountBinding binding;
-    int Default_Password_Input_Type;
+    int Int_Value_Of_Masked_Pw;//when pw are ***** there is an int value to make them unreadable
     Intent Page_Movement_Intent;
-    private static final String TAG = "Create_Account_Class";
+
     Boolean Gender_Selected = false;
+    private static final String TAG = "Create_Account_Class";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +27,7 @@ public class Create_Account extends AppCompatActivity {
         binding = ActivityCreateAccountBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_create_account);
         setContentView(binding.getRoot());
-        Default_Password_Input_Type = binding.PasswordInput.getInputType();
+        Int_Value_Of_Masked_Pw = binding.PasswordInput.getInputType();
     }
 
     public void Validation_Checks_Not_Null(View view) {
@@ -34,9 +36,9 @@ public class Create_Account extends AppCompatActivity {
         User User_Entered_Details = new User();
         Tester Tester_Details = new Tester();
 
+        //create vars from binding
         User_Entered_Details.setUsername(binding.UsernameInput.getText().toString());
         User_Entered_Details.setPassword(binding.PasswordInput.getText().toString());
-
         String Password2 = binding.PasswordInput2.getText().toString();
         User_Entered_Details.setEmail(binding.EmailInput.getText().toString());
         User_Entered_Details.setMale(Set_Gender_From_Buttons(User_Entered_Details, Gender_Selected));
@@ -94,41 +96,49 @@ public class Create_Account extends AppCompatActivity {
                 }else{//Incorrect Details Messages
                     reusableFunctions.Create_Toast(getApplicationContext(), "Invalid Email");
                 }
-            }else {
+            }else {//if passwords dont match
                 reusableFunctions.Create_Toast(getApplicationContext(), "Your Passwords Don't Match");
             }
-        }else {
+        }else {//incorrect type of password
             reusableFunctions.Create_Toast(getApplicationContext(), "Password Requires: 8 characters, special char + uppercase.");
         }
     }
 
     private void To_Database(User user, ReusableFunctions reusableFunctions, View view){
         ArrayList<String> Account_Info = new ArrayList();
+
+        //sends the user data to the db to be checked
         Account_Info.add(user.getUsername());
         Account_Info.add(user.getPassword());
         Account_Info.add(user.getEmail());
         Account_Info.add(String.valueOf(user.isMale()));
-        Account_Info.add(ReusableFunctions.intToString(user.getAge()));
+        Account_Info.add(ReusableFunctions.Int_To_Strng(user.getAge()));
         Account_Info.add(user.getHeight_Cm());
         Account_Info.add(user.getWeight_Kg());
         Account_Info.add(user.getRmi());
 
         Page_Movement_Intent = new Intent(view.getContext(), Database.class);
+
+        //the info to be sent
         Page_Movement_Intent.putExtra("Sent_Info", Account_Info);
 
         // 0 = Create_Account, 1 = login, 2 = Add Product From Db
+        //number representation of where the function is called
         Page_Movement_Intent.putExtra("Sent_From",0);
         reusableFunctions.Create_Toast(getApplicationContext(), "Going To Db");
         startActivity(Page_Movement_Intent);
     }
 
     public void Password_Checkbox_Clicked(View view) {
+        //if see pw box ticked. show pw, otherwise hide pw
         if (binding.PasswordCheckBox.isChecked()) {
+            //shows pws
             binding.PasswordInput.setInputType(0);
             binding.PasswordInput2.setInputType(0);
         } else {
-            binding.PasswordInput.setInputType(Default_Password_Input_Type);
-            binding.PasswordInput2.setInputType(Default_Password_Input_Type);
+            //hides pws
+            binding.PasswordInput.setInputType(Int_Value_Of_Masked_Pw);
+            binding.PasswordInput2.setInputType(Int_Value_Of_Masked_Pw);
         }
     }
 
@@ -158,6 +168,7 @@ public class Create_Account extends AppCompatActivity {
     }//checks if special char
 
     private void Set_Gender_From_Tester(Tester Passed_Tester_Details) {
+        //if male radio button pressed, set to male, else set to female
         if (binding.MaleRadioButton.isChecked()) {
             binding.MaleRadioButton.setChecked(true);
             Passed_Tester_Details.setMale(true);

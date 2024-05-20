@@ -8,7 +8,6 @@
     android:layout_height="match_parent"
     tools:context=".HomePage">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,8 +24,7 @@
             android:elevation="0dp"
             android:text="Text Search"
             tools:layout_editor_absoluteX="148dp"
-            tools:layout_editor_absoluteY="247dp"
-            android:onClick="Text_Button_Pressed"/>
+            tools:layout_editor_absoluteY="247dp"/>
 
         <Button
             android:id="@+id/photoSearch"
