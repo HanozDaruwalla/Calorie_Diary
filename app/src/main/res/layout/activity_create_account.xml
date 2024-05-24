@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Create_Account"
+    tools:context=".Creating_Account_And_Login.Create_Account"
     android:background="@color/background_color"
     android:orientation="vertical"
     android:gravity="top">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView2"
-        android:name="com.example.caloriediary.fragment_title"
+        android:name="com.example.caloriediary.Fragments.fragment_title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         tools:layout="@layout/fragment_title"

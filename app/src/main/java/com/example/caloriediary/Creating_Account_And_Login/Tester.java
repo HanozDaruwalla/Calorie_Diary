@@ -1,8 +1,8 @@
-package com.example.caloriediary;
+package com.example.caloriediary.Creating_Account_And_Login;
 
 import com.google.firebase.database.PropertyName;
 
-public class Tester extends User{
+public class Tester extends User {
 
     @PropertyName("Age")
     int Age = -1;

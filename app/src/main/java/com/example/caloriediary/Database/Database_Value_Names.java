@@ -1,4 +1,4 @@
-package com.example.caloriediary;
+package com.example.caloriediary.Database;
 
 public class Database_Value_Names {
 

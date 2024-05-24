@@ -1,6 +1,7 @@
-package com.example.caloriediary;
+package com.example.caloriediary.Api_Refactored;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -11,8 +12,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -24,7 +24,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.Header;
+import com.example.caloriediary.Creating_Account_And_Login.MainActivity;
+import com.example.caloriediary.R;
+import com.example.caloriediary.ReusableFunctions;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -35,88 +37,89 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 
-import cz.msebera.android.httpclient.HttpEntity;
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
 
-public class HomePage extends AppCompatActivity {
+public class Camera extends AppCompatActivity {
 
 
-    private static String TAG = "Homepage";
+    private final static String TAG = "Camera";
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int GALLERY_PERMISSIONS_REQUEST =2;
     static  final String CLOUD_VISION_REQUEST_URL ="https://vision.googleapis.com/v1/images:annotate?key=AIzaSyDnbrka7qti5lc6z_DZ3_Rb9wELod_Jvb0";
-    Button txtR;
-    Button photoR;
-    ImageView mImageView;
     Bitmap bitmap;
     Uri photoUri;
     ArrayList<String> arrayList;
 
     ReusableFunctions reusableFunctions = new ReusableFunctions();
+    Context Calorie_Homepage_Context = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_home_page);
+        setContentView(R.layout.activity_camera);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 
-            txtR = (Button)findViewById(R.id.textSearch);
-            photoR=(Button)findViewById(R.id.photoSearch);
-            mImageView =(ImageView)findViewById(R.id.imageView);
             bitmap =null;
+
 
             return insets;
         });
 
     }
 
-    private void openCamera() {
-        Log.d(TAG, "Camera Open Function");
-        Intent Picture_Intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        Log.d(TAG, "Camera Intent Made");
-        // Ensure that there's a camera activity to handle the intent
-        if (Picture_Intent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-            Log.d(TAG, "Making File for photo");
-            File photoFile = null;
-            Log.d(TAG, "Made Fle");
-            try {
-                Log.d(TAG, "calling createImageFile");
-                photoFile = createImageFile();
-                Log.d(TAG, "called createImageFile");
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-                Log.d(TAG, "Input Output exception error");
 
+    private void openCamera() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File photoFile = null;
+
+        try {
+            Log.d(TAG, "calling createImageFile");
+            photoFile = createImageFile();
+            Log.d(TAG, "called createImageFile");
+        } catch (IOException ex) {
+            // Error occurred while creating the File
+            Log.d(TAG, "Input Output exception error");
+
+        }
+
+        // Ensure that there's a camera activity to handle the intent
+        if (photoFile != null) {
+            Log.d(TAG, "file not null");
+            Log.d(TAG, "photoFile: " + photoFile);
+
+            if(photoFile != null){
+                Log.d(TAG, "packageName: " + this.getPackageName());
+
+                Uri photoURI = FileProvider.getUriForFile(this, this.getPackageName() + ".provider", photoFile);
+                Log.d(TAG, "UR MADE");
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                Log.d(TAG, "Taken Pic Intent");
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                Log.d(TAG, "Done act for res");
             }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        getApplicationContext().getPackageName() + ".provider",
-                        photoFile);
-                Picture_Intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(Picture_Intent, REQUEST_IMAGE_CAPTURE);
-            }else{
-                Log.d(TAG, "File Not Successfully Made");
+            else{
+                Log.d(TAG, "Is Null");
             }
         }else{
-            Log.d(TAG, "No Camera Activity To Hold Intent");
+            Log.d(TAG, "Failure");
         }
     }
 
-
     // Picture source from camera or gallery dialog
 
-    public void Call_Camera() {
+    public void Call_Camera(View view) {
         Log.d(TAG, "Call_Camera opened");
-
+        //setRequestImageCapture();
         openCamera();
     }
 
@@ -127,38 +130,41 @@ public class HomePage extends AppCompatActivity {
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(intent, "Select a photo"),
                     GALLERY_PERMISSIONS_REQUEST);
+        }else{
+            Log.d(TAG, "User Has Perms On For Camera");
         }
     }
 
     //request user for Gallery permission
-    private boolean setGalleryPermissionsRequest() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    GALLERY_PERMISSIONS_REQUEST);
+    private boolean setGalleryPermissionsRequest() {//check if camera has perms to write externally
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, GALLERY_PERMISSIONS_REQUEST);
             return true;
         }
         return false;
     }
 
     //request user for Camera Permission
-    private boolean setRequestImageCapture(){
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.CAMERA},
-                    REQUEST_IMAGE_CAPTURE);
-            return true;
+    private void setRequestImageCapture(){//checks if camera has permission. and if not asks
+        Log.d(TAG, "Request perms opened");
+        // Check if the camera permission is already available
+        try{
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                // If permission is not granted, request it
+                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},REQUEST_IMAGE_CAPTURE);
+            } else {
+                Log.d(TAG, "Perms already on");
+            }
+
+        }catch(Exception e){
+            Log.d(TAG, "Failure");
         }
-        return false;
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
 
+        //handles result of perm req
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);//added
         switch (requestCode) {
             case REQUEST_IMAGE_CAPTURE: {
@@ -167,7 +173,7 @@ public class HomePage extends AppCompatActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openCamera();
                 } else {
-                    Toast.makeText(HomePage.this, "Camera Permission needed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Camera.this, "Camera Permission needed", Toast.LENGTH_SHORT).show();
                 }
                 break;
 
@@ -181,7 +187,7 @@ public class HomePage extends AppCompatActivity {
 
                 } else {
 
-                    Toast.makeText(HomePage.this, "Permission to Access Gallery Needed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Camera.this, "Permission to Access Gallery Needed", Toast.LENGTH_SHORT).show();
                 }
                 break;
             }
@@ -191,6 +197,7 @@ public class HomePage extends AppCompatActivity {
         }
     }
 
+    //handles result of activity e.g. capturing an img with camera
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);//added
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -210,6 +217,7 @@ public class HomePage extends AppCompatActivity {
     }
 
 
+    //reduce size of img
     public Bitmap scaleBitmapDown(Bitmap bitmap, int maxDimension) {
 
         int originalWidth = bitmap.getWidth();
@@ -232,22 +240,29 @@ public class HomePage extends AppCompatActivity {
 
     String mCurrentPhotoPath;
 
+    //creates file to store img
     private File createImageFile() throws IOException {
         // Create an image file name
         Log.d(TAG, "in createImageFile");
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        Log.d(TAG, "Made Filename");
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        Log.d(TAG, "Made storage dir");
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
+        Log.d(TAG, "Formatted pic with name etc");
 
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
+        Log.d(TAG, "Saved photo");
         return image;
     }
+
+
     // call Google Vision cloud vision api
     public void callGoogleVision(Bitmap bitmap) {
         JSONObject mJsonObject = new JSONObject();
@@ -258,20 +273,19 @@ public class HomePage extends AppCompatActivity {
         JSONObject[] objs = new JSONObject[]{imageJObj, featuresJObj};
         String imageEncoded = encodeToBase64(bitmap, Bitmap.CompressFormat.JPEG, 100);
         AsyncHttpClient client = new AsyncHttpClient();
-        HttpEntity Http_Entity = null;//was stringEntity
+        StringEntity stringEntity = null;
 
         try {
             imageJObj.put("image", new JSONObject().put("content", imageEncoded));
-            typeMaxRJObj.put("type","LABEL_DETECTION");
+            typeMaxRJObj.put("type", "LABEL_DETECTION");
             typeMaxRJObj.put("maxResults", 6);
             featuresJObj.put("features", new JSONArray().put(typeMaxRJObj));
             for (JSONObject obj : objs) {
-                Iterator it = obj.keys();
+                Iterator<String> it = obj.keys();
                 while (it.hasNext()) {
-                    String key = (String) it.next();
+                    String key = it.next();
                     concatJObj.put(key, obj.get(key));
                 }
-
             }
             mJsonObject.put("requests", new JSONArray().put(concatJObj));
 
@@ -281,23 +295,20 @@ public class HomePage extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        /*
         try {
             stringEntity = new StringEntity(mJsonObject.toString());
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
-         */
-
-        client.post(this, CLOUD_VISION_REQUEST_URL, Http_Entity, "application/json", new JsonHttpResponseHandler() {
-            //@Override
+        client.post(this, CLOUD_VISION_REQUEST_URL, stringEntity, "application/json", new JsonHttpResponseHandler() {
+            @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Log.d("Response", response.toString());
 
                 try {
                     JSONArray jsonArray = response.getJSONArray("responses").getJSONObject(0).getJSONArray("labelAnnotations");
-                    if(jsonArray!=null) {
+                    if (jsonArray != null) {
                         arrayList = convertToArrList(jsonArray);
                         for (String str : arrayList) {
                             Log.d("Label", str);
@@ -308,15 +319,14 @@ public class HomePage extends AppCompatActivity {
                         startActivity(i);
                         finish();
                     }
-
                 } catch (JSONException e) {
-                    Toast.makeText(HomePage.this,"Error Occured Try Different Picture",Toast.LENGTH_LONG).show();
+                    Toast.makeText(Camera.this, "Error Occurred Try Different Picture", Toast.LENGTH_LONG).show();
                 }
             }
 
-            //@Override
+            @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("Failed Response",responseString);
+                Log.d("Failed Response", responseString);
             }
         });
     }
@@ -343,10 +353,6 @@ public class HomePage extends AppCompatActivity {
                                 MediaStore.Images.Media.getBitmap(getContentResolver(), uri),
                                 1200);
 
-
-
-
-
             } catch (IOException e) {
                 Log.d("upload", "Image picking failed because " + e.getMessage());
                 Toast.makeText(this, R.string.image_picker_error, Toast.LENGTH_LONG).show();
@@ -359,13 +365,16 @@ public class HomePage extends AppCompatActivity {
     }
 
     public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality)
-    {
+    {//encodes image to base 64 string for transmission
         ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
 
         image.compress(compressFormat, quality, byteArrayOS);
         return Base64.encodeToString(byteArrayOS.toByteArray(),Base64.DEFAULT);
     }
 
+
+
+    //: This inner class extends AsyncTask to handle the uploading of an image and subsequent call to the Google Vision API in a background thread.
     public class msyncTask extends AsyncTask<Uri,String,String> {
 
 

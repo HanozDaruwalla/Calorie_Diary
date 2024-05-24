@@ -1,4 +1,4 @@
-package com.example.caloriediary;
+package com.example.caloriediary.Api_Refactored;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,12 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -24,6 +18,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.caloriediary.R;
+import com.example.caloriediary.ReusableFunctions;
 import com.example.caloriediary.databinding.ActivityMain2Binding;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -38,21 +34,21 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class MainActivity2 extends AppCompatActivity {
-    // constants
-    //nutionIX api reference
+
 
     final static String TAG =  "MainActivity2";
 
     private ActivityMain2Binding binding;
+
+    ReusableFunctions reusableFunctions = new ReusableFunctions();
+
+    //api data
     final String API_KEY = "d016fd33a6081cbb9abd91a7e6cce48a";
     final String APP_ID = "3747b1e6";
     final String REQUEST_URL = "https://trackapi.nutritionix.com/v2/natural/nutrients";
 
     // variables
-    EditText mEditText;
-    TextView foodName, foodNameTextBox, calories, protein, totalfat, sugar, servingSize,
-            totalCarbonhydrate, sodium, cholesterol, potassium, diertaryFiber;
-    ProgressBar mProgressBar;
+
     NutritionData data;
     String product;
     InputMethodManager mgr;
@@ -60,89 +56,52 @@ public class MainActivity2 extends AppCompatActivity {
     ArrayList<String> mArrayList;
     Bitmap mBitmap;
 
-    RelativeLayout mRelativeLayout;
-    ScrollView mScrollView;
-
-    ImageView foodPic;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "Activity Loaded");
-        EdgeToEdge.enable(this);
+        binding = ActivityMain2Binding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_main2);
+        setContentView(binding.getRoot());
+
+        EdgeToEdge.enable(this);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 
-            binding = ActivityMain2Binding.inflate(getLayoutInflater());
-            setContentView(binding.getRoot());
 
-            mEditText = (EditText) findViewById(R.id.Search_Bar);
-            foodName = (TextView) findViewById(R.id.food_name_r);
-            foodNameTextBox = (TextView) findViewById(R.id.food_name);
-            calories = (TextView) findViewById(R.id.calries_r);
-            protein = (TextView) findViewById(R.id.protein_r);
-            totalfat = (TextView) findViewById(R.id.total_fat_r);
-            sugar = (TextView) findViewById(R.id.sugar_r);
-            servingSize = (TextView) findViewById(R.id.serving_size_r);
-            totalCarbonhydrate = (TextView) findViewById(R.id.total_carbonhydrate_r);
-            sodium = (TextView) findViewById(R.id.sodiuim_r);
-            cholesterol = (TextView) findViewById(R.id.cholesterol_r);
-            potassium = (TextView) findViewById(R.id.potassium_r);
-            diertaryFiber = (TextView) findViewById(R.id.dietary_fiber_r);
-            mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
-            mProgressBar.setVisibility(View.INVISIBLE);
+
+            binding.progressBar.setVisibility(View.INVISIBLE);
             mgr = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
-            foodPic = (ImageView) findViewById(R.id.foodPic);
-            mScrollView = (ScrollView)findViewById(R.id.mscrollView);
 
-            mRelativeLayout =(RelativeLayout)findViewById(R.id.relativeLayout);
             Log.d(TAG, "OnCreate done");
 
-            //get data from homaPage
+            //get data from homePage
             Intent i = getIntent();
             if(i.getExtras()!=null) {
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                 String str = i.getExtras().getString("BitmapUri");
                 Uri uri = Uri.parse(str);
                 mArrayList = i.getExtras().getStringArrayList("StringArrList");
-                Toast.makeText(this, mArrayList.get(arrListIndex), Toast.LENGTH_SHORT);
+
+                Log.d(TAG, "1");
+                reusableFunctions.Create_Toast(getApplicationContext(), mArrayList.get(arrListIndex) );
                 arrListIndex =0;
                 new msyncTask().execute(uri);
             }else{
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
             }
 
-
-
             return insets;
         });
-/*
-// Set a focus change listener on the edit text field to always make the cursor visible when it gains focus.
-mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-    @Override
-    public void onFocusChange(View v, boolean hasFocus) {
-        mEditText.setCursorVisible(true);
-    }
-});
 
-// Set a touch listener on the scroll view to handle swipe gestures.
-mScrollView.setOnTouchListener(new OnSwipeTouchListener(this){
-    // If a swipe to the right is detected, start the HomePage activity and finish the current activity.
-    public void onSwipeRight() {
-        Intent i = new Intent(getBaseContext(), HomePage.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
-        finish();
-    }
-});
-
- */
     }
 
     //API CALLS Method
     private void connectNutrionix(String foodName) {
+
+        Log.d(TAG, "2");
+
         StringEntity stringEntity = null;
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("x-app-id", APP_ID);
@@ -150,11 +109,14 @@ mScrollView.setOnTouchListener(new OnSwipeTouchListener(this){
         client.addHeader("x-remote-user-id", "0");
         JSONObject jsonObject = new JSONObject();
 
+        Log.d(TAG, "8");
         try {
             jsonObject.put("query", foodName);
+            Log.d(TAG, "9");
 
         } catch (JSONException e) {
             Log.d("Healthier", e.toString());
+            Log.d(TAG, "10 error!");
         }
         try {
             stringEntity = new StringEntity(jsonObject.toString());
@@ -167,22 +129,21 @@ mScrollView.setOnTouchListener(new OnSwipeTouchListener(this){
                     @Override
                     public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                         Log.d("Healthier", "Success" + response.toString());
-                        mProgressBar.setVisibility(View.INVISIBLE);
-                        data = NutritionData.Gather_Data_From_Json(response);
-                        mEditText.setCursorVisible(false);
-                        new DownloadImageTask(foodPic).execute(data.getUrl_Of_Photo());
-                        foodPic.setVisibility(View.VISIBLE);
+                        binding.progressBar.setVisibility(View.INVISIBLE);
+                        data = NutritionData.fromJson(response);
+
+                        new DownloadImageTask(binding.foodPic).execute(data.getPhotoUrl());
+                        binding.foodPic.setVisibility(View.VISIBLE);
 
                         updateUI(data);
                     }
-
                     @Override
                     public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
                         Log.d("Healthier", "failed" + errorResponse.toString());
                         Toast.makeText(MainActivity2.this, "Sorry, We couldn't match any of your foods",
                                 Toast.LENGTH_SHORT).show();
-                        mProgressBar.setVisibility(View.INVISIBLE);
-                        mEditText.setCursorVisible(false);
+                        binding.progressBar.setVisibility(View.INVISIBLE);
+
 
                     }
                 });
@@ -190,14 +151,14 @@ mScrollView.setOnTouchListener(new OnSwipeTouchListener(this){
     }
 
     private void callNutrionix(ArrayList<String> arrayList,int index) {
-
+        Log.d(TAG, "3");
         StringEntity stringEntity = null;
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("x-app-id", APP_ID);
         client.addHeader("x-app-key", API_KEY);
         client.addHeader("x-remote-user-id", "0");
         JSONObject jsonObject = new JSONObject();
-        mProgressBar.setVisibility(View.VISIBLE);
+        binding.progressBar.setVisibility(View.VISIBLE);
 
         try {
             jsonObject.put("query", arrayList.get(index));
@@ -216,11 +177,11 @@ mScrollView.setOnTouchListener(new OnSwipeTouchListener(this){
                     @Override
                     public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                         Log.d("Healthier", "Success" + response.toString());
-                        mProgressBar.setVisibility(View.INVISIBLE);
-                        data = NutritionData.Gather_Data_From_Json(response);
-                        mEditText.setCursorVisible(false);
-                        foodPic.setImageBitmap(mBitmap);
-                        foodPic.setVisibility(View.VISIBLE);
+                        binding.progressBar.setVisibility(View.INVISIBLE);
+                        data = NutritionData.fromJson(response);
+
+                        binding.foodPic.setImageBitmap(mBitmap);
+                        binding.foodPic.setVisibility(View.VISIBLE);
 
                         updateUI(data);
                     }
@@ -234,10 +195,9 @@ mScrollView.setOnTouchListener(new OnSwipeTouchListener(this){
                             Toast.makeText(MainActivity2.this, "Sorry,We couldn't match any of your foods",
                                     Toast.LENGTH_SHORT).show();
 
-                            mProgressBar.setVisibility(View.INVISIBLE);
-                            mEditText.setCursorVisible(false);
-                        }else {
+                            binding.progressBar.setVisibility(View.INVISIBLE);
 
+                        }else {
                             callNutrionix(mArrayList,arrListIndex);
 
                         }
@@ -247,25 +207,27 @@ mScrollView.setOnTouchListener(new OnSwipeTouchListener(this){
     }
 
     private void updateUI(NutritionData nutritionData) {
-        foodName.setText(nutritionData.getName_Of_Food());
+        Log.d(TAG, "4");
+        binding.foodNameR.setText(nutritionData.getFoodName());
 
-        calories.setText(String.valueOf(nutritionData.getCalories()));
+        binding.calriesR.setText(String.valueOf(nutritionData.getCalories()));
 
-        protein.setText(String.valueOf(nutritionData.getProtein()) + "g");
-        totalfat.setText(String.valueOf(nutritionData.getTotal_Fat()) + "g");
-        sugar.setText(String.valueOf(nutritionData.getSugar()) + "g");
-        servingSize.setText(nutritionData.getServing_Size());
-        totalCarbonhydrate.setText(String.valueOf(nutritionData.getTotal_Carbs() + "G"));
-        sodium.setText(String.valueOf(nutritionData.getSodium()) + "mg");
-        cholesterol.setText(String.valueOf(nutritionData.getCholesterol()) + "mg");
-        potassium.setText(String.valueOf(nutritionData.getPotassium()) + "mg");
-        diertaryFiber.setText(nutritionData.getFiber() + "g");
-        mRelativeLayout.setVisibility(View.VISIBLE);
+        binding.proteinR.setText(String.valueOf(nutritionData.getProtein()) + "g");
+        binding.totalFatR.setText(String.valueOf(nutritionData.getTotalfat()) + "g");
+        binding.sugarR.setText(String.valueOf(nutritionData.getSugar()) + "g");
+        binding.servingSizeR.setText(nutritionData.getServingSize());
+        binding.totalCarbonhydrateR.setText(String.valueOf(nutritionData.getTotalCarbonhydrate() + "G"));
+        binding.sodiuimR.setText(String.valueOf(nutritionData.getSodium()) + "mg");
+        binding.cholesterolR.setText(String.valueOf(nutritionData.getCholesterol()) + "mg");
+        binding.potassiumR.setText(String.valueOf(nutritionData.getPotassium()) + "mg");
+        binding.dietaryFiberR.setText(nutritionData.getDiertaryFiber() + "g");
+        binding.relativeLayout.setVisibility(View.VISIBLE);
 
     }
 
     public void createBitmap(Uri uri) {
 
+        Log.d(TAG, "5");
         if (uri != null) {
             try {
                 // scale the image to save on bandwidth
@@ -284,6 +246,7 @@ mScrollView.setOnTouchListener(new OnSwipeTouchListener(this){
 
     public Bitmap scaleBitmapDown(Bitmap bitmap, int maxDimension) {
 
+        Log.d(TAG, "6");
         int originalWidth = bitmap.getWidth();
         int originalHeight = bitmap.getHeight();
         int resizedWidth = maxDimension;
@@ -303,18 +266,19 @@ mScrollView.setOnTouchListener(new OnSwipeTouchListener(this){
     }
 
     public void Search_Button_Pressed(View view) {
-
+        Log.d(TAG, "7");
         Log.d(TAG, "Search_Button_Pressed");
         if(!(binding.SearchBar.getText().toString().equals(""))){
-            mProgressBar.setVisibility(View.VISIBLE);
-            product = mEditText.getText().toString();
+            binding.progressBar.setVisibility(View.VISIBLE);
+            product = binding.SearchBar.getText().toString();
             connectNutrionix(product);
-            mgr.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
+            mgr.hideSoftInputFromWindow(binding.SearchBar.getWindowToken(), 0);
 
         }else{
             Toast.makeText(MainActivity2.this, "Product Name Required", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     public class msyncTask extends AsyncTask<Uri,String,ArrayList<String>> {
 

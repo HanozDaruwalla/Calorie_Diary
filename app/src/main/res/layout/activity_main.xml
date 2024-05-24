@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".Creating_Account_And_Login.MainActivity"
     android:background="@color/background_color"
     android:orientation="vertical"
     android:gravity="center"
@@ -14,7 +14,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/title_fragment"
-        android:name="com.example.caloriediary.fragment_title"
+        android:name="com.example.caloriediary.Fragments.fragment_title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         tools:layout="@layout/fragment_title"
@@ -29,9 +29,10 @@
         android:layout_weight="1"
         android:text="Monitor your calorie intake and weight. With an inbuilt QR Code Scanner."
         android:textSize="25sp"
-        android:textAlignment="center"
+
         android:textColor="@color/black"
         android:layout_marginTop="10dp"
+        android:layout_margin="5dp"
         />
 
     <ImageView

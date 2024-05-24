@@ -1,10 +1,12 @@
-package com.example.caloriediary;
+package com.example.caloriediary.Api_Refactored;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
+
+import com.example.caloriediary.R;
 
 import java.io.InputStream;
 

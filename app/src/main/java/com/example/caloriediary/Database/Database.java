@@ -1,4 +1,4 @@
-package com.example.caloriediary;
+package com.example.caloriediary.Database;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,13 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.caloriediary.Bmi_Calc.Enter_Height;
+import com.example.caloriediary.Creating_Account_And_Login.Create_Account;
+import com.example.caloriediary.Creating_Account_And_Login.Login;
+import com.example.caloriediary.Creating_Account_And_Login.User;
+import com.example.caloriediary.Creating_Account_And_Login.Encryption_Decryption_Class;
+import com.example.caloriediary.R;
+import com.example.caloriediary.ReusableFunctions;
 import com.example.caloriediary.databinding.ActivityDatabaseBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

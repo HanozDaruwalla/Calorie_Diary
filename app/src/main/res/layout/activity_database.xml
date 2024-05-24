@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Database"
+    tools:context=".Database.Database"
     android:background="@color/background_color"
     android:orientation="vertical"
     android:gravity="top"
@@ -12,7 +12,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/title_fragment"
-        android:name="com.example.caloriediary.fragment_title"
+        android:name="com.example.caloriediary.Fragments.fragment_title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         tools:layout="@layout/fragment_title"

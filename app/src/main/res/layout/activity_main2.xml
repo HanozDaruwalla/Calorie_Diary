@@ -5,14 +5,14 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity2"
+    tools:context=".Api_Refactored.MainActivity2"
     android:orientation="vertical"
     android:weightSum="1"
     android:background="@color/background_color"
 >
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView2"
-        android:name="com.example.caloriediary.fragment_title"
+        android:name="com.example.caloriediary.Fragments.fragment_title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         tools:layout="@layout/fragment_title"

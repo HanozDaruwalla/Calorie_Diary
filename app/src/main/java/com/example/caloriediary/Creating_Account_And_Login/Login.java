@@ -1,4 +1,4 @@
-package com.example.caloriediary;
+package com.example.caloriediary.Creating_Account_And_Login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,9 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.caloriediary.Database.Database;
+import com.example.caloriediary.R;
+import com.example.caloriediary.ReusableFunctions;
 import com.example.caloriediary.databinding.ActivityLoginBinding;
 
 import java.util.ArrayList;
@@ -60,5 +63,6 @@ public class Login extends AppCompatActivity {
         } else {
             binding.PasswordInput.setInputType(Int_Value_Of_Masked_Pw_Format);
         }
+        binding.PasswordInput.setCursorVisible(true);
     }
 }

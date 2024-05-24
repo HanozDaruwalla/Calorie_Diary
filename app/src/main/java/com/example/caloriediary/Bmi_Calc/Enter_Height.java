@@ -1,4 +1,4 @@
-package com.example.caloriediary;
+package com.example.caloriediary.Bmi_Calc;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -9,6 +9,8 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.caloriediary.R;
+import com.example.caloriediary.ReusableFunctions;
 import com.example.caloriediary.databinding.ActivityUserEnterHeightBinding;
 
 import java.util.ArrayList;
@@ -141,7 +143,6 @@ public class Enter_Height extends AppCompatActivity {
         Intent Page_Movement_Intent = new Intent(Enter_Height.this, Enter_Weight.class);
         Page_Movement_Intent.putExtra("Data_For_Bmr", Arraylist_For_Bmr);
 
-        reusableFunctions.Create_Toast(getApplicationContext(), "Cm Class Complete");
         startActivity(Page_Movement_Intent);
     }
 

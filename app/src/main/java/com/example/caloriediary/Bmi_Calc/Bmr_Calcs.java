@@ -1,7 +1,10 @@
-package com.example.caloriediary;
+package com.example.caloriediary.Bmi_Calc;
 
 import android.util.Log;
 import android.view.View;
+
+import com.example.caloriediary.Database.Database;
+import com.example.caloriediary.ReusableFunctions;
 
 import java.util.ArrayList;
 

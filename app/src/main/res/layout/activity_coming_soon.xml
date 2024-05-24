@@ -15,7 +15,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/title_fragment"
-        android:name="com.example.caloriediary.fragment_title"
+        android:name="com.example.caloriediary.Fragments.fragment_title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         tools:layout="@layout/fragment_title"
@@ -65,7 +65,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView3"
-        android:name="com.example.caloriediary.Nav_Bar"
+        android:name="com.example.caloriediary.Fragments.Nav_Bar"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         tools:layout="@layout/fragment_nav__bar"

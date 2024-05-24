@@ -1,4 +1,4 @@
-package com.example.caloriediary;
+package com.example.caloriediary.Creating_Account_And_Login;
 
 import android.os.Build;
 

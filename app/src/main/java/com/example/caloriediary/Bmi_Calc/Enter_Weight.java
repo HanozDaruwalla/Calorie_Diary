@@ -1,4 +1,4 @@
-package com.example.caloriediary;
+package com.example.caloriediary.Bmi_Calc;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -9,6 +9,9 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.caloriediary.Calorie_Homepage;
+import com.example.caloriediary.R;
+import com.example.caloriediary.ReusableFunctions;
 import com.example.caloriediary.databinding.ActivityEnterWeightBinding;
 
 import java.util.ArrayList;
@@ -64,7 +67,6 @@ public class Enter_Weight extends AppCompatActivity {
                 if (((Weight_Input.charAt(1) == '.' || Weight_Input.charAt(2) == '.') && Weight_Input.length()<6)){
 
                     Log.d(TAG, "Valid Stone Entry");
-                    reusableFunctions.Create_Toast(getApplicationContext(), "Stone = " + Weight_Input);
 
                     New_Weight_In_Kg = Stone_To_Kg(Weight_Input);
                     Pack_Data_To_Arraylist_For_Bmr(New_Weight_In_Kg, view);
@@ -114,7 +116,6 @@ public class Enter_Weight extends AppCompatActivity {
             Formatted_Kg = reusableFunctions.Two_Decimal_Place(Weight_In_Kg);
             Log.d(TAG, "Kg = " + Formatted_Kg);
 
-            reusableFunctions.Create_Toast(getApplicationContext(), "Converted Kg = " + Formatted_Kg);
             return Formatted_Kg;
 
         } catch (NumberFormatException e) {
