@@ -49,10 +49,10 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 public class Camera extends AppCompatActivity {
 
 
-    private final static String TAG = "Camera";
+    private final static String TAG = "Camera_Class";
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int GALLERY_PERMISSIONS_REQUEST =2;
-    static  final String CLOUD_VISION_REQUEST_URL ="https://vision.googleapis.com/v1/images:annotate?key=AIzaSyDnbrka7qti5lc6z_DZ3_Rb9wELod_Jvb0";
+    static final String CLOUD_VISION_REQUEST_URL ="https://vision.googleapis.com/v1/images:annotate?key=AIzaSyDnbrka7qti5lc6z_DZ3_Rb9wELod_Jvb0";
     Bitmap bitmap;
     Uri photoUri;
     ArrayList<String> arrayList;
@@ -69,6 +69,9 @@ public class Camera extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 
+            setRequestImageCapture();
+            setGalleryPermissionsRequest();
+
             bitmap =null;
 
 
@@ -83,9 +86,8 @@ public class Camera extends AppCompatActivity {
         File photoFile = null;
 
         try {
-            Log.d(TAG, "calling createImageFile");
+
             photoFile = createImageFile();
-            Log.d(TAG, "called createImageFile");
         } catch (IOException ex) {
             // Error occurred while creating the File
             Log.d(TAG, "Input Output exception error");
@@ -94,18 +96,20 @@ public class Camera extends AppCompatActivity {
 
         // Ensure that there's a camera activity to handle the intent
         if (photoFile != null) {
-            Log.d(TAG, "file not null");
+
             Log.d(TAG, "photoFile: " + photoFile);
 
             if(photoFile != null){
                 Log.d(TAG, "packageName: " + this.getPackageName());
 
                 Uri photoURI = FileProvider.getUriForFile(this, this.getPackageName() + ".provider", photoFile);
-                Log.d(TAG, "UR MADE");
+
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                Log.d(TAG, "Taken Pic Intent");
+
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                Log.d(TAG, "Done act for res");
+                Log.d(TAG, "Uri made and Pic Intent");
+
+                notifyMediaScanner(photoFile);
             }
             else{
                 Log.d(TAG, "Is Null");
@@ -118,11 +122,14 @@ public class Camera extends AppCompatActivity {
     // Picture source from camera or gallery dialog
 
     public void Call_Camera(View view) {
-        Log.d(TAG, "Call_Camera opened");
-        setRequestImageCapture();
-        setGalleryPermissionsRequest();
 
         openCamera();
+
+    }
+
+    public void Call_Gallery(View view){
+        startGalleryChooser();
+
     }
 
     public void startGalleryChooser() {
@@ -207,6 +214,7 @@ public class Camera extends AppCompatActivity {
 
     //creates file to store img
     private File createImageFile() throws IOException {
+    try{
         // Create an image file name
         Log.d(TAG, "in createImageFile");
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -216,7 +224,7 @@ public class Camera extends AppCompatActivity {
         Log.d(TAG, "Made storage dir");
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
+                ".JPEG",         /* suffix */
                 storageDir      /* directory */
         );
         Log.d(TAG, "Formatted pic with name etc");
@@ -225,6 +233,11 @@ public class Camera extends AppCompatActivity {
         mCurrentPhotoPath = image.getAbsolutePath();
         Log.d(TAG, "Saved photo");
         return image;
+
+    }catch(Exception E){
+        Log.d(TAG, "ImageCreation FAILURE!!!!!!!!!!!!!!!");
+        return null;
+    }
     }
 
 
@@ -337,12 +350,17 @@ public class Camera extends AppCompatActivity {
         return Base64.encodeToString(byteArrayOS.toByteArray(),Base64.DEFAULT);
     }
 
+    private void notifyMediaScanner(File photoFile) {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        Uri contentUri = Uri.fromFile(photoFile);
+        mediaScanIntent.setData(contentUri);
+        sendBroadcast(mediaScanIntent);
+    }
+
 
 
     //: This inner class extends AsyncTask to handle the uploading of an image and subsequent call to the Google Vision API in a background thread.
     public class msyncTask extends AsyncTask<Uri,String,String> {
-
-
 
         @Override
         protected String doInBackground(Uri... params) {
@@ -353,10 +371,9 @@ public class Camera extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             callGoogleVision(bitmap);
-
-
-
         }
+
+
     }
 
 }
