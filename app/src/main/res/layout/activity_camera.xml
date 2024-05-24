@@ -1,5 +1,4 @@
 
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,6 +8,15 @@
     android:background="@color/background_color"
     tools:context=".Api_Refactored.Camera">
 
+    <LinearLayout
+        android:id="@+id/Extra_Layer"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+    </LinearLayout>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView2"
@@ -17,9 +25,10 @@
         android:layout_height="50dp"
         tools:layout="@layout/fragment_title"
         android:layout_marginBottom="10dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Extra_Layer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
 
     <TextView
         android:id="@+id/Title_Label"
@@ -37,6 +46,23 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
+        android:id="@+id/Credits_Lb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/API_Credits"
+        android:textSize="15sp"
+        android:layout_margin="8dp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/Title_Label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <TextView
         android:id="@+id/Permissions_Label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,16 +73,16 @@
         android:textColor="@color/black"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
-        app:layout_constraintTop_toBottomOf="@id/Title_Label"
+        app:layout_constraintTop_toBottomOf="@id/Credits_Lb"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
         android:layout_margin="12dp"
-        android:id="@+id/Camera_Permissions_Label"
+        android:id="@+id/Permissions_Info_Label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Go To 'Settings', 'Permission Manager', 'Camera' then.... Find 'Calorie Diary' and allow only when using the app,:"
+        android:text="Please Note, that the app will ask you for permissions on the 'Camera' and 'Media And Storage' to be turned on (this can be set to, just when the app is open)."
         android:textSize="17sp"
         android:textColor="@color/black"
         android:layout_marginTop="20dp"
@@ -68,29 +94,45 @@
 
     <TextView
         android:layout_margin="12dp"
-        android:id="@+id/Gallery_Permissions_Label"
+        android:id="@+id/Permissions_Info_Label2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Go To 'Settings', 'Permission Manager', 'Files And Media' then.... Find 'Calorie Diary' and allow only when using the app,:"
+        android:text="This is to allow you to take a picture and gather the Nutritional data on the picture:"
         android:textSize="17sp"
         android:textColor="@color/black"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
-        app:layout_constraintTop_toBottomOf="@id/Camera_Permissions_Label"
+        app:layout_constraintTop_toBottomOf="@id/Permissions_Info_Label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:layout_margin="12dp"
+        android:id="@+id/Permissions_Info_Label3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Or you can go to the previous page and use text searching instead."
+        android:textSize="17sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/Permissions_Info_Label2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
 
     <TextView
         android:layout_margin="12dp"
         android:id="@+id/Then_Label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="You Are Ready! Click the Button Below to log food via image:"
+        android:text="You Are Ready! Click the Button Below:"
+        android:textStyle="bold"
         android:textSize="17sp"
         android:textColor="@color/black"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="10dp"
-        app:layout_constraintTop_toBottomOf="@id/Gallery_Permissions_Label"
+        app:layout_constraintTop_toBottomOf="@id/Permissions_Info_Label3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -104,8 +146,12 @@
         tools:layout_editor_absoluteY="476dp"
         app:layout_constraintTop_toBottomOf="@id/Then_Label"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="@color/interface_color"
+        android:textColor="@color/black"
+        android:textSize="15sp"
         />
+
 
 
     <androidx.fragment.app.FragmentContainerView

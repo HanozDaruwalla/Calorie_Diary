@@ -93,9 +93,6 @@
             android:onClick="signin2_Label_Clicked"
             />
 
-
-
-
     </LinearLayout>
 
 </LinearLayout>

@@ -144,7 +144,6 @@ public class Database extends AppCompatActivity {
     }
 
     public void Add_Account(User Creating_Users_Details, Database_Value_Names Db_Value_Names, String Creation_Type, DatabaseReference Database_Controller) {
-        reusableFunctions.Create_Toast(getApplicationContext(), "Creating Account");
 
         if (Creation_Type.equals("Users")) {
 

@@ -119,7 +119,9 @@ public class Camera extends AppCompatActivity {
 
     public void Call_Camera(View view) {
         Log.d(TAG, "Call_Camera opened");
-        //setRequestImageCapture();
+        setRequestImageCapture();
+        setGalleryPermissionsRequest();
+
         openCamera();
     }
 
@@ -160,43 +162,6 @@ public class Camera extends AppCompatActivity {
             Log.d(TAG, "Failure");
         }
     }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-
-        //handles result of perm req
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);//added
-        switch (requestCode) {
-            case REQUEST_IMAGE_CAPTURE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    openCamera();
-                } else {
-                    Toast.makeText(Camera.this, "Camera Permission needed", Toast.LENGTH_SHORT).show();
-                }
-                break;
-
-
-            }
-            case GALLERY_PERMISSIONS_REQUEST: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    startGalleryChooser();
-
-                } else {
-
-                    Toast.makeText(Camera.this, "Permission to Access Gallery Needed", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
-        }
-    }
-
     //handles result of activity e.g. capturing an img with camera
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);//added
