@@ -43,4 +43,9 @@
     <string name="image_picker_error">Something is wrong with that image. Pick a different one please.</string>
 
     <string name="API_Credits"> The Camera Features/ Text Search for foods and food Nutritional Values come from yjj781265`s Healthier App ad NutritionIX API.</string>
+    <string name="title_activity_item_layout">item_layout</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_recyclerview">recyclerview</string>
 </resources>
