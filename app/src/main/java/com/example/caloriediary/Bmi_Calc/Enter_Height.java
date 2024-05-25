@@ -142,6 +142,7 @@ public class Enter_Height extends AppCompatActivity {
         //Go To Enter Weight Function and pass arraylist
         Intent Page_Movement_Intent = new Intent(Enter_Height.this, Enter_Weight.class);
         Page_Movement_Intent.putExtra("Data_For_Bmr", Arraylist_For_Bmr);
+        Page_Movement_Intent.putExtra("User_Data", User_Data);
 
         startActivity(Page_Movement_Intent);
     }

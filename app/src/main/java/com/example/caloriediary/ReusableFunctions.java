@@ -1,7 +1,10 @@
 package com.example.caloriediary;
 
-import android.widget.Toast;
 import android.content.Context;
+import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ReusableFunctions {
 
@@ -9,6 +12,13 @@ public class ReusableFunctions {
         Toast toast = Toast.makeText(context, Toast_Msg, Toast.LENGTH_SHORT);//was "LONG"
         //toast.setGravity(Gravity.CENTER_VERTICAL,0,250);
         toast.show();
+    }
+
+    public static String Date_Creator() {
+        Date Current_Date = new Date();
+        SimpleDateFormat Data_Formatter = new SimpleDateFormat("dd/MM/yy");
+        String Formatted_Date = Data_Formatter.format(Current_Date);
+        return Formatted_Date;
     }
 
     public String Two_Decimal_Place(double Decimal_Number){

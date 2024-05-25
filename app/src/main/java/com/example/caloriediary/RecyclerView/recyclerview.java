@@ -2,15 +2,17 @@ package com.example.caloriediary.RecyclerView;
 
 import android.os.Bundle;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.caloriediary.R;
 import com.example.caloriediary.databinding.ActivityRecyclerviewBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
 
 public class recyclerview extends AppCompatActivity {
 
@@ -19,6 +21,8 @@ public class recyclerview extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ArrayList<String> User_Data = getIntent().getExtras().getStringArrayList("User_Data");
 
         binding = ActivityRecyclerviewBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

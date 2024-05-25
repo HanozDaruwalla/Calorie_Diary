@@ -21,7 +21,7 @@ public class Enter_Weight extends AppCompatActivity {
     private ActivityEnterWeightBinding binding;
     ReusableFunctions reusableFunctions = new ReusableFunctions();
     public static final String TAG = "Enter_Weight_Section";
-    ArrayList<String> Data_For_Bmr = new ArrayList<>();
+    ArrayList<String> Data_For_Bmr, User_Data = new ArrayList<>();
 
     boolean Is_Kg_Button_Pressed = false;
     boolean Is_Stone_Button_Pressed = false;
@@ -33,6 +33,7 @@ public class Enter_Weight extends AppCompatActivity {
         setContentView(R.layout.activity_enter_weight);
         setContentView(binding.getRoot());
         Data_For_Bmr = getIntent().getExtras().getStringArrayList("Data_For_Bmr");
+        User_Data = getIntent().getExtras().getStringArrayList("User_Data");
 
         Log.d(TAG, "Loaded");
     }
@@ -156,17 +157,26 @@ public class Enter_Weight extends AppCompatActivity {
         Bmr_Calcs bmr_calcs = new Bmr_Calcs();
 
         Bmr = bmr_calcs.calculateBMR(dataForBmr, view);
+        // Index 0: Age (in years), Index 1: Email address, Index 2: Height (in centimeters)
+        // Index 3: Password, Index 4: Bmr, Index 5: Sex
+        // Index 6: Username, Index 7: Weight (in kilograms)
+        User_Data.set(4, Bmr);
 
         To_Calorie_Homepage();
 
     }
 
     private void To_Calorie_Homepage() {
-        //This needs to be replaced with database to data data to db
-        Intent pageMovementIntent = new Intent(Enter_Weight.this, Calorie_Homepage.class);
-        //pageMovementIntent.putExtra("Data_For_Bmr", Data_For_Bmr);
+        // Index 0: Age (in years), Index 1: Email address, Index 2: Height (in centimeters)
+        // Index 3: Password, Index 4: Bmr, Index 5: Sex
+        // Index 6: Username, Index 7: Weight (in kilograms)
 
-        startActivity(pageMovementIntent);
+        Intent Page_Movement_Intent = new Intent(Enter_Weight.this, Calorie_Homepage.class);
+
+        Log.d(TAG, "Size = " + User_Data.size());
+        Page_Movement_Intent.putExtra("User_Data", User_Data);
+
+        startActivity(Page_Movement_Intent);
     }
 
 

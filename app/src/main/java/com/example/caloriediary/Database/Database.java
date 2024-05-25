@@ -78,11 +78,12 @@ public class Database extends AppCompatActivity {
 
             Login(Imported_Data_Arraylist, Database_Controller);
 
-        // 0 = Create_Account, 1 = login, 2 = Add Product From Db
+        // 0 = Create_Account, 1 = login, 2 = Add Food
         }else if (Sent_From == (int) 2) {
-            Log.d(TAG, "Add Data Editing");
-            //go to function
-        //if number doesnt match
+            Log.d(TAG, "Add Food");
+
+            Database_Value_Names Db_Value_Names = new Database_Value_Names();
+            Add_Food(Imported_Data_Arraylist, Db_Value_Names, Database_Controller);
         } else {
             Log.d(TAG, "Login: Unexpected Page Transfer");
             To_Login(Imported_Data_Arraylist.get(0));
@@ -179,65 +180,68 @@ public class Database extends AppCompatActivity {
             Log.d(TAG, "Add Account: Information packed for finish");
 
             Database_Controller.child(Db_Value_Names.getDb_Users_Db_Name()).child(Creating_Users_Details.getUsername()).updateChildren(Information_Hashmap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        //add data to db (if successful login)/ go back to create account if fail
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                To_Login(Creating_Users_Details.getUsername());
-                                Log.d(TAG, "Add Account: Account Created");
-                            } else {
-                                reusableFunctions.Create_Toast(getApplicationContext(), "Network/ Database Error. Try Again");
-                                To_Create_Account();
-                                Log.d(TAG, "Add Account: Account Filed Creation?");
-                            }
-                        }
-                    });
-        } else {
-            reusableFunctions.Create_Toast(getApplicationContext(), "Products Sections commented");
-            /*
-            if (Creation_Type.equals("Products")) {
-                String Product_Name, Product_Description, Product_Price, Product_Stock;
-                Double Converted_Product_Price;
-                int Converted_Product_Stock;
-                int New_Id;
-
-                Product_Name = Info[0];
-                Product_Description = Info[1];
-                Product_Price = Info[2];
-                Converted_Product_Price = To_Double(Product_Price);
-                Product_Stock = Info[3];
-                Converted_Product_Stock = To_Int(Product_Stock);
-
-                String GetID = getString(R.string.Max_ID_Value);
-                New_Id = To_Int(GetID);
-
-                Information_Hashmap.put("Product_ID", New_Id);
-                Information_Hashmap.put("Product_Name", Product_Name);
-                Information_Hashmap.put("Product_Description", Product_Description);
-                Information_Hashmap.put("Product_Price", Product_Price);
-                Information_Hashmap.put("Product_Stock", Product_Stock);
-
-                Database_Controller.child(Db_Node).child(Product_Name).updateChildren(Information_Hashmap)
-
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Create_Toast("Product Created");
-                                    Page_Movement_Intent = new Intent(Database2.this, Create_Product.class);//
-                                    startActivity(Page_Movement_Intent);
-
-                                } else {
-                                    Create_Toast("Network/ Database Error. Try Again");
-                                }
-                            }
-                        });
-            }
-
-             */
-
+                @Override
+                //add data to db (if successful login)/ go back to create account if fail
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        To_Login(Creating_Users_Details.getUsername());
+                        Log.d(TAG, "Add Account: Account Created");
+                    } else {
+                        reusableFunctions.Create_Toast(getApplicationContext(), "Network/ Database Error. Try Again");
+                        To_Create_Account();
+                        Log.d(TAG, "Add Account: Account Filed Creation?");
+                    }
+                }
+            });
+        }else{
+            Log.d(TAG,"Db Name doesnt match");
         }
     }
+
+
+    public void Add_Food(ArrayList<String> Name_Date_Food_Arraylist, Database_Value_Names Db_Value_Names, DatabaseReference Database_Controller) {
+
+        Log.d(TAG, "Logging Food");
+
+        String Username = Name_Date_Food_Arraylist.get(0);
+        String Date = Name_Date_Food_Arraylist.get(1);
+        String Food_Name = Name_Date_Food_Arraylist.get(2);
+        String Portion_Size = Name_Date_Food_Arraylist.get(3);
+        String Calories = Name_Date_Food_Arraylist.get(4);
+        String Fat = Name_Date_Food_Arraylist.get(5);
+        String Meal_Type = Name_Date_Food_Arraylist.get(6);
+
+        //add values in a hashmap to add to db
+        Information_Hashmap.put(Db_Value_Names.getDb_Username_Name(), Username);
+        Information_Hashmap.put(Db_Value_Names.getDb_Date_Name(), Date);
+        Information_Hashmap.put(Db_Value_Names.getDb_Food_Name_Name(), Food_Name);
+        Information_Hashmap.put(Db_Value_Names.getDb_Portion_Name(), Portion_Size);
+        Information_Hashmap.put(Db_Value_Names.getDb_Caloires_Name(),Calories );
+        Information_Hashmap.put(Db_Value_Names.getDb_Fat_Name(), Fat);
+        Information_Hashmap.put(Db_Value_Names.getDb_Meal_Type_Name(), Meal_Type);
+
+        Log.d(TAG, "Add Account: Information packed for finish");
+
+        DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Username).push();
+
+        Db_Reference.setValue(Information_Hashmap).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            //add data to db (if successful login)/ go back to create account if fail
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "Add Account: Account Created");
+                } else {
+                    reusableFunctions.Create_Toast(getApplicationContext(), "Network/ Database Error. Try Again");
+                    To_Create_Account();
+                    Log.d(TAG, "Add Account: Account Filed Creation?");
+                }
+            }
+        });
+    }
+
+
+
+
 
     private void Login(ArrayList<String> Imported_Data_Arraylist, DatabaseReference Database_Controller) {
         User Login_User_Details = new User();

@@ -1,6 +1,8 @@
 package com.example.caloriediary.Api_Refactored;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -18,6 +20,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.caloriediary.Database.Database;
 import com.example.caloriediary.R;
 import com.example.caloriediary.ReusableFunctions;
 import com.example.caloriediary.databinding.ActivityMain2Binding;
@@ -38,6 +41,8 @@ public class MainActivity2 extends AppCompatActivity {
 
     final static String TAG =  "MainActivity2";
 
+    String Meal_Type = "Undefined";
+
     private ActivityMain2Binding binding;
 
     ReusableFunctions reusableFunctions = new ReusableFunctions();
@@ -56,6 +61,10 @@ public class MainActivity2 extends AppCompatActivity {
     ArrayList<String> Nutritional_Values_Arraylist;
     Bitmap ImageData;
 
+
+    String Username = "Undefined";
+    String Bmr = "Undefined";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +77,20 @@ public class MainActivity2 extends AppCompatActivity {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+
+
+            SharedPreferences shared_preference = getSharedPreferences("User_Data", Context.MODE_PRIVATE);
+            String data = shared_preference.getString("Data", null);
+
+
+            String[] Values_In_Preference = data.split(",");
+            if (Values_In_Preference.length == 2) {
+                Username = Values_In_Preference[0];
+                Bmr = Values_In_Preference[1];
+
+            }else{
+                Log.d(TAG, "Shared preferences has got more or less than 2 values!!!!");
+            }
 
 
 
@@ -277,6 +300,55 @@ public class MainActivity2 extends AppCompatActivity {
         }else{
             Toast.makeText(MainActivity2.this, "Product Name Required", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void Save_Button_Pressed(String Meal_Type) {
+        Log.d(TAG, "Save Button Pressed");
+        String Food_Name = binding.foodNameR.getText().toString();
+        String Portion_Size = binding.servingSizeR.getText().toString();
+        String Calories = binding.calriesR.getText().toString();
+        String Fat = binding.totalFatR.getText().toString();
+        Log.d(TAG, "Vars made");
+
+        ArrayList<String> Food_Arraylist = new ArrayList();
+        ArrayList<String> Name_Date_Food_Arraylist = new ArrayList<>();
+
+        Food_Arraylist.add(Food_Name);
+        Food_Arraylist.add(Portion_Size);
+        Food_Arraylist.add(Calories);
+        Food_Arraylist.add(Fat);
+        Log.d(TAG, "Foods Added");
+
+        // Index 0: Age (in years), Index 1: Email address, Index 2: Height (in centimeters)
+        // Index 3: Password, Index 4: Bmr, Index 5: Sex
+        // Index 6: Username, Index 7: Weight (in kilograms)
+
+        Log.d(TAG, Username);
+
+        Name_Date_Food_Arraylist.add(Username);
+        Name_Date_Food_Arraylist.add(reusableFunctions.Date_Creator());
+        Name_Date_Food_Arraylist.addAll(Food_Arraylist);
+        Name_Date_Food_Arraylist.add(Meal_Type);
+
+        Intent Page_Movement_Intent = new Intent(MainActivity2.this, Database.class);
+        Page_Movement_Intent.putExtra("Sent_Info",Name_Date_Food_Arraylist);
+        Page_Movement_Intent.putExtra("Sent_From",2);
+        startActivity(Page_Movement_Intent);
+    }
+
+    public void Add_Breakfast_Button(View view) {
+        Meal_Type = "Breakfast";
+        Save_Button_Pressed(Meal_Type);
+    }
+
+    public void Add_Lunch_Button(View view) {
+        Meal_Type = "Lunch";
+        Save_Button_Pressed(Meal_Type);
+    }
+
+    public void Add_Dinner_Button(View view) {
+        Meal_Type = "Dinner";
+        Save_Button_Pressed(Meal_Type);
     }
 
 
