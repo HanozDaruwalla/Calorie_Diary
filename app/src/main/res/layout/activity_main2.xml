@@ -18,7 +18,8 @@
         tools:layout="@layout/fragment_title"
         android:layout_marginBottom="10dp"
         tools:layout_editor_absoluteX="145dp"
-        tools:layout_editor_absoluteY="83dp" />
+        tools:layout_editor_absoluteY="83dp"
+        android:layout_marginTop="30dp"/>
 
 
     <LinearLayout

@@ -49,12 +49,12 @@ public class MainActivity2 extends AppCompatActivity {
 
     // variables
 
-    NutritionData data;
-    String product;
-    InputMethodManager mgr;
-    int arrListIndex;
-    ArrayList<String> mArrayList;
-    Bitmap mBitmap;
+    NutritionData Nutrition_Data_Template;
+    String Food_Item = "Undefined";
+    InputMethodManager input_method_manager;
+    int Index_Of_Nutritional_Values_Arraylist;
+    ArrayList<String> Nutritional_Values_Arraylist;
+    Bitmap ImageData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +72,7 @@ public class MainActivity2 extends AppCompatActivity {
 
 
             binding.progressBar.setVisibility(View.INVISIBLE);
-            mgr = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
+            input_method_manager = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
 
             Log.d(TAG, "OnCreate done");
 
@@ -82,11 +82,11 @@ public class MainActivity2 extends AppCompatActivity {
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                 String str = i.getExtras().getString("BitmapUri");
                 Uri uri = Uri.parse(str);
-                mArrayList = i.getExtras().getStringArrayList("StringArrList");
+                Nutritional_Values_Arraylist = i.getExtras().getStringArrayList("StringArrList");
 
                 Log.d(TAG, "1");
-                reusableFunctions.Create_Toast(getApplicationContext(), mArrayList.get(arrListIndex) );
-                arrListIndex =0;
+                reusableFunctions.Create_Toast(getApplicationContext(), Nutritional_Values_Arraylist.get(Index_Of_Nutritional_Values_Arraylist) );
+                Index_Of_Nutritional_Values_Arraylist =0;
                 new msyncTask().execute(uri);
             }else{
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
@@ -130,12 +130,12 @@ public class MainActivity2 extends AppCompatActivity {
                     public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                         Log.d("Healthier", "Success" + response.toString());
                         binding.progressBar.setVisibility(View.INVISIBLE);
-                        data = NutritionData.fromJson(response);
+                        Nutrition_Data_Template = NutritionData.fromJson(response);
 
-                        new DownloadImageTask(binding.foodPic).execute(data.getPhotoUrl());
+                        new DownloadImageTask(binding.foodPic).execute(Nutrition_Data_Template.getPhotoUrl());
                         binding.foodPic.setVisibility(View.VISIBLE);
 
-                        updateUI(data);
+                        updateUI(Nutrition_Data_Template);
                     }
                     @Override
                     public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
@@ -178,27 +178,27 @@ public class MainActivity2 extends AppCompatActivity {
                     public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                         Log.d("Healthier", "Success" + response.toString());
                         binding.progressBar.setVisibility(View.INVISIBLE);
-                        data = NutritionData.fromJson(response);
+                        Nutrition_Data_Template = NutritionData.fromJson(response);
 
-                        binding.foodPic.setImageBitmap(mBitmap);
+                        binding.foodPic.setImageBitmap(ImageData);
                         binding.foodPic.setVisibility(View.VISIBLE);
 
-                        updateUI(data);
+                        updateUI(Nutrition_Data_Template);
                     }
 
                     @Override
                     public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
                         Log.d("Healthier", "failed" + errorResponse.toString());
 
-                        arrListIndex++;
-                        if(arrListIndex > mArrayList.size()-1) {
+                        Index_Of_Nutritional_Values_Arraylist++;
+                        if(Index_Of_Nutritional_Values_Arraylist > Nutritional_Values_Arraylist.size()-1) {
                             Toast.makeText(MainActivity2.this, "Sorry,We couldn't match any of your foods",
                                     Toast.LENGTH_SHORT).show();
 
                             binding.progressBar.setVisibility(View.INVISIBLE);
 
                         }else {
-                            callNutrionix(mArrayList,arrListIndex);
+                            callNutrionix(Nutritional_Values_Arraylist, Index_Of_Nutritional_Values_Arraylist);
 
                         }
 
@@ -231,7 +231,7 @@ public class MainActivity2 extends AppCompatActivity {
         if (uri != null) {
             try {
                 // scale the image to save on bandwidth
-                mBitmap = scaleBitmapDown(MediaStore.Images.Media.getBitmap(getContentResolver(), uri), 1200);
+                ImageData = scaleBitmapDown(MediaStore.Images.Media.getBitmap(getContentResolver(), uri), 1200);
 
             } catch (IOException e) {
                 Log.d("upload", "Image picking failed because " + e.getMessage());
@@ -270,9 +270,9 @@ public class MainActivity2 extends AppCompatActivity {
         Log.d(TAG, "Search_Button_Pressed");
         if(!(binding.SearchBar.getText().toString().equals(""))){
             binding.progressBar.setVisibility(View.VISIBLE);
-            product = binding.SearchBar.getText().toString();
-            connectNutrionix(product);
-            mgr.hideSoftInputFromWindow(binding.SearchBar.getWindowToken(), 0);
+            Food_Item = binding.SearchBar.getText().toString();
+            connectNutrionix(Food_Item);
+            input_method_manager.hideSoftInputFromWindow(binding.SearchBar.getWindowToken(), 0);
 
         }else{
             Toast.makeText(MainActivity2.this, "Product Name Required", Toast.LENGTH_SHORT).show();
@@ -290,7 +290,7 @@ public class MainActivity2 extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList arrayList) {
-            callNutrionix(mArrayList,arrListIndex);
+            callNutrionix(Nutritional_Values_Arraylist, Index_Of_Nutritional_Values_Arraylist);
         }
 
     }

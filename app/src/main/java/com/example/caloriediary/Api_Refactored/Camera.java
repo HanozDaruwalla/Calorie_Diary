@@ -129,7 +129,6 @@ public class Camera extends AppCompatActivity {
 
     public void Call_Gallery(View view){
         startGalleryChooser();
-
     }
 
     public void startGalleryChooser() {
@@ -137,8 +136,10 @@ public class Camera extends AppCompatActivity {
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
+            Log.d(TAG, "startActivityForResult started");
             startActivityForResult(Intent.createChooser(intent, "Select a photo"),
                     GALLERY_PERMISSIONS_REQUEST);
+            Log.d(TAG, "startActivityForResult Done");
         }else{
             Log.d(TAG, "User Has Perms On For Camera");
         }
@@ -232,6 +233,7 @@ public class Camera extends AppCompatActivity {
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
         Log.d(TAG, "Saved photo");
+
         return image;
 
     }catch(Exception E){
@@ -372,7 +374,6 @@ public class Camera extends AppCompatActivity {
         protected void onPostExecute(String s) {
             callGoogleVision(bitmap);
         }
-
 
     }
 
