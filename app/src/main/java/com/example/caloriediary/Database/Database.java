@@ -263,14 +263,16 @@ public class Database extends AppCompatActivity {
         // Reference to the "Food" node in the database
         DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name());
 
-        // Query to get all entries where Meal_Type matches
-        Query query = Db_Reference.orderByChild(Db_Value_Names.getDb_Meal_Type_Name()).equalTo(Meal_Type);
+        // Query to get all entries where the Username matches
+        Query query = Db_Reference.orderByChild(Db_Value_Names.getDb_Username_Name()).equalTo(Username);
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<Item> foodDataList = new ArrayList<>();
+                ArrayList<ArrayList<Item>> nestedFoodDataList = new ArrayList<>();
                 if (dataSnapshot.exists()) {
+                    Log.d(TAG, "Data found for the given Username");
+                    ArrayList<Item> foodDataList = new ArrayList<>();
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         // Retrieve the information
                         String fetchedUsername = snapshot.child(Db_Value_Names.getDb_Username_Name()).getValue(String.class);
@@ -281,19 +283,33 @@ public class Database extends AppCompatActivity {
                         int fetchedFat = snapshot.child(Db_Value_Names.getDb_Fat_Name()).getValue(Integer.class);
                         String fetchedMealType = snapshot.child(Db_Value_Names.getDb_Meal_Type_Name()).getValue(String.class);
 
-                        // Check if the fetched data matches the username and date
-                        if (Username.equals(fetchedUsername) && Date.equals(fetchedDate)) {
+                        // Log the fetched data
+                        Log.d(TAG, "Fetched Data: Username=" + fetchedUsername + ", Date=" + fetchedDate +
+                                ", FoodName=" + fetchedFoodName + ", PortionSize=" + fetchedPortionSize +
+                                ", Calories=" + fetchedCalories + ", Fat=" + fetchedFat + ", MealType=" + fetchedMealType);
+
+                        // Check if the fetched data matches the date and meal type
+                        if (Date.equals(fetchedDate) && Meal_Type.equals(fetchedMealType)) {
                             Item item = new Item(fetchedFoodName, fetchedCalories, fetchedFat, fetchedPortionSize);
-                            foodDataList.add(item);
-                        }else{
-                            Log.d(TAG, "No food found by user");
+                            ArrayList Data_Arraylist = new ArrayList();
+                            Data_Arraylist.add(fetchedFoodName);
+                            Data_Arraylist.add(fetchedCalories);
+                            Data_Arraylist.add(fetchedFat);
+                            Data_Arraylist.add(fetchedPortionSize);
+
+                            ItemAdapter itemAdapter = new ItemAdapter(Data_Arraylist); // Instantiate ItemAdapter
+                            itemAdapter.Set_Items(Data_Arraylist); // Call Set_Items on the instance
                         }
-                        ItemAdapter itemAdapter = new ItemAdapter(foodDataList);
-                        itemAdapter.
+                    }
+                    if (!foodDataList.isEmpty()) {
+                        nestedFoodDataList.add(foodDataList);
+                        Log.d(TAG, "Added food data list to nested list. Current nested list size: " + nestedFoodDataList.size());
+                    } else {
+                        Log.d(TAG, "No matching food data found for the given Date and Meal Type");
                     }
 
                 } else {
-                    Log.d(TAG, "No data found for the given Meal Type");
+                    Log.d(TAG, "No data found for the given Username");
                 }
             }
 
@@ -303,6 +319,9 @@ public class Database extends AppCompatActivity {
             }
         });
     }
+
+
+
 
 
 
