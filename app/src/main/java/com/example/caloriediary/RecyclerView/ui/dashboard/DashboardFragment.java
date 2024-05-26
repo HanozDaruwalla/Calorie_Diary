@@ -41,14 +41,15 @@ public class DashboardFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         List<Item> itemList = new ArrayList<>();
-        itemList.add(new Item("Item 1"));
-        itemList.add(new Item("Item 2"));
-        itemList.add(new Item("Item 3"));
+        itemList.add(new Item("apple", 23, 34, "large"));
+        itemList.add(new Item("peach", 23, 34, "large"));
+        itemList.add(new Item("Rubarb", 23, 34, "large"));
 
         adapter = new ItemAdapter(itemList);
         recyclerView.setAdapter(adapter);
 
         return root;
+
     }
 
     @Override

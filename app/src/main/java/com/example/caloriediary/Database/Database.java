@@ -13,6 +13,8 @@ import com.example.caloriediary.Creating_Account_And_Login.Encryption_Decryption
 import com.example.caloriediary.Creating_Account_And_Login.Login;
 import com.example.caloriediary.Creating_Account_And_Login.User;
 import com.example.caloriediary.R;
+import com.example.caloriediary.RecyclerView.Item;
+import com.example.caloriediary.RecyclerView.ItemAdapter;
 import com.example.caloriediary.ReusableFunctions;
 import com.example.caloriediary.databinding.ActivityDatabaseBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -267,6 +269,7 @@ public class Database extends AppCompatActivity {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<Item> foodDataList = new ArrayList<>();
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         // Retrieve the information
@@ -274,18 +277,21 @@ public class Database extends AppCompatActivity {
                         String fetchedDate = snapshot.child(Db_Value_Names.getDb_Date_Name()).getValue(String.class);
                         String fetchedFoodName = snapshot.child(Db_Value_Names.getDb_Food_Name_Name()).getValue(String.class);
                         String fetchedPortionSize = snapshot.child(Db_Value_Names.getDb_Portion_Name()).getValue(String.class);
-                        String fetchedCalories = snapshot.child(Db_Value_Names.getDb_Caloires_Name()).getValue(String.class);
-                        String fetchedFat = snapshot.child(Db_Value_Names.getDb_Fat_Name()).getValue(String.class);
+                        int fetchedCalories = snapshot.child(Db_Value_Names.getDb_Caloires_Name()).getValue(Integer.class);
+                        int fetchedFat = snapshot.child(Db_Value_Names.getDb_Fat_Name()).getValue(Integer.class);
                         String fetchedMealType = snapshot.child(Db_Value_Names.getDb_Meal_Type_Name()).getValue(String.class);
 
                         // Check if the fetched data matches the username and date
                         if (Username.equals(fetchedUsername) && Date.equals(fetchedDate)) {
-                            Log.d(TAG, "Food Data: Username: " + fetchedUsername + ", Date: " + fetchedDate + ", Food: " + fetchedFoodName +
-                                    ", Portion: " + fetchedPortionSize + ", Calories: " + fetchedCalories + ", Fat: " + fetchedFat + ", Meal Type: " + fetchedMealType);
-
-                            // You can further process the data here as needed
+                            Item item = new Item(fetchedFoodName, fetchedCalories, fetchedFat, fetchedPortionSize);
+                            foodDataList.add(item);
+                        }else{
+                            Log.d(TAG, "No food found by user");
                         }
+                        ItemAdapter itemAdapter = new ItemAdapter(foodDataList);
+                        itemAdapter.
                     }
+
                 } else {
                     Log.d(TAG, "No data found for the given Meal Type");
                 }
@@ -297,7 +303,6 @@ public class Database extends AppCompatActivity {
             }
         });
     }
-
 
 
 
