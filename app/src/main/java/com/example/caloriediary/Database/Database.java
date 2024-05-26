@@ -9,9 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.caloriediary.Bmi_Calc.Enter_Height;
 import com.example.caloriediary.Creating_Account_And_Login.Create_Account;
+import com.example.caloriediary.Creating_Account_And_Login.Encryption_Decryption_Class;
 import com.example.caloriediary.Creating_Account_And_Login.Login;
 import com.example.caloriediary.Creating_Account_And_Login.User;
-import com.example.caloriediary.Creating_Account_And_Login.Encryption_Decryption_Class;
 import com.example.caloriediary.R;
 import com.example.caloriediary.ReusableFunctions;
 import com.example.caloriediary.databinding.ActivityDatabaseBinding;
@@ -22,6 +22,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -84,6 +85,13 @@ public class Database extends AppCompatActivity {
 
             Database_Value_Names Db_Value_Names = new Database_Value_Names();
             Add_Food(Imported_Data_Arraylist, Db_Value_Names, Database_Controller);
+
+        }else if (Sent_From == (int) 3) {
+            Log.d(TAG, "Add Food");
+
+            Database_Value_Names Db_Value_Names = new Database_Value_Names();
+            Get_Food_Data(Imported_Data_Arraylist, Db_Value_Names, Database_Controller);
+
         } else {
             Log.d(TAG, "Login: Unexpected Page Transfer");
             To_Login(Imported_Data_Arraylist.get(0));
@@ -229,7 +237,10 @@ public class Database extends AppCompatActivity {
             //add data to db (if successful login)/ go back to create account if fail
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Log.d(TAG, "Add Account: Account Created");
+                    Log.d(TAG, "Food Added successfully");
+                    reusableFunctions.Create_Toast(getApplicationContext(), "Food Added To Database. Press back twice to continue");
+
+
                 } else {
                     reusableFunctions.Create_Toast(getApplicationContext(), "Network/ Database Error. Try Again");
                     To_Create_Account();
@@ -238,6 +249,55 @@ public class Database extends AppCompatActivity {
             }
         });
     }
+
+
+    public void Get_Food_Data(ArrayList<String> Name_Date_Meal_Type, Database_Value_Names Db_Value_Names, DatabaseReference Database_Controller) {
+        Log.d(TAG, "Fetching Food Data");
+
+        String Username = Name_Date_Meal_Type.get(0);
+        String Date = Name_Date_Meal_Type.get(1);
+        String Meal_Type = Name_Date_Meal_Type.get(2);
+
+        // Reference to the "Food" node in the database
+        DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name());
+
+        // Query to get all entries where Meal_Type matches
+        Query query = Db_Reference.orderByChild(Db_Value_Names.getDb_Meal_Type_Name()).equalTo(Meal_Type);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        // Retrieve the information
+                        String fetchedUsername = snapshot.child(Db_Value_Names.getDb_Username_Name()).getValue(String.class);
+                        String fetchedDate = snapshot.child(Db_Value_Names.getDb_Date_Name()).getValue(String.class);
+                        String fetchedFoodName = snapshot.child(Db_Value_Names.getDb_Food_Name_Name()).getValue(String.class);
+                        String fetchedPortionSize = snapshot.child(Db_Value_Names.getDb_Portion_Name()).getValue(String.class);
+                        String fetchedCalories = snapshot.child(Db_Value_Names.getDb_Caloires_Name()).getValue(String.class);
+                        String fetchedFat = snapshot.child(Db_Value_Names.getDb_Fat_Name()).getValue(String.class);
+                        String fetchedMealType = snapshot.child(Db_Value_Names.getDb_Meal_Type_Name()).getValue(String.class);
+
+                        // Check if the fetched data matches the username and date
+                        if (Username.equals(fetchedUsername) && Date.equals(fetchedDate)) {
+                            Log.d(TAG, "Food Data: Username: " + fetchedUsername + ", Date: " + fetchedDate + ", Food: " + fetchedFoodName +
+                                    ", Portion: " + fetchedPortionSize + ", Calories: " + fetchedCalories + ", Fat: " + fetchedFat + ", Meal Type: " + fetchedMealType);
+
+                            // You can further process the data here as needed
+                        }
+                    }
+                } else {
+                    Log.d(TAG, "No data found for the given Meal Type");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "Database Error: " + databaseError.getMessage());
+            }
+        });
+    }
+
 
 
 

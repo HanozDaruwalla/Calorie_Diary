@@ -173,6 +173,7 @@ public class Enter_Weight extends AppCompatActivity {
 
         Intent Page_Movement_Intent = new Intent(Enter_Weight.this, Calorie_Homepage.class);
 
+
         Log.d(TAG, "Size = " + User_Data.size());
         Page_Movement_Intent.putExtra("User_Data", User_Data);
 

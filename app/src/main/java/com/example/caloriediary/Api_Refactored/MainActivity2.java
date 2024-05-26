@@ -338,17 +338,35 @@ public class MainActivity2 extends AppCompatActivity {
 
     public void Add_Breakfast_Button(View view) {
         Meal_Type = "Breakfast";
-        Save_Button_Pressed(Meal_Type);
+        if(Is_Data_Entered()){
+            Save_Button_Pressed(Meal_Type);
+        }
     }
 
     public void Add_Lunch_Button(View view) {
         Meal_Type = "Lunch";
-        Save_Button_Pressed(Meal_Type);
+        if(Is_Data_Entered()){
+            Save_Button_Pressed(Meal_Type);
+        }
     }
 
     public void Add_Dinner_Button(View view) {
         Meal_Type = "Dinner";
-        Save_Button_Pressed(Meal_Type);
+
+        if(Is_Data_Entered()){
+            Save_Button_Pressed(Meal_Type);
+        }
+
+    }
+
+    private boolean Is_Data_Entered(){
+        if(binding.SearchBar.getText().equals("")){
+            reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter Data");
+            return false;
+        }else{
+            return true;
+        }
+
     }
 
 

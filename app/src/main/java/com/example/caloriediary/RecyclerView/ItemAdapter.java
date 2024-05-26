@@ -17,11 +17,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     private List<Item> itemList;
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
-        public TextView textView;
+        public TextView Food_Name_TextView, Serving_Size_TextView, Calories_TextView, Fat_TextView;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.item_text);
+            Food_Name_TextView = itemView.findViewById(R.id.Food_Name);
+            Serving_Size_TextView = itemView.findViewById(R.id.Serving_Size);
+            Calories_TextView = itemView.findViewById(R.id.Calories);
+            Fat_TextView = itemView.findViewById(R.id.Fat);
         }
     }
 
@@ -40,7 +43,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         Item currentItem = itemList.get(position);
-        holder.textView.setText(currentItem.getFinal_String());
+        //holder.textView.setText(currentItem.getFinal_String());
     }
 
     @Override
