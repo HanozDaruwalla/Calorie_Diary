@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Fragments.Nav_Bar"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:orientation="horizontal"
+    android:weightSum="3"
+    android:layout_gravity="bottom"
+    android:layout_marginBottom="0dp"
+    >
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/Weight_Section_Card"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTint="@color/interface_color"
+        android:layout_weight="1"
+        >
+
+        <LinearLayout
+            android:id="@+id/Weight_Layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="2"
+            >
+
+            <TextView
+                android:id="@+id/Weight_Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Weight"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textAlignment="center"
+                >
+
+            </TextView>
+
+
+            <ImageView
+                android:id="@+id/Weight_Image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/scale"
+                />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/Calorie_Counter_Section_Card"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTint="@color/interface_color"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/Calorie_Layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:onClick="Calorie_Diary_Button_Pressed"
+            >
+
+            <TextView
+                android:id="@+id/Calorie_Counter_Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Calorie Counter"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textAlignment="center"
+                >
+
+            </TextView>
+
+            <ImageView
+                android:id="@+id/Calorie_Counter_Image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/calorie_counter_icon"
+                />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/Info_Section_Card"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTint="@color/interface_color"
+        android:layout_weight="1"
+        >
+
+        <LinearLayout
+            android:id="@+id/Info_Layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/Info_Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Info"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textAlignment="center"
+
+                >
+            </TextView>
+
+            <ImageView
+                android:id="@+id/Info_Img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/question_mark2"
+
+                />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Creating_Account_And_Login.MainActivity"
+    android:background="@color/background_color"
+    android:orientation="vertical"
+    android:gravity="center"
+    >
+
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/title_fragment"
+        android:name="com.example.caloriediary.Fragments.fragment_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        tools:layout="@layout/fragment_title"
+        android:layout_marginBottom="10dp"
+
+        />
+
+    <TextView
+        android:id="@+id/Info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Monitor your calorie intake and weight. With an inbuilt QR Code Scanner."
+        android:textSize="25sp"
+
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:layout_margin="5dp"
+        />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="450dp"
+        android:layout_height="450dp"
+        android:layout_weight="2"
+        android:layout_marginBottom="10dp"
+        app:srcCompat="@drawable/fruit_homepage" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Started"
+        android:textSize="25dp"
+        android:backgroundTint="@color/interface_color"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+
+        android:layout_marginTop="10dp"
+        android:onClick="GetStarted_Clicked"
+        />
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/signin_Label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="1"
+            android:text="Already Have An Account?"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:onClick="signin_Label_Clicked"
+            />
+
+        <TextView
+            android:id="@+id/signin2_Label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="1"
+            android:text="Sign In?"
+            android:textSize="20dp"
+            android:textColor="@color/Dark_Blue"
+            android:textStyle="bold"
+            android:onClick="signin2_Label_Clicked"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

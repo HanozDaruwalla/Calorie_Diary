@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Info"
+    android:background="@color/background_color"
+    android:orientation="vertical"
+
+    >
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView2"
+        android:name="com.example.caloriediary.Fragments.fragment_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        tools:layout="@layout/fragment_title"
+        android:layout_marginBottom="10dp"
+        tools:layout_editor_absoluteX="145dp"
+        />
+
+    <TextView
+        android:id="@+id/Title_Label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Credits And Info:"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="10dp"
+        />
+
+    <LinearLayout
+        android:id="@+id/Image_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="7dp"
+
+        >
+
+        <TextView
+            android:id="@+id/Image_Textview_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="Images:"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_marginRight="80dp"
+            >
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/Image_Textview_Data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="All credit to Creators at Freepik.com"
+            android:textColor="@color/black"
+            android:textSize="20sp">
+        </TextView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/Database_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="7dp"
+
+        >
+
+        <TextView
+            android:id="@+id/Database_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="Database:"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_marginRight="60dp"
+
+            >
+        </TextView>
+
+        <TextView
+            android:id="@+id/Database_Textview_Data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Google Firebase Database"
+            android:textColor="@color/black"
+            android:textSize="20sp">
+        </TextView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/Image_Layout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="7dp"
+
+        >
+
+        <TextView
+            android:id="@+id/Image2_Textview_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="Edited Images:"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_marginRight="15dp"
+            >
+        </TextView>
+
+        <TextView
+            android:id="@+id/Image2_Textview_Data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Some images edited with Gimp."
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            >
+        </TextView>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/Image_Layout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="7dp"
+
+        >
+
+        <TextView
+            android:id="@+id/Image3_Textview_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="API Camera  :"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_marginRight="15dp"
+            >
+        </TextView>
+
+        <TextView
+            android:id="@+id/Image3_Textview_Data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text= "@string/API_Credits"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            >
+        </TextView>
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:srcCompat="@drawable/_1889502_edited"
+        android:layout_margin="50dp"
+    /><!--android:layout_margin="15dp"-->
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView3"
+        android:name="com.example.caloriediary.Fragments.Nav_Bar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        tools:layout="@layout/fragment_nav__bar"
+        tools:layout_editor_absoluteX="145dp"
+        tools:layout_editor_absoluteY="83dp"
+        android:layout_gravity="bottom"
+        >
+    </androidx.fragment.app.FragmentContainerView>
+
+
+</LinearLayout>
