@@ -62,7 +62,7 @@ public class Enter_Height extends AppCompatActivity {
         } else if (Measurement_In_Foot) { //Foot Checks
             Log.d(TAG, "Height In Foot Found at Not Null Checks");
             try{
-                if ((Height_Input.length() == 1 || Height_Input.charAt(1) == '.') && Extra_Foot_Checks(Height_Input) == true){
+                if ((Height_Input.length() == 1 || (Height_Input.charAt(1) == '.') && Height_Input.length() <= 3 ) && Extra_Foot_Checks(Height_Input) == true){
                     //if condition met
                     Log.d(TAG, "Valid Height Foot Entry");
                     Cm_Height = Foot_Inches_To_Cm(Height_Input);
@@ -78,7 +78,7 @@ public class Enter_Height extends AppCompatActivity {
 
         }else{// CM CHECKS
             try{
-                if (!(Height_Input.length() > 4 && Height_Input.charAt(3) == '.') && !(Height_Input.length() == 3) && Extra_Cm_Checks(Height_Input)) {
+                if (!(Height_Input.length() > 4 && Height_Input.charAt(3) == '.') && !(Height_Input.length() <= 3) && Extra_Cm_Checks(Height_Input)) {
                     Log.d(TAG, "Invalid Cm Entry");
                     reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter Your Height Correctly in Cm. e.g., 170.78 or 170");
                 }else{
@@ -95,7 +95,7 @@ public class Enter_Height extends AppCompatActivity {
     private boolean Extra_Foot_Checks(String user_input){
         try {
             double Double_Datatype_Height = Double.parseDouble(user_input);
-            return Double_Datatype_Height >= 1.0 && Double_Datatype_Height <= 8.0;
+            return Double_Datatype_Height >= 2.0 && Double_Datatype_Height <= 8.11;
         } catch (NumberFormatException e) {
             Log.e(TAG, "Invalid foot height format", e);
             return false;
@@ -111,7 +111,6 @@ public class Enter_Height extends AppCompatActivity {
             return false;
         }
     }
-
 
     private String Foot_Inches_To_Cm(String Passed_Height_Input){
         //converts FOOT to CM
