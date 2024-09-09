@@ -56,18 +56,18 @@ public class Enter_Height extends AppCompatActivity {
             Log.d(TAG, "Error in Null_Null_Checks decimal catch");
         }
 
-        if (Height_Input.isEmpty()) {
+        if(Height_Input.isEmpty()) {
             Log.d(TAG, "Height Empty");
             reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter All Data");
-        } else if (Measurement_In_Foot) { //Foot Checks
+        }else if (Measurement_In_Foot) { //Foot Checks
             Log.d(TAG, "Height In Foot Found at Not Null Checks");
             try{
-                if ((Height_Input.length() == 1 || (Height_Input.charAt(1) == '.') && Height_Input.length() <= 3 ) && Extra_Foot_Checks(Height_Input) == true){
+                if((Height_Input.length() == 1 || (Height_Input.charAt(1) == '.') && Height_Input.length() <= 3 ) && Extra_Foot_Checks(Height_Input) == true){
                     //if condition met
                     Log.d(TAG, "Valid Height Foot Entry");
                     Cm_Height = Foot_Inches_To_Cm(Height_Input);
                     Pack_Data_To_Arraylist_For_Bmr(Cm_Height, view);
-                } else {
+                }else {
                     Log.d(TAG, "Invalid Height Foot Entry");
                     reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter Your Height Correctly in Feet. e.g., 5.8 or '5.0'");
                 }
