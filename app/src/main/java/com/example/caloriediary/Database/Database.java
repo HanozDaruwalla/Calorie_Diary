@@ -12,6 +12,7 @@ import com.example.caloriediary.Creating_Account_And_Login.Create_Account;
 import com.example.caloriediary.Creating_Account_And_Login.Encryption_Decryption_Class;
 import com.example.caloriediary.Creating_Account_And_Login.Login;
 import com.example.caloriediary.Creating_Account_And_Login.User;
+import com.example.caloriediary.Bmi_Calc.OptionForBmi;
 import com.example.caloriediary.R;
 import com.example.caloriediary.RecyclerView.Item;
 import com.example.caloriediary.RecyclerView.ItemAdapter;
@@ -422,10 +423,21 @@ public class Database extends AppCompatActivity {
         Log.d(TAG, "Login_Success_Function");
         //if bmi not calculated, calculate, else to Calorie_homepage
         if (Gathered_Account_Details.getHeight_Cm().equals("Undeclared") || Gathered_Account_Details.getWeight_Kg().equals("Undeclared")) {
-            Page_Movement_Intent = new Intent(Database.this, Enter_Height.class);//
-            Log.d(TAG, "putting extra in Login Success");
-            Page_Movement_Intent.putExtra("User_Data", Create_String_Arraylist(Gathered_Account_Details));
-            startActivity(Page_Movement_Intent);
+
+            if(Gathered_Account_Details.getRmi().equals("Undeclared")){
+                Page_Movement_Intent = new Intent(Database.this, Enter_Height.class);//
+                Log.d(TAG, "taking user to bmi calcs");
+                Page_Movement_Intent.putExtra("User_Data", Create_String_Arraylist(Gathered_Account_Details));
+                startActivity(Page_Movement_Intent);
+
+            }else{
+                Page_Movement_Intent = new Intent(Database.this, OptionForBmi.class);//
+                Log.d(TAG, "taking user to bmi option");
+                Page_Movement_Intent.putExtra("User_Data", Create_String_Arraylist(Gathered_Account_Details));
+                startActivity(Page_Movement_Intent);
+
+            }
+
 
         } else {//if bmr already calculated
             reusableFunctions.Create_Toast(getApplicationContext(), "Go To Main App Section");

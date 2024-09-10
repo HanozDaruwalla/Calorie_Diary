@@ -50,11 +50,9 @@ public class Enter_Weight extends AppCompatActivity {
             if(!(Weight_Input.contains("."))){
                 Log.d(TAG, "Added decimal to weight");
                 Weight_Input = Weight_Input + ".0";
-
             }else{
                 Log.d(TAG, "decimal already in weight");
             }
-
         }catch(NumberFormatException e){// was index out of bounds exception
             Log.d(TAG, "Decimal check exception caught");
         }
@@ -65,10 +63,10 @@ public class Enter_Weight extends AppCompatActivity {
         } else if (Measurement_In_Stone) { //Stone Checks
             Log.d(TAG, "Weight In Stone Found at Not Null Checks");
             try{//If Weight is correct format for stone. then convert to KG. then put to arraylst
-                if (((Weight_Input.charAt(1) == '.' || Weight_Input.charAt(2) == '.') && Weight_Input.length()<6)){
+                //if ((((Weight_Input.charAt(1) == '.' || Weight_Input.charAt(2) == '.') && Weight_Input.length()<6) && Extra_Stone_Checks(Weight_Input) == true)){
+                if ((((Weight_Input.charAt(1) == '.' || Weight_Input.charAt(2) == '.') && Weight_Input.length()<6) || (Weight_Input.charAt(3) == '.') && Weight_Input.length()<7) && Extra_Stone_Checks(Weight_Input) == true){
 
                     Log.d(TAG, "Valid Stone Entry");
-
                     New_Weight_In_Kg = Stone_To_Kg(Weight_Input);
                     Pack_Data_To_Arraylist_For_Bmr(New_Weight_In_Kg, view);
                 }else{
@@ -81,16 +79,37 @@ public class Enter_Weight extends AppCompatActivity {
         }else{// Kg CHECKS
             Log.d(TAG, "Weight In Kg Found at Not Null Checks");
             //checks if weight in KG is correct format. if it is. put in arraylisr
-            if ((Weight_Input.charAt(1) == '.' || Weight_Input.charAt(2) == '.') || Weight_Input.length()<6 && Weight_Input.charAt(3) == '.'){ //its 6 so u allow weight like 100kg
+            if ((Weight_Input.charAt(1) == '.' || Weight_Input.charAt(2) == '.') || Weight_Input.length()<6 && Weight_Input.charAt(3) == '.' && Extra_Kg_Checks(Weight_Input) == true){ //its 6 so u allow weight like 100kg
                 //if condition met
 
                 Log.d(TAG, "Valid Weight Kg Entry");
-                //New_Weight_In_Kg = Stone_To_Kg(Weight_Input);
-                Pack_Data_To_Arraylist_For_Bmr(Weight_Input, view);
+                New_Weight_In_Kg = Stone_To_Kg(Weight_Input);
+                Pack_Data_To_Arraylist_For_Bmr(New_Weight_In_Kg, view);
             } else {
                 Log.d(TAG, "Invalid Weight Kg Entry");
                 reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter Your weight Correctly in Kg. e.g, 67.5");
             }
+        }
+    }
+
+    private boolean Extra_Kg_Checks(String Passed_Weight_Input) {
+        try{
+            double Converted_Stone_Weight = Double.parseDouble(Passed_Weight_Input);
+            return Converted_Stone_Weight >= 47.625 && Converted_Stone_Weight <= 660.4;
+
+        }catch(NumberFormatException e) {
+            Log.e(TAG, "Invalid Stone Kg format", e);
+            return false;
+        }
+    }
+
+    private boolean Extra_Stone_Checks(String Passed_Weight_Input) {
+        try{
+            double Converted_Stone_Weight = Double.parseDouble(Passed_Weight_Input);
+            return Converted_Stone_Weight >= 7.5 && Converted_Stone_Weight <= 104;
+        }catch(NumberFormatException e) {
+            Log.e(TAG, "Invalid Stone weight format", e);
+            return false;
         }
     }
 
@@ -101,7 +120,6 @@ public class Enter_Weight extends AppCompatActivity {
         String Formatted_Kg = "";
 
         Log.d(TAG, "Starting Calcs");
-
         Log.d(TAG, "String Weight = " + Weight_Input);
         //seperates the string to an int from the char "."
         String[] Weight_Array = Weight_Input.split("\\.");
@@ -123,7 +141,6 @@ public class Enter_Weight extends AppCompatActivity {
             Log.e(TAG, "Invalid input: " + Weight_Input);
             reusableFunctions.Create_Toast(getApplicationContext(), "Invalid input. Please enter a valid number.");
         }
-
         return "Error in Stone_To_Kg Convert";
     }
 
@@ -144,7 +161,7 @@ public class Enter_Weight extends AppCompatActivity {
 
         //if Foot button is colored. then true, else false.
         if (Int_Stone_Button_Current_Color == Resource_Interface_Color_Clicked_Color) {
-            Stone_To_Kg(binding.WeightInput.getText().toString());
+            //Stone_To_Kg(binding.WeightInput.getText().toString());
             return true;
         } else {
             Log.d(TAG, "Weight Entered In Kg");
@@ -163,7 +180,6 @@ public class Enter_Weight extends AppCompatActivity {
         User_Data.set(4, Bmr);
 
         To_Calorie_Homepage();
-
     }
 
     private void To_Calorie_Homepage() {
@@ -172,7 +188,6 @@ public class Enter_Weight extends AppCompatActivity {
         // Index 6: Username, Index 7: Weight (in kilograms)
 
         Intent Page_Movement_Intent = new Intent(Enter_Weight.this, Calorie_Homepage.class);
-
 
         Log.d(TAG, "Size = " + User_Data.size());
         Page_Movement_Intent.putExtra("User_Data", User_Data);

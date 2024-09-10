@@ -23,7 +23,6 @@ public class Enter_Height extends AppCompatActivity {
     ArrayList<String> User_Data = new ArrayList<>();
     boolean Is_Cm_Pressed = false;
     boolean Is_Inches_Pressed = false;
-    //github testing7
     String Height_Error = "Invalid Height Foot Entry";
 
     @Override
@@ -38,6 +37,7 @@ public class Enter_Height extends AppCompatActivity {
     }
 
     public void Not_Null_Checks(View view) {
+        Log.d(TAG, "Starting Not Null Checks");
         boolean Measurement_In_Foot = Is_Feet_Selected(view);
         String Cm_Height = "Not Declared"; //was null
         Log.d(TAG, "Measurement Saved = " + Measurement_In_Foot);
