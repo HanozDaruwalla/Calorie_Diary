@@ -45,7 +45,7 @@ public class Bmr_Calcs {
         reusableFunctions.Create_Toast(view.getContext(), "BMR = " + Formatted_Bmr);
 
         Database db = new Database();
-        //db.Edit_User_Data("Tester");
+
         return Formatted_Bmr;
     }
 }

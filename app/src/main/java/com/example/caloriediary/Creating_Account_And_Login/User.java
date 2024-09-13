@@ -17,7 +17,7 @@ public class User {
     String Password = "Undeclared";
 
     @PropertyName("Rmi")
-    String Rmi = "Undeclared";
+    String Bmr = "Undeclared";
 
     @PropertyName("isMale")
     boolean isMale = true; //default
@@ -81,12 +81,12 @@ public class User {
         Weight_Kg = weight_Kg;
     }
 
-    public String getRmi() {
-        return Rmi;
+    public String getBmr() {
+        return Bmr;
     }
 
-    public void setRmi(String rmi) {
-        Rmi = rmi;
+    public void setBmr(String bmr) {
+        Bmr = bmr;
     }
 
     public int getAge() {

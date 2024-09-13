@@ -79,13 +79,13 @@ public class Tester extends User {
     }
 
     @Override
-    public String getRmi() {
+    public String getBmr() {
         return Rmi;
     }
 
     @Override
-    public void setRmi(String rmi) {
-        Rmi = rmi;
+    public void setBmr(String bmr) {
+        Rmi = bmr;
     }
 
     @Override

@@ -10,11 +10,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.caloriediary.Calorie_Homepage;
+import com.example.caloriediary.Creating_Account_And_Login.Encryption_Decryption_Class;
+import com.example.caloriediary.Database.Database;
+import com.example.caloriediary.Database.Database_Value_Names;
 import com.example.caloriediary.R;
 import com.example.caloriediary.ReusableFunctions;
 import com.example.caloriediary.databinding.ActivityEnterWeightBinding;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Enter_Weight extends AppCompatActivity {
 
@@ -83,8 +87,8 @@ public class Enter_Weight extends AppCompatActivity {
                 //if condition met
 
                 Log.d(TAG, "Valid Weight Kg Entry");
-                New_Weight_In_Kg = Stone_To_Kg(Weight_Input);
-                Pack_Data_To_Arraylist_For_Bmr(New_Weight_In_Kg, view);
+
+                Pack_Data_To_Arraylist_For_Bmr(Weight_Input, view);
             } else {
                 Log.d(TAG, "Invalid Weight Kg Entry");
                 reusableFunctions.Create_Toast(getApplicationContext(), "Please Enter Your weight Correctly in Kg. e.g, 67.5");
@@ -179,8 +183,36 @@ public class Enter_Weight extends AppCompatActivity {
         // Index 6: Username, Index 7: Weight (in kilograms)
         User_Data.set(4, Bmr);
 
+        Database db = new Database();
+
+        //passes the creation type and the result of the encrypted hashmap
+        db.Edit_User_Data("Users", Pack_And_Pass_Bmr_Weight_Height(Data_For_Bmr, Bmr), User_Data.get(6));
         To_Calorie_Homepage();
     }
+
+    private HashMap<String, Object> Pack_And_Pass_Bmr_Weight_Height(ArrayList<String> Data_For_Bmr, String Bmr) {
+        HashMap<String, Object> Information_Hashmap = new HashMap<>();
+
+            //encrypt data for db
+            Log.d(TAG, "Pass And Pack Starting Encryption");
+            Database_Value_Names Db_Values = new Database_Value_Names();
+            Encryption_Decryption_Class Encryption_Class = new Encryption_Decryption_Class();
+            try {
+
+                Information_Hashmap.put(Db_Values.getDb_Height_Name(), Encryption_Class.Encryption_Function(Data_For_Bmr.get(2)));
+                Information_Hashmap.put(Db_Values.getDb_Weight_Name(), Encryption_Class.Encryption_Function(Data_For_Bmr.get(3)));
+                Information_Hashmap.put(Db_Values.getDb_Bmr_Name(), Encryption_Class.Encryption_Function(Bmr));
+
+                Log.d(TAG, "Encryption Complete");
+                //error when encryptng
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.d(TAG, "Encryption Failed");
+            }
+
+            Log.d(TAG, "Returning Hashmap");
+            return Information_Hashmap;
+        }
 
     private void To_Calorie_Homepage() {
         // Index 0: Age (in years), Index 1: Email address, Index 2: Height (in centimeters)

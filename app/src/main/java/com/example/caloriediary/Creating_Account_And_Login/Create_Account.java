@@ -119,7 +119,7 @@ public class Create_Account extends AppCompatActivity {
         Account_Info.add(ReusableFunctions.Int_To_Strng(user.getAge()));
         Account_Info.add(user.getHeight_Cm());
         Account_Info.add(user.getWeight_Kg());
-        Account_Info.add(user.getRmi());
+        Account_Info.add(user.getBmr());
 
         Page_Movement_Intent = new Intent(view.getContext(), Database.class);
 

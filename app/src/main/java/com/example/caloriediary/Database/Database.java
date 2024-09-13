@@ -115,7 +115,7 @@ public class Database extends AppCompatActivity {
         Creating_User_Details.setAge(reusableFunctions.To_Int(Imported_Data_Arraylist.get(4)));
         Creating_User_Details.setHeight_Cm(Imported_Data_Arraylist.get(5));
         Creating_User_Details.setWeight_Kg(Imported_Data_Arraylist.get(6));
-        Creating_User_Details.setRmi(Imported_Data_Arraylist.get(7));
+        Creating_User_Details.setBmr(Imported_Data_Arraylist.get(7));
 
         //log the data to see if accurate
         Log.d(TAG, "Username = " + Creating_User_Details.getUsername());
@@ -125,8 +125,7 @@ public class Database extends AppCompatActivity {
         Log.d(TAG, "Age = " + Creating_User_Details.getAge());
         Log.d(TAG, "Height_Cm = " + Creating_User_Details.getHeight_Cm());
         Log.d(TAG, "Weight_Kg = " + Creating_User_Details.getWeight_Kg());
-        Log.d(TAG, "Rmi = " + Creating_User_Details.getRmi());
-        Log.d(TAG, "Rmi = " + Creating_User_Details.getAge());
+        Log.d(TAG, "Rmi = " + Creating_User_Details.getBmr());
 
 
         Database_Controller.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -165,7 +164,7 @@ public class Database extends AppCompatActivity {
             try {
                 Creating_Users_Details.setPassword(Encryption_Class.Encryption_Function(Creating_Users_Details.getPassword()));
                 Creating_Users_Details.setEmail(Encryption_Class.Encryption_Function(Creating_Users_Details.getEmail()));
-                Creating_Users_Details.setRmi(Encryption_Class.Encryption_Function(Creating_Users_Details.getRmi()));
+                Creating_Users_Details.setBmr(Encryption_Class.Encryption_Function(Creating_Users_Details.getBmr()));
                 Creating_Users_Details.setHeight_Cm(Encryption_Class.Encryption_Function(Creating_Users_Details.getHeight_Cm()));
                 Creating_Users_Details.setWeight_Kg(Encryption_Class.Encryption_Function(Creating_Users_Details.getWeight_Kg()));
 
@@ -183,7 +182,7 @@ public class Database extends AppCompatActivity {
             Information_Hashmap.put(Db_Value_Names.getDb_Email_Name(), Creating_Users_Details.getEmail());
             Information_Hashmap.put(Db_Value_Names.getDb_Height_Name(), Creating_Users_Details.getHeight_Cm());
             Information_Hashmap.put(Db_Value_Names.getDb_Password_Name(), Creating_Users_Details.getPassword());
-            Information_Hashmap.put(Db_Value_Names.getDb_Bmr_Name(), Creating_Users_Details.getRmi());
+            Information_Hashmap.put(Db_Value_Names.getDb_Bmr_Name(), Creating_Users_Details.getBmr());
             Information_Hashmap.put(Db_Value_Names.getDb_isMale_Name(), Creating_Users_Details.isMale());
             Information_Hashmap.put(Db_Value_Names.getDb_Username_Name(), Creating_Users_Details.getUsername());
             Information_Hashmap.put(Db_Value_Names.getDb_Weight_Name(), Creating_Users_Details.getWeight_Kg());
@@ -242,7 +241,6 @@ public class Database extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "Food Added successfully");
                     reusableFunctions.Create_Toast(getApplicationContext(), "Food Added To Database. Press back twice to continue");
-
 
                 } else {
                     reusableFunctions.Create_Toast(getApplicationContext(), "Network/ Database Error. Try Again");
@@ -322,12 +320,6 @@ public class Database extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
     private void Login(ArrayList<String> Imported_Data_Arraylist, DatabaseReference Database_Controller) {
         User Login_User_Details = new User();
         Database_Value_Names Db_Value_Names = new Database_Value_Names();
@@ -403,6 +395,53 @@ public class Database extends AppCompatActivity {
         });
     }
 
+
+
+    public void Edit_User_Data(String Creation_Type, HashMap<String, Object> Information_Hashmap, String Username) {
+
+        Log.d(TAG, "In Edit Data Function");
+        DatabaseReference Database_Controller = null;
+        Database_Controller = FirebaseDatabase.getInstance().getReference();
+
+        Database_Value_Names Db_Value_Names = new Database_Value_Names();
+
+        if (Creation_Type.equals("Users")) {
+            Log.d(TAG, "In users area");
+            Database_Controller.child(Db_Value_Names.getDb_Users_Db_Name()).child(Username).updateChildren(Information_Hashmap).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                @Override
+                //add data to db (if successful login)/ go back to create account if fail
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "Information Edited");
+                    } else {
+                        reusableFunctions.Create_Toast(getApplicationContext(), "Network/ Database Error. Try Again");
+                        Log.d(TAG, "Edit Failed!");
+                    }
+                }
+            });
+        }else{
+            Log.d(TAG,"Db Name doesnt match");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private void To_Login(String Username) {
         //pass username and take user to login page
         Log.d(TAG, "To_Login_Called");
@@ -422,9 +461,8 @@ public class Database extends AppCompatActivity {
     private void Login_Success(User Gathered_Account_Details, ReusableFunctions reusableFunctions) {
         Log.d(TAG, "Login_Success_Function");
         //if bmi not calculated, calculate, else to Calorie_homepage
-        if (Gathered_Account_Details.getHeight_Cm().equals("Undeclared") || Gathered_Account_Details.getWeight_Kg().equals("Undeclared")) {
 
-            if(Gathered_Account_Details.getRmi().equals("Undeclared")){
+            if(Gathered_Account_Details.getBmr().equals("Undeclared")){
                 Page_Movement_Intent = new Intent(Database.this, Enter_Height.class);//
                 Log.d(TAG, "taking user to bmi calcs");
                 Page_Movement_Intent.putExtra("User_Data", Create_String_Arraylist(Gathered_Account_Details));
@@ -437,11 +475,6 @@ public class Database extends AppCompatActivity {
                 startActivity(Page_Movement_Intent);
 
             }
-
-
-        } else {//if bmr already calculated
-            reusableFunctions.Create_Toast(getApplicationContext(), "Go To Main App Section");
-        }
     }
 
     private ArrayList<String> Create_String_Arraylist(User Gathered_User_Data) {
@@ -455,7 +488,7 @@ public class Database extends AppCompatActivity {
         User_Data_Arraylist.add(Gathered_User_Data.getEmail());
         User_Data_Arraylist.add(Gathered_User_Data.getHeight_Cm());
         User_Data_Arraylist.add(Gathered_User_Data.getPassword());
-        User_Data_Arraylist.add(Gathered_User_Data.getRmi());
+        User_Data_Arraylist.add(Gathered_User_Data.getBmr());
         User_Data_Arraylist.add(String.valueOf(Gathered_User_Data.isMale()));
         User_Data_Arraylist.add(Gathered_User_Data.getUsername());
         User_Data_Arraylist.add(Gathered_User_Data.getWeight_Kg());
