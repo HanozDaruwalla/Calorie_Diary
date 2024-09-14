@@ -133,6 +133,7 @@ public class Camera extends AppCompatActivity {
 
     public void startGalleryChooser() {
         if (!setGalleryPermissionsRequest()) {
+            Log.d(TAG, "in gallery chooser");
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
