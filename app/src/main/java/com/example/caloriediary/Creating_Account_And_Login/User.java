@@ -16,7 +16,7 @@ public class User {
     @PropertyName("Password")
     String Password = "Undeclared";
 
-    @PropertyName("Rmi")
+    @PropertyName("Bmr")
     String Bmr = "Undeclared";
 
     @PropertyName("isMale")
@@ -25,17 +25,23 @@ public class User {
     @PropertyName("Username")
     String Username = "Undeclared";
 
-    @PropertyName("Weight")
+    @PropertyName("Weight_Kg") // was Weight
     String Weight_Kg = "Undeclared";
 
 
 
     //HEIGHT/ WEIGHT @ BMI NOT ADDED TO CONSTRUCTER. (ISNT NEEDED WHEN CREATING ACCOUNT)
-    public User(String username, String password, String password2, Boolean is_male, String email) {
-        Username = username;
-        Password = password;
-        isMale = is_male;
+
+    public User(int age, String bmr, String email, String height_Cm, String password, String username, String weight_Kg, boolean isMale) {
+        Age = age;
+        Bmr = bmr;
         Email = email;
+        Height_Cm = height_Cm;
+        Password = password;
+        Username = username;
+        Weight_Kg = weight_Kg;
+        this.isMale = isMale;
+
     }
 
     public User() {

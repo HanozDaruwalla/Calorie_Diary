@@ -347,7 +347,10 @@ public class Database extends AppCompatActivity {
 
                     //get all data from db based on username
                     Log.d(TAG, "Gathering User Info From Db");
+
+
                     User Gathered_Account_Details = snapshot.child(Db_Value_Names.getDb_Users_Db_Name()).child(Username).getValue(User.class);//send users username to the Users_Data class
+
                     Log.d(TAG, "Gathered Data Username = " + Gathered_Account_Details.getUsername());
                     Log.d(TAG, "Gathered Data Password = " + Gathered_Account_Details.getPassword());
                     Log.d(TAG, "Attempting Decryption");
@@ -362,6 +365,7 @@ public class Database extends AppCompatActivity {
                         //unencrypt pw
                         Log.d(TAG, "Password = " + Gathered_Account_Details.getPassword());
                         Unencrypted_Password = Encryption_Class.Decryption_Function(Gathered_Account_Details.getPassword());
+
                         Log.d(TAG, "Decryption Success");
                         Log.d(TAG, "Decrypted_Password = " + Unencrypted_Password);
                     } catch (Exception e) {//if encryption failure
@@ -459,10 +463,28 @@ public class Database extends AppCompatActivity {
     }
 
     private void Login_Success(User Gathered_Account_Details, ReusableFunctions reusableFunctions) {
+        String Decrypted_Bmr = "Undeclared!";
+        String Decrypted_Height = "Undeclared!";
         Log.d(TAG, "Login_Success_Function");
         //if bmi not calculated, calculate, else to Calorie_homepage
 
-            if(Gathered_Account_Details.getBmr().equals("Undeclared")){
+
+        try{
+            Encryption_Decryption_Class Decryption = new Encryption_Decryption_Class();
+            Decrypted_Bmr = Decryption.Decryption_Function(Gathered_Account_Details.getBmr());
+            Decrypted_Height = Decryption.Decryption_Function(Gathered_Account_Details.getHeight_Cm());
+
+        }catch(Exception E){
+            Log.d(TAG, "Decryption Failed");
+
+        }
+
+        Log.d(TAG, "Get Username = " + Gathered_Account_Details.getUsername());
+        Log.d(TAG, "Get Bmr = " + Decrypted_Bmr);
+        Log.d(TAG, "Get Height = " + Decrypted_Height);
+
+
+            if(Decrypted_Bmr.equals("Undeclared")){
                 Page_Movement_Intent = new Intent(Database.this, Enter_Height.class);//
                 Log.d(TAG, "taking user to bmi calcs");
                 Page_Movement_Intent.putExtra("User_Data", Create_String_Arraylist(Gathered_Account_Details));
