@@ -48,7 +48,6 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class Camera extends AppCompatActivity {
 
-
     private final static String TAG = "Camera_Class";
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int GALLERY_PERMISSIONS_REQUEST =2;
@@ -63,17 +62,16 @@ public class Camera extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate");
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_camera);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-
             setRequestImageCapture();
             setGalleryPermissionsRequest();
 
             bitmap =null;
-
 
             return insets;
         });
@@ -82,11 +80,11 @@ public class Camera extends AppCompatActivity {
 
 
     private void openCamera() {
+        Log.d(TAG, "openCamera");
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File photoFile = null;
 
         try {
-
             photoFile = createImageFile();
         } catch (IOException ex) {
             // Error occurred while creating the File
@@ -97,7 +95,7 @@ public class Camera extends AppCompatActivity {
         // Ensure that there's a camera activity to handle the intent
         if (photoFile != null) {
 
-            Log.d(TAG, "photoFile: " + photoFile);
+            Log.d(TAG, "photoFile: ");
 
             if(photoFile != null){
                 Log.d(TAG, "packageName: " + this.getPackageName());
@@ -122,7 +120,6 @@ public class Camera extends AppCompatActivity {
     // Picture source from camera or gallery dialog
 
     public void Call_Camera(View view) {
-
         openCamera();
 
     }
@@ -132,8 +129,8 @@ public class Camera extends AppCompatActivity {
     }
 
     public void startGalleryChooser() {
+        Log.d(TAG, "in gallery chooser");
         if (!setGalleryPermissionsRequest()) {
-            Log.d(TAG, "in gallery chooser");
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -148,6 +145,7 @@ public class Camera extends AppCompatActivity {
 
     //request user for Gallery permission
     private boolean setGalleryPermissionsRequest() {//check if camera has perms to write externally
+        Log.d(TAG, "in Gallery Perms Req");
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, GALLERY_PERMISSIONS_REQUEST);
             return true;
@@ -173,17 +171,19 @@ public class Camera extends AppCompatActivity {
     }
     //handles result of activity e.g. capturing an img with camera
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG, "On Activity Result");
         super.onActivityResult(requestCode, resultCode, data);//added
+
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             File f = new File(mCurrentPhotoPath);
             photoUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", f);
 
             new msyncTask().execute(photoUri);
 
-            Log.d("OnActivityResult", "Camera");
+            Log.d(TAG, "Camera");
         }
         if (requestCode == GALLERY_PERMISSIONS_REQUEST && data != null) {
-            Log.d("OnActivityResult", "Gallery");
+            Log.d(TAG, "OnActivityResult2");
 
             photoUri = data.getData();
             new msyncTask().execute(photoUri);
@@ -193,7 +193,7 @@ public class Camera extends AppCompatActivity {
 
     //reduce size of img
     public Bitmap scaleBitmapDown(Bitmap bitmap, int maxDimension) {
-
+        Log.d(TAG, "Scale Bitmap Down");
         int originalWidth = bitmap.getWidth();
         int originalHeight = bitmap.getHeight();
         int resizedWidth = maxDimension;
@@ -209,6 +209,7 @@ public class Camera extends AppCompatActivity {
             resizedHeight = maxDimension;
             resizedWidth = maxDimension;
         }
+        Log.d(TAG, "iScale Down complete");
         return Bitmap.createScaledBitmap(bitmap, resizedWidth, resizedHeight, false);
     }
 
@@ -216,6 +217,7 @@ public class Camera extends AppCompatActivity {
 
     //creates file to store img
     private File createImageFile() throws IOException {
+        Log.d(TAG, "create imagefile");
     try{
         // Create an image file name
         Log.d(TAG, "in createImageFile");
@@ -246,6 +248,7 @@ public class Camera extends AppCompatActivity {
 
     // call Google Vision cloud vision api
     public void callGoogleVision(Bitmap bitmap) {
+        Log.d(TAG, "callgooglevision");
         JSONObject mJsonObject = new JSONObject();
         JSONObject imageJObj = new JSONObject();
         JSONObject featuresJObj = new JSONObject();
@@ -270,7 +273,7 @@ public class Camera extends AppCompatActivity {
             }
             mJsonObject.put("requests", new JSONArray().put(concatJObj));
 
-            Log.d("JsonMy", imageEncoded);
+            Log.d(TAG, "JsonMy");
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -285,18 +288,18 @@ public class Camera extends AppCompatActivity {
         client.post(this, CLOUD_VISION_REQUEST_URL, stringEntity, "application/json", new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d("Response", response.toString());
+                Log.d(TAG, "response");
 
                 try {
                     JSONArray jsonArray = response.getJSONArray("responses").getJSONObject(0).getJSONArray("labelAnnotations");
                     if (jsonArray != null) {
                         arrayList = convertToArrList(jsonArray);
                         for (String str : arrayList) {
-                            Log.d("Label", str);
+                            Log.d(TAG, "label" + str);
                         }
                         Intent i = new Intent(getBaseContext(), MainActivity.class);
-                        i.putExtra("StringArrList", arrayList);
-                        i.putExtra("BitmapUri", photoUri.toString());
+                        i.putExtra(TAG, "StringArrList" + arrayList);
+                        i.putExtra(TAG, "BitmapUri" + photoUri.toString());
                         startActivity(i);
                         finish();
                     }
@@ -307,7 +310,7 @@ public class Camera extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("Failed Response", responseString);
+                Log.d(TAG, "Google Vision Call Failure");
             }
         });
     }
@@ -329,24 +332,21 @@ public class Camera extends AppCompatActivity {
         if (uri != null) {
             try {
                 // scale the image to save on bandwidth
-                bitmap =
-                        scaleBitmapDown(
-                                MediaStore.Images.Media.getBitmap(getContentResolver(), uri),
-                                1200);
+                bitmap = scaleBitmapDown(MediaStore.Images.Media.getBitmap(getContentResolver(), uri), 1200);
 
             } catch (IOException e) {
-                Log.d("upload", "Image picking failed because " + e.getMessage());
+                Log.d("upload", "Image picking failed because");
                 Toast.makeText(this, R.string.image_picker_error, Toast.LENGTH_LONG).show();
             }
         } else {
-            Log.d("upload", "Image picker gave us a null image.");
+            Log.d(TAG, "Image picker gave us a null image.");
             Toast.makeText(this, R.string.image_picker_error, Toast.LENGTH_LONG).show();
         }
 
     }
 
-    public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality)
-    {//encodes image to base 64 string for transmission
+    public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality) {//encodes image to base 64 string for transmission
+        Log.d(TAG, "Encode Base 64");
         ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
 
         image.compress(compressFormat, quality, byteArrayOS);
@@ -354,6 +354,7 @@ public class Camera extends AppCompatActivity {
     }
 
     private void notifyMediaScanner(File photoFile) {
+        Log.d(TAG, "in Notify Media Scanner");
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         Uri contentUri = Uri.fromFile(photoFile);
         mediaScanIntent.setData(contentUri);
@@ -367,12 +368,14 @@ public class Camera extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Uri... params) {
+            Log.d(TAG, "in doInBackground");
             uploadImage(params[0]);
             return null;
         }
 
         @Override
         protected void onPostExecute(String s) {
+            Log.d(TAG, "in onPostExecute");
             callGoogleVision(bitmap);
         }
 
