@@ -80,7 +80,7 @@ public class Camera extends AppCompatActivity {
 
 
     private void openCamera() {
-        Log.d(TAG, "openCamera");
+        Log.d(TAG, "openCamera function");
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File photoFile = null;
 
@@ -88,32 +88,25 @@ public class Camera extends AppCompatActivity {
             photoFile = createImageFile();
         } catch (IOException ex) {
             // Error occurred while creating the File
-            Log.d(TAG, "Input Output exception error");
+            Log.d(TAG, "error making photofile");
 
         }
 
         // Ensure that there's a camera activity to handle the intent
-        if (photoFile != null) {
+        if(photoFile != null){
+            Log.d(TAG, "packageName: " + this.getPackageName());
 
-            Log.d(TAG, "photoFile: ");
+            Uri photoURI = FileProvider.getUriForFile(this, this.getPackageName() + ".provider", photoFile);
 
-            if(photoFile != null){
-                Log.d(TAG, "packageName: " + this.getPackageName());
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
 
-                Uri photoURI = FileProvider.getUriForFile(this, this.getPackageName() + ".provider", photoFile);
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            Log.d(TAG, "Uri made and Pic Intent");
 
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                Log.d(TAG, "Uri made and Pic Intent");
-
-                notifyMediaScanner(photoFile);
-            }
-            else{
-                Log.d(TAG, "Is Null");
-            }
-        }else{
-            Log.d(TAG, "Failure");
+            notifyMediaScanner(photoFile);
+        }
+        else{
+            Log.d(TAG, "Is Null");
         }
     }
 
