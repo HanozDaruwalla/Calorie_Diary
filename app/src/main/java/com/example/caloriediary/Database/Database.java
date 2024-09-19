@@ -28,6 +28,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -42,6 +44,7 @@ public class Database extends AppCompatActivity {
     private String Creation_Type = "";
     int Sent_From = -1;
     ArrayList<String> Imported_Data_Arraylist = new ArrayList<>();
+    String Todays_Date = (ReusableFunctions.Date_Creator().replace("/","-"));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -232,7 +235,8 @@ public class Database extends AppCompatActivity {
 
         Log.d(TAG, "Add Account: Information packed for finish");
 
-        DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Username).push();
+        //DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Username).push();
+        DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Username).child(Todays_Date).push();
 
         Db_Reference.setValue(Information_Hashmap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -260,7 +264,8 @@ public class Database extends AppCompatActivity {
         String Meal_Type = Name_Date_Meal_Type.get(2);
 
         // Reference to the "Food" node in the database
-        DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name());
+        //DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name());
+        DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Todays_Date);
 
         // Query to get all entries where the Username matches
         Query query = Db_Reference.orderByChild(Db_Value_Names.getDb_Username_Name()).equalTo(Username);
