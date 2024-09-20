@@ -251,12 +251,13 @@ public class Camera extends AppCompatActivity {
         String imageEncoded = encodeToBase64(bitmap, Bitmap.CompressFormat.JPEG, 100);
         AsyncHttpClient client = new AsyncHttpClient();
         StringEntity stringEntity = null;
-
+        Log.d(TAG, "callgooglevision Vars Made");
         try {
             imageJObj.put("image", new JSONObject().put("content", imageEncoded));
             typeMaxRJObj.put("type", "LABEL_DETECTION");
             typeMaxRJObj.put("maxResults", 6);
             featuresJObj.put("features", new JSONArray().put(typeMaxRJObj));
+            Log.d(TAG, "callgooglevision obvs put");
             for (JSONObject obj : objs) {
                 Iterator<String> it = obj.keys();
                 while (it.hasNext()) {
@@ -266,7 +267,7 @@ public class Camera extends AppCompatActivity {
             }
             mJsonObject.put("requests", new JSONArray().put(concatJObj));
 
-            Log.d(TAG, "JsonMy");
+            Log.d(TAG, "JsonMy ");
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -343,6 +344,7 @@ public class Camera extends AppCompatActivity {
         ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
 
         image.compress(compressFormat, quality, byteArrayOS);
+        Log.d(TAG, "Encode Base 64 COMPLETE");
         return Base64.encodeToString(byteArrayOS.toByteArray(),Base64.DEFAULT);
     }
 
