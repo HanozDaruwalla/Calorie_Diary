@@ -50,10 +50,7 @@ public class OptionForBmi extends AppCompatActivity {
 
     public void No_Button_Pressed(View view) {
         Intent Page_Movement_Intent = new Intent(this, Calorie_Homepage.class);
-
-        Log.d(TAG, "Size = " + User_Data.size());
         Page_Movement_Intent.putExtra("User_Data", User_Data);
-
         startActivity(Page_Movement_Intent);
 
     }

@@ -377,6 +377,7 @@
             android:textStyle="bold"
             android:onClick="Add_Breakfast_Button"
             android:layout_weight="1"
+            android:visibility="invisible"
 
             />
 
@@ -392,6 +393,7 @@
             android:textStyle="bold"
             android:onClick="Add_Lunch_Button"
             android:layout_weight="1"
+            android:visibility="invisible"
 
             />
 
@@ -407,7 +409,7 @@
             android:textStyle="bold"
             android:onClick="Add_Dinner_Button"
             android:layout_weight="1"
-
+            android:visibility="invisible"
             />
 
     </LinearLayout>

@@ -5,18 +5,12 @@ import android.util.Log;
 import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
-/**
- * Created by yjj781265 on 7/27/2017.
- */
 
 public class NutritionData {
     private String foodName, photoUrl, servingSize;
     private int calories, protein, totalfat, sugar, totalCarbonhydrate, sodium,
             cholesterol, potassium, diertaryFiber;
     private static final int NULL_VALUE =0;
-
-
-
 
     public static NutritionData fromJson(JSONObject jsonObject) {
         NutritionData data = new NutritionData();
@@ -49,13 +43,9 @@ public class NutritionData {
             Log.d("Success JSON", data.foodName + " " + data.servingSize);
 
         } catch (JSONException e) {
-
             Log.d("JSON response", e.toString());
-
         }
-
         return data;
-
     }
 
     private static String servingSizeMaker(JSONObject foods) {

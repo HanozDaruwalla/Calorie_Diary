@@ -65,6 +65,8 @@ public class MainActivity2 extends AppCompatActivity {
     String Username = "Undefined";
     String Bmr = "Undefined";
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,8 +93,6 @@ public class MainActivity2 extends AppCompatActivity {
             }else{
                 Log.d(TAG, "Shared preferences has got more or less than 2 values!!!!");
             }
-
-
 
             binding.progressBar.setVisibility(View.INVISIBLE);
             input_method_manager = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
@@ -292,6 +292,10 @@ public class MainActivity2 extends AppCompatActivity {
         Log.d(TAG, "7");
         Log.d(TAG, "Search_Button_Pressed");
         if(!(binding.SearchBar.getText().toString().equals(""))){
+            binding.BreakfastButton.setVisibility(View.VISIBLE);
+            binding.LunchButton.setVisibility(View.VISIBLE);
+            binding.DinnerButton.setVisibility(View.VISIBLE);
+
             binding.progressBar.setVisibility(View.VISIBLE);
             Food_Item = binding.SearchBar.getText().toString();
             connectNutrionix(Food_Item);
@@ -339,6 +343,7 @@ public class MainActivity2 extends AppCompatActivity {
     public void Add_Breakfast_Button(View view) {
         Meal_Type = "Breakfast";
         if(Is_Data_Entered()){
+            Buttons_Invisble();
             Save_Button_Pressed(Meal_Type);
         }
     }
@@ -346,6 +351,7 @@ public class MainActivity2 extends AppCompatActivity {
     public void Add_Lunch_Button(View view) {
         Meal_Type = "Lunch";
         if(Is_Data_Entered()){
+            Buttons_Invisble();
             Save_Button_Pressed(Meal_Type);
         }
     }
@@ -354,7 +360,9 @@ public class MainActivity2 extends AppCompatActivity {
         Meal_Type = "Dinner";
 
         if(Is_Data_Entered()){
+            Buttons_Invisble();
             Save_Button_Pressed(Meal_Type);
+
         }
 
     }
@@ -367,6 +375,12 @@ public class MainActivity2 extends AppCompatActivity {
             return true;
         }
 
+    }
+
+    private void Buttons_Invisble(){
+        binding.BreakfastButton.setVisibility(View.INVISIBLE);
+        binding.LunchButton.setVisibility(View.INVISIBLE);
+        binding.DinnerButton.setVisibility(View.INVISIBLE);
     }
 
 

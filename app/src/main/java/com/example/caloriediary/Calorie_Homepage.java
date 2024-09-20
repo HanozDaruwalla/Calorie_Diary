@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.caloriediary.Api_Refactored.Camera;
 import com.example.caloriediary.Api_Refactored.MainActivity2;
+import com.example.caloriediary.Creating_Account_And_Login.User;
 import com.example.caloriediary.RecyclerView.recyclerview;
 import com.example.caloriediary.databinding.ActivityCalorieHomepageBinding;
 
@@ -33,6 +34,12 @@ public class Calorie_Homepage extends AppCompatActivity {
 
         User_Data = getIntent().getExtras().getStringArrayList("User_Data");
 
+        try{
+            binding.TitleLabel.setText("Welcome " + User_Data.get(6));
+        }catch(Exception E){
+            binding.TitleLabel.setText("Welcome User");
+        }
+
     }
 
     public void Camera_Button_Pressed(View view) {
@@ -45,7 +52,6 @@ public class Calorie_Homepage extends AppCompatActivity {
     public void Search_Button_Pressed(View view) {
         Log.d(TAG, "Search Button Pressed");
         Intent intent = new Intent(Calorie_Homepage.this, MainActivity2.class);
-
 
         Log.d(TAG, "Save data to Shared Preference");
 
