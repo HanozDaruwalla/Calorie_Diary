@@ -249,6 +249,7 @@ public class Camera extends AppCompatActivity {
         JSONObject concatJObj = new JSONObject();
         JSONObject[] objs = new JSONObject[]{imageJObj, featuresJObj};
         String imageEncoded = encodeToBase64(bitmap, Bitmap.CompressFormat.JPEG, 100);
+        Log.d(TAG, "Encode To Base 64 complete");
         AsyncHttpClient client = new AsyncHttpClient();
         StringEntity stringEntity = null;
         Log.d(TAG, "callgooglevision Vars Made");
@@ -257,7 +258,7 @@ public class Camera extends AppCompatActivity {
             typeMaxRJObj.put("type", "LABEL_DETECTION");
             typeMaxRJObj.put("maxResults", 6);
             featuresJObj.put("features", new JSONArray().put(typeMaxRJObj));
-            Log.d(TAG, "callgooglevision obvs put");
+            Log.d(TAG, "callgooglevision objs put");
             for (JSONObject obj : objs) {
                 Iterator<String> it = obj.keys();
                 while (it.hasNext()) {
@@ -274,30 +275,42 @@ public class Camera extends AppCompatActivity {
         }
 
         try {
+            Log.d(TAG, "Put Json to String Array ");
             stringEntity = new StringEntity(mJsonObject.toString());
+            Log.d(TAG, "success putting Json to String Array ");
         } catch (UnsupportedEncodingException e) {
+            Log.d(TAG, "Failure Putting Json to String Array (which is null)");
             e.printStackTrace();
         }
 
+        Log.d(TAG, "Starting Client Post");
         client.post(this, CLOUD_VISION_REQUEST_URL, stringEntity, "application/json", new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Log.d(TAG, "response");
-
                 try {
+                    Log.d(TAG, "Trying to get responses");
                     JSONArray jsonArray = response.getJSONArray("responses").getJSONObject(0).getJSONArray("labelAnnotations");
                     if (jsonArray != null) {
+                        Log.d(TAG, "Json Not Null. Put to arraylist");
                         arrayList = convertToArrList(jsonArray);
                         for (String str : arrayList) {
                             Log.d(TAG, "label" + str);
                         }
+                        Log.d(TAG,"Done");
+                        /*
                         Intent i = new Intent(getBaseContext(), MainActivity.class);
                         i.putExtra(TAG, "StringArrList" + arrayList);
                         i.putExtra(TAG, "BitmapUri" + photoUri.toString());
                         startActivity(i);
                         finish();
+
+                         */
+                    }else{
+                        Log.d(TAG, "Error making string arraylist for jsopn output");
                     }
                 } catch (JSONException e) {
+                    Log.d(TAG, "Error occured in formimng string arraylist");
                     Toast.makeText(Camera.this, "Error Occurred Try Different Picture", Toast.LENGTH_LONG).show();
                 }
             }
@@ -355,8 +368,6 @@ public class Camera extends AppCompatActivity {
         mediaScanIntent.setData(contentUri);
         sendBroadcast(mediaScanIntent);
     }
-
-
 
     //: This inner class extends AsyncTask to handle the uploading of an image and subsequent call to the Google Vision API in a background thread.
     public class msyncTask extends AsyncTask<Uri,String,String> {
