@@ -238,7 +238,6 @@ public class Camera extends AppCompatActivity {
     }
     }
 
-
     // call Google Vision cloud vision api
     public void callGoogleVision(Bitmap bitmap) {
         Log.d(TAG, "callgooglevision");
@@ -284,45 +283,67 @@ public class Camera extends AppCompatActivity {
         }
 
         Log.d(TAG, "Starting Client Post");
-        client.post(this, CLOUD_VISION_REQUEST_URL, stringEntity, "application/json", new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d(TAG, "response");
-                try {
-                    Log.d(TAG, "Trying to get responses");
-                    JSONArray jsonArray = response.getJSONArray("responses").getJSONObject(0).getJSONArray("labelAnnotations");
-                    if (jsonArray != null) {
-                        Log.d(TAG, "Json Not Null. Put to arraylist");
-                        arrayList = convertToArrList(jsonArray);
-                        for (String str : arrayList) {
-                            Log.d(TAG, "label" + str);
-                        }
-                        Log.d(TAG,"Done");
+        try{
+            client.post(this, CLOUD_VISION_REQUEST_URL, stringEntity, "application/json", new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    Log.d(TAG, "response");
+                    try {
+                        Log.d(TAG, "Trying to get responses");
+                        JSONArray jsonArray = response.getJSONArray("responses").getJSONObject(0).getJSONArray("labelAnnotations");
+                        if (jsonArray != null) {
+                            Log.d(TAG, "Json Not Null. Put to arraylist");
+                            arrayList = convertToArrList(jsonArray);
                         /*
                         Intent i = new Intent(getBaseContext(), MainActivity.class);
                         i.putExtra(TAG, "StringArrList" + arrayList);
                         i.putExtra(TAG, "BitmapUri" + photoUri.toString());
                         startActivity(i);
                         finish();
-
                          */
-                    }else{
-                        Log.d(TAG, "Error making string arraylist for jsopn output");
+                        }else{
+                            Log.d(TAG, "Error making string arraylist for jsopn output");
+                        }
+                    } catch (JSONException e) {
+                        Log.d(TAG, "Error occured in formimng string arraylist");
+                        Toast.makeText(Camera.this, "Error Occurred Try Different Picture", Toast.LENGTH_LONG).show();
                     }
-                } catch (JSONException e) {
-                    Log.d(TAG, "Error occured in formimng string arraylist");
-                    Toast.makeText(Camera.this, "Error Occurred Try Different Picture", Toast.LENGTH_LONG).show();
                 }
-            }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d(TAG, "Google Vision Call Failure");
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    if (responseString != null) {
+                        Log.d(TAG, "Response: " + responseString);
+                    }
+                    if (throwable != null) {
+                        Log.d(TAG, "Error: " + throwable.getMessage());
+                    }
+                }
+            });
+            Log.d(TAG, "callGoogleVision Finished");
+        }catch(Exception E){
+            Log.d(TAG, "Failed Client Request");
+        }
+        Output_Json(arrayList);
+    }
+
+
+    private void Output_Json(ArrayList<String> arraylist){
+        Log.d(TAG, "In Output_Json");
+
+        try{
+            for (String str : arrayList) {
+                Log.d(TAG, "label" + str);
             }
-        });
+            Log.d(TAG,"Done");
+        }catch(Exception E){
+
+            Log.d(TAG, "Output Failure");
+        }
     }
 
     private ArrayList<String> convertToArrList(JSONArray jsonArray){
+        Log.d(TAG, "In Convert Arraylist");
         ArrayList<String> labelList = new ArrayList<>();
         for(int i =0; i<jsonArray.length();i++){
             try {

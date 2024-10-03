@@ -80,10 +80,8 @@ public class MainActivity2 extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 
-
             SharedPreferences shared_preference = getSharedPreferences("User_Data", Context.MODE_PRIVATE);
             String data = shared_preference.getString("Data", null);
-
 
             String[] Values_In_Preference = data.split(",");
             if (Values_In_Preference.length == 2) {

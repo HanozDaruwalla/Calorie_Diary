@@ -119,19 +119,26 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:background="@color/panel_color">
+                            android:background="@color/panel_color"
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/Food_Logging_Label"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="Food Logging:"
-                                android:textColor="@color/black"
-                                android:textAlignment="center"
-                                android:textSize="20sp"
+                                android:layout_height="wrap_content"
                                 android:onClick="To_Breakfast_Recycler"
-                                />
+                                android:text="Food Diary:"
+                                android:textAlignment="center"
+                                android:textColor="@color/black"
+                                android:textSize="20sp" />
+
+                            <ImageView
+                                android:id="@+id/imageView7"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:srcCompat="@drawable/_6"
+                                android:onClick="To_Breakfast_Recycler"/>
+
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 

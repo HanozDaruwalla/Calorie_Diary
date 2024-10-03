@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     android:background="@color/interface_color"
     android:orientation="vertical"
-    android:padding="8dp"
-    android:layout_margin="10dp">
+    android:padding="4dp"
+    android:layout_margin="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:text="Name of Food: "
+            android:textSize="12sp"
             android:textStyle="bold"/>
 
         <TextView
@@ -26,6 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
+            android:textSize="12sp"
             android:text="Default"/>
     </LinearLayout>
 
@@ -34,6 +36,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:textColor="@color/black"
+        android:textSize="12sp"
         android:paddingBottom="4dp">
 
         <TextView
@@ -41,6 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Serving Size: "
+            android:textSize="12sp"
             android:textColor="@color/black"
             android:textStyle="bold"/>
 
@@ -49,6 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1 piece"
+            android:textSize="12sp"
             android:textColor="@color/black"
             android:layout_marginLeft="10dp"/>
     </LinearLayout>
@@ -64,6 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Calories: "
+            android:textSize="12sp"
             android:textColor="@color/black"
             android:textStyle="bold"/>
 
@@ -72,6 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="105"
+            android:textSize="12sp"
             android:textColor="@color/black"
             android:layout_marginLeft="38dp"/>
     </LinearLayout>
@@ -88,6 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Total Fat: "
+            android:textSize="12sp"
             android:textColor="@color/black"
             android:textStyle="bold"/>
 
@@ -96,8 +104,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0.3g"
+            android:textSize="12sp"
             android:textColor="@color/black"
             android:layout_marginLeft="35dp"
             />
     </LinearLayout>
 </LinearLayout>
+
