@@ -96,7 +96,7 @@ public class Database extends AppCompatActivity {
             Log.d(TAG, "Add Food");
 
             Database_Value_Names Db_Value_Names = new Database_Value_Names();
-            Get_Food_Data(Imported_Data_Arraylist, Db_Value_Names, Database_Controller);
+            Get_Food_Data(Imported_Data_Arraylist, Database_Controller);
 
         } else {
             Log.d(TAG, "Login: Unexpected Page Transfer");
@@ -256,20 +256,23 @@ public class Database extends AppCompatActivity {
     }
 
 
-    public void Get_Food_Data(ArrayList<String> Name_Date_Meal_Type, Database_Value_Names Db_Value_Names, DatabaseReference Database_Controller) {
+    public void Get_Food_Data(ArrayList<String> Name_Date_Meal_Type) {
+        Database_Value_Names Db_Value_Names = new Database_Value_Names();
+
         Log.d(TAG, "Fetching Food Data");
 
         String Username = Name_Date_Meal_Type.get(0);
         String Date = Name_Date_Meal_Type.get(1);
         String Meal_Type = Name_Date_Meal_Type.get(2);
+        Log.d(TAG, "Vars Set");
 
         // Reference to the "Food" node in the database
         //DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name());
-        DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Todays_Date);
-
+        DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Username).child(Todays_Date);
+        Log.d(TAG, "path set");
         // Query to get all entries where the Username matches
         Query query = Db_Reference.orderByChild(Db_Value_Names.getDb_Username_Name()).equalTo(Username);
-
+        Log.d(TAG, "Query");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -287,6 +290,7 @@ public class Database extends AppCompatActivity {
                         int fetchedFat = snapshot.child(Db_Value_Names.getDb_Fat_Name()).getValue(Integer.class);
                         String fetchedMealType = snapshot.child(Db_Value_Names.getDb_Meal_Type_Name()).getValue(String.class);
 
+                        Log.d(TAG, "got info");
                         // Log the fetched data
                         Log.d(TAG, "Fetched Data: Username=" + fetchedUsername + ", Date=" + fetchedDate +
                                 ", FoodName=" + fetchedFoodName + ", PortionSize=" + fetchedPortionSize +
@@ -339,7 +343,6 @@ public class Database extends AppCompatActivity {
         Log.d(TAG, "Get Username = " + Username);
         Log.d(TAG, "Login: Username got from GUI");
 
-
         Database_Controller.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -349,13 +352,9 @@ public class Database extends AppCompatActivity {
                     String Unencrypted_Username = "N/A";
                     String Unencrypted_Password = "N/A";
                     //Unencrypted Username is kept encase encryption of username is done
-
                     //get all data from db based on username
                     Log.d(TAG, "Gathering User Info From Db");
-
-
                     User Gathered_Account_Details = snapshot.child(Db_Value_Names.getDb_Users_Db_Name()).child(Username).getValue(User.class);//send users username to the Users_Data class
-
                     Log.d(TAG, "Gathered Data Username = " + Gathered_Account_Details.getUsername());
                     Log.d(TAG, "Gathered Data Password = " + Gathered_Account_Details.getPassword());
                     Log.d(TAG, "Attempting Decryption");
@@ -370,7 +369,6 @@ public class Database extends AppCompatActivity {
                         //unencrypt pw
                         Log.d(TAG, "Password = " + Gathered_Account_Details.getPassword());
                         Unencrypted_Password = Encryption_Class.Decryption_Function(Gathered_Account_Details.getPassword());
-
                         Log.d(TAG, "Decryption Success");
                         Log.d(TAG, "Decrypted_Password = " + Unencrypted_Password);
                     } catch (Exception e) {//if encryption failure
@@ -383,7 +381,6 @@ public class Database extends AppCompatActivity {
                         reusableFunctions.Create_Toast(getApplicationContext(), "Login Successful");
                         Log.d(TAG, "Successful Login");
                         Login_Success(Gathered_Account_Details, reusableFunctions);
-
                     } else {
                         reusableFunctions.Create_Toast(getApplicationContext(), "Incorrect Username Or Password");
                         Log.d(TAG, "Password Doesn't Exist");
@@ -395,7 +392,6 @@ public class Database extends AppCompatActivity {
                     To_Login(Login_User_Details.getUsername());
                 }
             }
-
             @Override//if db cancelled. often cause security
             public void onCancelled(@NonNull DatabaseError error) {
                 reusableFunctions.Create_Toast(getApplicationContext(), "Database Error. Cancelled");
@@ -407,17 +403,14 @@ public class Database extends AppCompatActivity {
 
 
     public void Edit_User_Data(String Creation_Type, HashMap<String, Object> Information_Hashmap, String Username) {
-
         Log.d(TAG, "In Edit Data Function");
         DatabaseReference Database_Controller = null;
         Database_Controller = FirebaseDatabase.getInstance().getReference();
-
         Database_Value_Names Db_Value_Names = new Database_Value_Names();
 
         if (Creation_Type.equals("Users")) {
             Log.d(TAG, "In users area");
             Database_Controller.child(Db_Value_Names.getDb_Users_Db_Name()).child(Username).updateChildren(Information_Hashmap).addOnCompleteListener(new OnCompleteListener<Void>() {
-
                 @Override
                 //add data to db (if successful login)/ go back to create account if fail
                 public void onComplete(@NonNull Task<Void> task) {
@@ -473,7 +466,6 @@ public class Database extends AppCompatActivity {
         Log.d(TAG, "Login_Success_Function");
         //if bmi not calculated, calculate, else to Calorie_homepage
 
-
         try{
             Encryption_Decryption_Class Decryption = new Encryption_Decryption_Class();
             Decrypted_Bmr = Decryption.Decryption_Function(Gathered_Account_Details.getBmr());
@@ -483,7 +475,6 @@ public class Database extends AppCompatActivity {
             Log.d(TAG, "Decryption Failed");
 
         }
-
         Log.d(TAG, "Get Username = " + Gathered_Account_Details.getUsername());
         Log.d(TAG, "Get Bmr = " + Decrypted_Bmr);
         Log.d(TAG, "Get Height = " + Decrypted_Height);
@@ -500,7 +491,6 @@ public class Database extends AppCompatActivity {
                 Log.d(TAG, "taking user to bmi option");
                 Page_Movement_Intent.putExtra("User_Data", Create_String_Arraylist(Gathered_Account_Details));
                 startActivity(Page_Movement_Intent);
-
             }
     }
 

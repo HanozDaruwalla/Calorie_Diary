@@ -10,6 +10,7 @@ public class NutritionData {
     private String foodName, photoUrl, servingSize;
     private int calories, protein, totalfat, sugar, totalCarbonhydrate, sodium,
             cholesterol, potassium, diertaryFiber;
+
     private static final int NULL_VALUE =0;
 
     public static NutritionData fromJson(JSONObject jsonObject) {

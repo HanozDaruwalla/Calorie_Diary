@@ -1,5 +1,6 @@
 package com.example.caloriediary.RecyclerView.ui.dashboard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.caloriediary.Api_Refactored.MainActivity2;
+import com.example.caloriediary.Database.Database;
 import com.example.caloriediary.RecyclerView.Item;
 import com.example.caloriediary.RecyclerView.ItemAdapter;
 import com.example.caloriediary.databinding.FragmentDashboardBinding;
@@ -25,10 +28,7 @@ public class DashboardFragment extends Fragment {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {DashboardViewModel dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -45,6 +45,16 @@ public class DashboardFragment extends Fragment {
         itemList.add(new Item("peach", 23, 34, "large"));
         itemList.add(new Item("Rubarb", 23, 34, "large"));
 
+        /*Intent Page_Movement_Intent = new Intent(getActivity(), Database.class);
+        Page_Movement_Intent.putExtra("Sent_Info",User_Data);
+        Page_Movement_Intent.putExtra("Sent_From",3);
+        startActivity(Page_Movement_Intent);
+
+         */
+
+        Database db = new Database();
+        db.Get_Food_Data();
+        //set the recycler view to arraylist
         adapter = new ItemAdapter(itemList);
         recyclerView.setAdapter(adapter);
 
