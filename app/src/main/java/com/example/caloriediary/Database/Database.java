@@ -46,6 +46,7 @@ public class Database extends AppCompatActivity {
     ArrayList<String> Imported_Data_Arraylist = new ArrayList<>();
     String Todays_Date = (ReusableFunctions.Date_Creator().replace("/","-"));
 
+    DatabaseReference Database_Controller = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "Login: onCreate");
@@ -54,6 +55,7 @@ public class Database extends AppCompatActivity {
         setContentView(R.layout.activity_database);
         setContentView(binding.getRoot());
 
+        Database_Controller = FirebaseDatabase.getInstance().getReference();
         //gets the data the user entered
         Imported_Data_Arraylist = getIntent().getExtras().getStringArrayList("Sent_Info");
         Log.d(TAG, "Imported_Arraylist.Username() = " + Imported_Data_Arraylist.get(0));
@@ -64,8 +66,6 @@ public class Database extends AppCompatActivity {
         //firebase extras
         //FirebaseAuth mAuth = FirebaseAuth.getInstance(); only for reset pw
         FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        DatabaseReference Database_Controller = null;
-        Database_Controller = FirebaseDatabase.getInstance().getReference();
         Log.d(TAG, "Login: onCreate Complete");
 
         // 0 = Create_Account, 1 = login, 2 = Add Product From Db
@@ -96,7 +96,7 @@ public class Database extends AppCompatActivity {
             Log.d(TAG, "Add Food");
 
             Database_Value_Names Db_Value_Names = new Database_Value_Names();
-            Get_Food_Data(Imported_Data_Arraylist, Database_Controller);
+            Get_Food_Data(Imported_Data_Arraylist);
 
         } else {
             Log.d(TAG, "Login: Unexpected Page Transfer");

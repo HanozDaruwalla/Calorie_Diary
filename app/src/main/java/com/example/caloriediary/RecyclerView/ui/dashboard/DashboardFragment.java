@@ -27,6 +27,7 @@ public class DashboardFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    ArrayList<String> User_Data = new ArrayList();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {DashboardViewModel dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
 
@@ -40,6 +41,9 @@ public class DashboardFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
+        //EDIT
+        //User_Data = getIntent().getExtras().getStringArrayList("UsernameDateFoodtype");
+
         List<Item> itemList = new ArrayList<>();
         itemList.add(new Item("apple", 23, 34, "large"));
         itemList.add(new Item("peach", 23, 34, "large"));
@@ -52,8 +56,11 @@ public class DashboardFragment extends Fragment {
 
          */
 
-        Database db = new Database();
+        //EDIT
+        /*Database db = new Database();
         db.Get_Food_Data();
+
+         */
         //set the recycler view to arraylist
         adapter = new ItemAdapter(itemList);
         recyclerView.setAdapter(adapter);

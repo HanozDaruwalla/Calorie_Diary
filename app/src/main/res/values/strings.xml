@@ -21,6 +21,8 @@
     </string-array>
 
 
+    <string name="Lunch_Meal_Type">Lunch</string>
+
     <string name="calories">Calories:</string>
     <string name="food_name">Product Name:</string>
     <string name="serving_size">Serving Size:</string>
