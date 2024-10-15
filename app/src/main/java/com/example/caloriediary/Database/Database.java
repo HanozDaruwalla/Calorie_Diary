@@ -236,7 +236,7 @@ public class Database extends AppCompatActivity {
         Log.d(TAG, "Add Account: Information packed for finish");
 
         //DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Username).push();
-        DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Username).child(Todays_Date).push();
+        DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Username).child(Todays_Date).child(Meal_Type).push();
 
         Db_Reference.setValue(Information_Hashmap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -268,7 +268,7 @@ public class Database extends AppCompatActivity {
 
         // Reference to the "Food" node in the database
         //DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name());
-        DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Username).child(Todays_Date);
+        DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Username).child(Todays_Date).child(Meal_Type);
         Log.d(TAG, "path set");
         // Query to get all entries where the Username matches
         Query query = Db_Reference.orderByChild(Db_Value_Names.getDb_Username_Name()).equalTo(Username);
