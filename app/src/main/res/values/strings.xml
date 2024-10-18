@@ -21,7 +21,9 @@
     </string-array>
 
 
+    <string name="Breakfast_Meal_Type">Breakfast</string>
     <string name="Lunch_Meal_Type">Lunch</string>
+    <string name="Dinner_Meal_Type">Dinner</string>
 
     <string name="calories">Calories:</string>
     <string name="food_name">Product Name:</string>

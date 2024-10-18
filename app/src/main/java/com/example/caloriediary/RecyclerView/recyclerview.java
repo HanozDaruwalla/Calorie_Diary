@@ -44,23 +44,36 @@ public class recyclerview extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
 
         //EDIT
-        //Lunch_Data_Passer(User_Data);
+        Lunch_Data_Passer(User_Data);
     }
 
     private void Lunch_Data_Passer(ArrayList<String> userdata){
+
+        Log.d(TAG, "In Function");
         ArrayList<String> UsernameDateFoodtype = new ArrayList<>();
-        UsernameDateFoodtype.add(userdata.get(5));
+        UsernameDateFoodtype.add(userdata.get(6));
         UsernameDateFoodtype.add(reusableFunctions.Date_Creator());
         UsernameDateFoodtype.add(getString(R.string.Lunch_Meal_Type));
+        Log.d(TAG, "Assigned");
         //gets from string xml file
 
-        Log.d(TAG, "data = " + UsernameDateFoodtype.get(0) + "+" + UsernameDateFoodtype.get(0) + "+" + UsernameDateFoodtype.get(2));
+
+
+        Log.d(TAG, "data = " + UsernameDateFoodtype.get(0) + "+" + UsernameDateFoodtype.get(1) + "+" + UsernameDateFoodtype.get(2));
         Log.d(TAG, "Vars Set");
-        Page_Movement_Intent = new Intent(recyclerview.this, DashboardFragment.class);//
+        Database DB = new Database();
+        DB.Get_Food_Data(UsernameDateFoodtype);
+
+
+
+
+        /*Page_Movement_Intent = new Intent(recyclerview.this, DashboardFragment.class);//
         Log.d(TAG, "taking user to bmi option");
         Page_Movement_Intent.putExtra("UsernameDateFoodtype", UsernameDateFoodtype);
         startActivity(Page_Movement_Intent);
 
+
+         */
 
 
 

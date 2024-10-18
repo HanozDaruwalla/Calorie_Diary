@@ -93,7 +93,7 @@ public class Database extends AppCompatActivity {
             Add_Food(Imported_Data_Arraylist, Db_Value_Names, Database_Controller);
 
         }else if (Sent_From == (int) 3) {
-            Log.d(TAG, "Add Food");
+            Log.d(TAG, "Get Food");
 
             Database_Value_Names Db_Value_Names = new Database_Value_Names();
             Get_Food_Data(Imported_Data_Arraylist);
@@ -264,10 +264,12 @@ public class Database extends AppCompatActivity {
         String Username = Name_Date_Meal_Type.get(0);
         String Date = Name_Date_Meal_Type.get(1);
         String Meal_Type = Name_Date_Meal_Type.get(2);
+        Log.d(TAG, "Username = " + Username + "date = "+ Date + "Meal_Type=" + Meal_Type);
         Log.d(TAG, "Vars Set");
 
         // Reference to the "Food" node in the database
         //DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name());
+        Log.d(TAG, "Path = " + Db_Value_Names.getDb_Food_Name_Name() +"+"+ Username + "+" + Todays_Date + "+ " + Meal_Type);
         DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Username).child(Todays_Date).child(Meal_Type);
         Log.d(TAG, "path set");
         // Query to get all entries where the Username matches
