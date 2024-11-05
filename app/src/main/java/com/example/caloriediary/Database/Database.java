@@ -213,7 +213,6 @@ public class Database extends AppCompatActivity {
 
 
     public void Add_Food(ArrayList<String> Name_Date_Food_Arraylist, Database_Value_Names Db_Value_Names, DatabaseReference Database_Controller) {
-
         Log.d(TAG, "Logging Food");
 
         String Username = Name_Date_Food_Arraylist.get(0);
@@ -222,7 +221,14 @@ public class Database extends AppCompatActivity {
         String Portion_Size = Name_Date_Food_Arraylist.get(3);
         String Calories = Name_Date_Food_Arraylist.get(4);
         String Fat = Name_Date_Food_Arraylist.get(5);
-        String Meal_Type = Name_Date_Food_Arraylist.get(6);
+        String Cholesterol = Name_Date_Food_Arraylist.get(6);
+        String Sodium = Name_Date_Food_Arraylist.get(7);
+        String Potassium = Name_Date_Food_Arraylist.get(8);
+        String Total_Carbs = Name_Date_Food_Arraylist.get(9);
+        String Sugar = Name_Date_Food_Arraylist.get(10);
+        String Dietary_Fiber = Name_Date_Food_Arraylist.get(11);
+        String Protein = Name_Date_Food_Arraylist.get(12);
+        String Meal_Type = Name_Date_Food_Arraylist.get(13);
 
         //add values in a hashmap to add to db
         Information_Hashmap.put(Db_Value_Names.getDb_Username_Name(), Username);
@@ -231,13 +237,19 @@ public class Database extends AppCompatActivity {
         Information_Hashmap.put(Db_Value_Names.getDb_Portion_Name(), Portion_Size);
         Information_Hashmap.put(Db_Value_Names.getDb_Caloires_Name(),Calories );
         Information_Hashmap.put(Db_Value_Names.getDb_Fat_Name(), Fat);
+        Information_Hashmap.put(Db_Value_Names.getDb_Cholesterol_Name(), Cholesterol);
+        Information_Hashmap.put(Db_Value_Names.getDb_Sodium_Name(), Sodium);
+        Information_Hashmap.put(Db_Value_Names.getDb_Potassium_Name(), Potassium);
+        Information_Hashmap.put(Db_Value_Names.getDb_Total_Carbs_Name(), Total_Carbs);
+        Information_Hashmap.put(Db_Value_Names.getDb_Sugar_Name(), Sugar);
+        Information_Hashmap.put(Db_Value_Names.getDb_Dietary_Fiber_Name(), Dietary_Fiber);
+        Information_Hashmap.put(Db_Value_Names.getDb_Protein_Name(), Protein);
         Information_Hashmap.put(Db_Value_Names.getDb_Meal_Type_Name(), Meal_Type);
 
         Log.d(TAG, "Add Account: Information packed for finish");
 
-        //DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Username).push();
+        //Path
         DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Username).child(Todays_Date).child(Meal_Type).push();
-
         Db_Reference.setValue(Information_Hashmap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             //add data to db (if successful login)/ go back to create account if fail
@@ -249,7 +261,7 @@ public class Database extends AppCompatActivity {
                 } else {
                     reusableFunctions.Create_Toast(getApplicationContext(), "Network/ Database Error. Try Again");
                     To_Create_Account();
-                    Log.d(TAG, "Add Account: Account Filed Creation?");
+                    Log.d(TAG, "Add Account: Account Failed Creation?");
                 }
             }
         });

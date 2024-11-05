@@ -24,8 +24,13 @@ public class Database_Value_Names {
     private String Db_Caloires_Name = "Calories";
     private String Db_Fat_Name = "Fat";
 
-
-
+    private String Db_Cholesterol_Name = "Cholesterol";
+    private String Db_Sodium_Name = "Sodium";
+    private String Db_Potassium_Name = "Potassium";
+    private String Db_Total_Carbs_Name = "Total_Carbs";
+    private String Db_Sugar_Name = "Sugar";
+    private String Db_Dietary_Fiber_Name = "Dietary_Fiber";
+    private String Db_Protein_Name = "Protein";
     private String Db_Meal_Type_Name = "Type Of Meal";
 
 
@@ -163,6 +168,62 @@ public class Database_Value_Names {
 
     public void setDb_Fat_Name(String db_Fat_Name) {
         Db_Fat_Name = db_Fat_Name;
+    }
+
+    public String getDb_Cholesterol_Name() {
+        return Db_Cholesterol_Name;
+    }
+
+    public void setDb_Cholesterol_Name(String db_Cholesterol_Name) {
+        Db_Cholesterol_Name = db_Cholesterol_Name;
+    }
+
+    public String getDb_Sodium_Name() {
+        return Db_Sodium_Name;
+    }
+
+    public void setDb_Sodium_Name(String db_Sodium_Name) {
+        Db_Sodium_Name = db_Sodium_Name;
+    }
+
+    public String getDb_Potassium_Name() {
+        return Db_Potassium_Name;
+    }
+
+    public void setDb_Potassium_Name(String db_Potassium_Name) {
+        Db_Potassium_Name = db_Potassium_Name;
+    }
+
+    public String getDb_Total_Carbs_Name() {
+        return Db_Total_Carbs_Name;
+    }
+
+    public void setDb_Total_Carbs_Name(String db_Total_Carbs_Name) {
+        Db_Total_Carbs_Name = db_Total_Carbs_Name;
+    }
+
+    public String getDb_Sugar_Name() {
+        return Db_Sugar_Name;
+    }
+
+    public void setDb_Sugar_Name(String db_Sugar_Name) {
+        Db_Sugar_Name = db_Sugar_Name;
+    }
+
+    public String getDb_Dietary_Fiber_Name() {
+        return Db_Dietary_Fiber_Name;
+    }
+
+    public void setDb_Dietary_Fiber_Name(String db_Dietary_Fiber_Name) {
+        Db_Dietary_Fiber_Name = db_Dietary_Fiber_Name;
+    }
+
+    public String getDb_Protein_Name() {
+        return Db_Protein_Name;
+    }
+
+    public void setDb_Protein_Name(String db_Protein_Name) {
+        Db_Protein_Name = db_Protein_Name;
     }
 
     public String getDb_Meal_Type_Name() {

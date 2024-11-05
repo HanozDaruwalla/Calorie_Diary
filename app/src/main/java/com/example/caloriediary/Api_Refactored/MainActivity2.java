@@ -310,6 +310,14 @@ public class MainActivity2 extends AppCompatActivity {
         String Portion_Size = binding.servingSizeR.getText().toString();
         String Calories = binding.calriesR.getText().toString();
         String Fat = binding.totalFatR.getText().toString();
+        String Cholesterol = binding.cholesterolR.getText().toString();
+        String Sodium = binding.sodiuimR.getText().toString();
+        String Potassium = binding.potassiumR.getText().toString();
+        String Total_Carbs = binding.totalCarbonhydrateR.getText().toString();
+        String Sugar = binding.sugarR.getText().toString();
+        String Dietary_Fiber = binding.dietaryFiberR.getText().toString();
+        String Protein = binding.proteinR.getText().toString();
+
         Log.d(TAG, "Vars made");
 
         ArrayList<String> Food_Arraylist = new ArrayList();
@@ -319,8 +327,15 @@ public class MainActivity2 extends AppCompatActivity {
         Food_Arraylist.add(Portion_Size);
         Food_Arraylist.add(Calories);
         Food_Arraylist.add(Fat);
-        Log.d(TAG, "Foods Added");
+        Food_Arraylist.add(Cholesterol);
+        Food_Arraylist.add(Sodium);
+        Food_Arraylist.add(Potassium);
+        Food_Arraylist.add(Total_Carbs);
+        Food_Arraylist.add(Sugar);
+        Food_Arraylist.add(Dietary_Fiber);
+        Food_Arraylist.add(Protein);
 
+        Log.d(TAG, "Foods Added");
         // Index 0: Age (in years), Index 1: Email address, Index 2: Height (in centimeters)
         // Index 3: Password, Index 4: Bmr, Index 5: Sex
         // Index 6: Username, Index 7: Weight (in kilograms)
