@@ -25,11 +25,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -145,6 +143,7 @@ public class Database extends AppCompatActivity {
                     Page_Movement_Intent = new Intent(Database.this, Create_Account.class);
                     startActivity(Page_Movement_Intent);
                 }
+                //return null;
             }
 
             @Override
@@ -160,7 +159,6 @@ public class Database extends AppCompatActivity {
     public void Add_Account(User Creating_Users_Details, Database_Value_Names Db_Value_Names, String Creation_Type, DatabaseReference Database_Controller) {
 
         if (Creation_Type.equals("Users")) {
-
             //encrypt data for db
             Log.d(TAG, "Add Account: Starting Encryption");
             Encryption_Decryption_Class Encryption_Class = new Encryption_Decryption_Class();
@@ -170,7 +168,6 @@ public class Database extends AppCompatActivity {
                 Creating_Users_Details.setBmr(Encryption_Class.Encryption_Function(Creating_Users_Details.getBmr()));
                 Creating_Users_Details.setHeight_Cm(Encryption_Class.Encryption_Function(Creating_Users_Details.getHeight_Cm()));
                 Creating_Users_Details.setWeight_Kg(Encryption_Class.Encryption_Function(Creating_Users_Details.getWeight_Kg()));
-
                 Log.d(TAG, "Add Account: Encryption Complete");
                 //error when encryptng
             } catch (Exception e) {
@@ -179,7 +176,6 @@ public class Database extends AppCompatActivity {
                 Log.d(TAG, "Add Account: Encryption Failed");
             }
             //These names must be the same as the User/ Tester classes (they go into the DB)
-
             //add values in a hashmap to add to db
             Information_Hashmap.put(Db_Value_Names.getDb_Age_Name(), Creating_Users_Details.getAge());
             Information_Hashmap.put(Db_Value_Names.getDb_Email_Name(), Creating_Users_Details.getEmail());
@@ -249,7 +245,10 @@ public class Database extends AppCompatActivity {
         Log.d(TAG, "Add Account: Information packed for finish");
 
         //Path
-        DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Username).child(Todays_Date).child(Meal_Type).push();
+
+        //creates random primary key
+        //DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Username).child(Todays_Date).child(Meal_Type).push());
+        DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Username).child(Todays_Date).child(Meal_Type).child(Db_Food_Primary_Key_Checker(Username, Meal_Type)); //should be .child(add pk)
         Db_Reference.setValue(Information_Hashmap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             //add data to db (if successful login)/ go back to create account if fail
@@ -267,10 +266,50 @@ public class Database extends AppCompatActivity {
         });
     }
 
+    private String Db_Food_Primary_Key_Checker(String Username, String Meal_Type){
+        Database_Value_Names Db_Value_Names = new Database_Value_Names();
+        Database_Controller.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int int_x = 0;
+                String str_x;
+                Boolean Found_Next_Pk = false;
+                while (Found_Next_Pk == false){
+                    str_x = reusableFunctions.Int_To_Strng(int_x);
+                    DataSnapshot pathSnapshot = snapshot
+                            .child(Db_Value_Names.getDb_Food_Name_Name()).child(Username)
+                            .child(Todays_Date).child(Meal_Type).child(str_x);
+                    if (pathSnapshot.exists()) {
+                        int_x = int_x + 1;
+                        str_x = reusableFunctions.Int_To_Strng(int_x);
+                        Log.d(TAG, "PK " + int_x + " Exists");
+                    } else {
+                        // Found the first missing primary key
+                        Log.d(TAG, "PK " + str_x + " Does Not Exist - Available as new PK");
+                        Return_Function("0");
+                        Found_Next_Pk = true;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                reusableFunctions.Create_Toast(getApplicationContext(), "Database Error. Cancelled");
+                Log.d(TAG, "Error iterating Food Db in Db_Food_Primary_Key_Checker");
+            }
+
+            private String Return_Function(final String str){
+                Log.d(TAG, "Returned Through Function");
+                return str;
+            }
+
+        });
+        Log.d(TAG, "Hardcoded return");
+        return "HardcodedReturnCase";
+    }
 
     public void Get_Food_Data(ArrayList<String> Name_Date_Meal_Type) {
         Database_Value_Names Db_Value_Names = new Database_Value_Names();
-
         Log.d(TAG, "Fetching Food Data");
 
         String Username = Name_Date_Meal_Type.get(0);
@@ -284,10 +323,7 @@ public class Database extends AppCompatActivity {
         Log.d(TAG, "Path = " + Db_Value_Names.getDb_Food_Name_Name() +"+"+ Username + "+" + Todays_Date + "+ " + Meal_Type);
         DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Username).child(Todays_Date).child(Meal_Type);
         Log.d(TAG, "path set");
-        // Query to get all entries where the Username matches
-        Query query = Db_Reference.orderByChild(Db_Value_Names.getDb_Username_Name()).equalTo(Username);
-        Log.d(TAG, "Query");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        Db_Reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList<ArrayList<Item>> nestedFoodDataList = new ArrayList<>();
@@ -333,6 +369,7 @@ public class Database extends AppCompatActivity {
                 } else {
                     Log.d(TAG, "No data found for the given Username");
                 }
+                //return null;
             }
 
             @Override
@@ -405,6 +442,7 @@ public class Database extends AppCompatActivity {
                     Log.d(TAG, "Username Doesn't Exist");
                     To_Login(Login_User_Details.getUsername());
                 }
+                //return null;
             }
             @Override//if db cancelled. often cause security
             public void onCancelled(@NonNull DatabaseError error) {
@@ -442,21 +480,7 @@ public class Database extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // --------------------------------------- EXTRAS -----------------------------------------
 
     private void To_Login(String Username) {
         //pass username and take user to login page

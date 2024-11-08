@@ -56,11 +56,15 @@ public class DashboardFragment extends Fragment {
 
          */
 
+        /*
+
         //EDIT
-        /*Database db = new Database();
+        Database db = new Database();
         db.Get_Food_Data();
 
-         */
+        */
+
+
         //set the recycler view to arraylist
         adapter = new ItemAdapter(itemList);
         recyclerView.setAdapter(adapter);
