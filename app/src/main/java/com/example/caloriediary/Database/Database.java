@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.caloriediary.Api_Refactored.NutritionData;
 import com.example.caloriediary.Bmi_Calc.Enter_Height;
 import com.example.caloriediary.Creating_Account_And_Login.Create_Account;
 import com.example.caloriediary.Creating_Account_And_Login.Encryption_Decryption_Class;
@@ -14,8 +15,6 @@ import com.example.caloriediary.Creating_Account_And_Login.Login;
 import com.example.caloriediary.Creating_Account_And_Login.User;
 import com.example.caloriediary.Bmi_Calc.OptionForBmi;
 import com.example.caloriediary.R;
-import com.example.caloriediary.RecyclerView.Item;
-import com.example.caloriediary.RecyclerView.ItemAdapter;
 import com.example.caloriediary.ReusableFunctions;
 import com.example.caloriediary.databinding.ActivityDatabaseBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -262,7 +261,6 @@ public class Database extends AppCompatActivity {
             @Override
             public void onPrimaryKeyFound(String nextPk) {
                 // HERE IS DB CODE
-
                 Log.d(TAG, "New Pk Found");
 
                 DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Username)
@@ -338,8 +336,10 @@ public class Database extends AppCompatActivity {
     public void Get_Food_Data(ArrayList<String> Name_Date_Meal_Type) {
         //return type was string
 
+        Database_Controller = FirebaseDatabase.getInstance().getReference();
+
         Database_Value_Names Db_Value_Names = new Database_Value_Names();
-        Log.d(TAG, "Fetching Food Data");
+        Log.d(TAG, "\n\n -------------------- Fetching Food Data  -------------------- \n");
 
         String Username = Name_Date_Meal_Type.get(0);
         String Date = Name_Date_Meal_Type.get(1);
@@ -349,62 +349,71 @@ public class Database extends AppCompatActivity {
 
         // Reference to the "Food" node in the database
         //DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name());
-        Log.d(TAG, "Path = " + Db_Value_Names.getDb_Food_Name_Name() +"+"+ Username + "+" + Todays_Date + "+ " + Meal_Type);
-        DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Username).child(Todays_Date).child(Meal_Type);
-        Log.d(TAG, "path set");
+        Log.d(TAG, "Path = " + Db_Value_Names.getDb_Food_Name_Name() + Username + Todays_Date + Meal_Type);
+
+        DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name())
+                .child(Username)
+                .child(Todays_Date).child(Meal_Type);
         Db_Reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<ArrayList<Item>> nestedFoodDataList = new ArrayList<>();
-                if (dataSnapshot.exists()) {
-                    Log.d(TAG, "Data found for the given Username");
-                    ArrayList<Item> foodDataList = new ArrayList<>();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        // Retrieve the information
-                        String fetchedUsername = snapshot.child(Db_Value_Names.getDb_Username_Name()).getValue(String.class);
-                        String fetchedDate = snapshot.child(Db_Value_Names.getDb_Date_Name()).getValue(String.class);
-                        String fetchedFoodName = snapshot.child(Db_Value_Names.getDb_Food_Name_Name()).getValue(String.class);
-                        String fetchedPortionSize = snapshot.child(Db_Value_Names.getDb_Portion_Name()).getValue(String.class);
-                        int fetchedCalories = snapshot.child(Db_Value_Names.getDb_Caloires_Name()).getValue(Integer.class);
-                        int fetchedFat = snapshot.child(Db_Value_Names.getDb_Fat_Name()).getValue(Integer.class);
-                        String fetchedMealType = snapshot.child(Db_Value_Names.getDb_Meal_Type_Name()).getValue(String.class);
 
-                        Log.d(TAG, "got info");
-                        // Log the fetched data
-                        Log.d(TAG, "Fetched Data: Username=" + fetchedUsername + ", Date=" + fetchedDate +
-                                ", FoodName=" + fetchedFoodName + ", PortionSize=" + fetchedPortionSize +
-                                ", Calories=" + fetchedCalories + ", Fat=" + fetchedFat + ", MealType=" + fetchedMealType);
+                int i = 0;
 
-                        // Check if the fetched data matches the date and meal type
-                        if (Date.equals(fetchedDate) && Meal_Type.equals(fetchedMealType)) {
-                            Item item = new Item(fetchedFoodName, fetchedCalories, fetchedFat, fetchedPortionSize);
-                            ArrayList Data_Arraylist = new ArrayList();
-                            Data_Arraylist.add(fetchedFoodName);
-                            Data_Arraylist.add(fetchedCalories);
-                            Data_Arraylist.add(fetchedFat);
-                            Data_Arraylist.add(fetchedPortionSize);
+                Log.d(TAG, "path set to " + Db_Value_Names.getDb_Food_Name_Name() + Username + Todays_Date + Meal_Type + reusableFunctions.Int_To_Strng(i));
+                ArrayList<ArrayList<NutritionData>> Nested_Food_Data_List = new ArrayList<>();
+                ArrayList<NutritionData> Breakfast_Food_List = new ArrayList<>();
+                ArrayList<NutritionData> Lunch_Food_List = new ArrayList<>();
+                ArrayList<NutritionData> Dinner_Food_List = new ArrayList<>();
 
-                            ItemAdapter itemAdapter = new ItemAdapter(Data_Arraylist); // Instantiate ItemAdapter
-                            itemAdapter.Set_Items(Data_Arraylist); // Call Set_Items on the instance
+                Boolean Continue_Collecting_Data = true;
+
+                while (Continue_Collecting_Data == true) {
+
+                    if (dataSnapshot.child(reusableFunctions.Int_To_Strng(i)).exists()) {
+
+                        Log.d(TAG, "Data food found for the given Username");
+
+                        NutritionData Gathered_Food = dataSnapshot.child(Db_Value_Names.getDb_Food_Name_Name())
+                                .child(Username).child(Todays_Date).child(Meal_Type).child(reusableFunctions.Int_To_Strng(i))
+                                .getValue(NutritionData.class);
+
+                        Log.d(TAG, "got info for id" + i);
+                        i++;
+
+                        switch(Meal_Type){
+                            case "Breakfast":
+                                Breakfast_Food_List.add(Gathered_Food);
+                                break;
+                            case "Lunch":
+                                Lunch_Food_List.add(Gathered_Food);
+                                break;
+                            case "Dinner":
+                                Dinner_Food_List.add(Gathered_Food);
+                                break;
+                            default:
+                                Log.d(TAG, "Meal Type Not Identified");
+
                         }
-                    }
-                    if (!foodDataList.isEmpty()) {
-                        nestedFoodDataList.add(foodDataList);
-                        Log.d(TAG, "Added food data list to nested list. Current nested list size: " + nestedFoodDataList.size());
-                    } else {
-                        Log.d(TAG, "No matching food data found for the given Date and Meal Type");
-                    }
 
-                } else {
-                    Log.d(TAG, "No data found for the given Username");
+                    } else {
+                        Log.d(TAG, "No food data found for the given Username");
+                        Continue_Collecting_Data = false;
+                    }
+                    //return null;
+
                 }
-                //return null;
+
+                Nested_Food_Data_List.add(Breakfast_Food_List);
+                Nested_Food_Data_List.add(Lunch_Food_List);
+                Nested_Food_Data_List.add(Dinner_Food_List);
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled (DatabaseError databaseError){
                 Log.d(TAG, "Database Error: " + databaseError.getMessage());
             }
+
         });
     }
 
