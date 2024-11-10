@@ -43,6 +43,7 @@ public class Database extends AppCompatActivity {
     int Sent_From = -1;
     ArrayList<String> Imported_Data_Arraylist = new ArrayList<>();
     String Todays_Date = (ReusableFunctions.Date_Creator().replace("/","-"));
+    public String Next_Pk = "Na";
 
     DatabaseReference Database_Controller = null;
     @Override
@@ -88,7 +89,13 @@ public class Database extends AppCompatActivity {
             Log.d(TAG, "Add Food");
 
             Database_Value_Names Db_Value_Names = new Database_Value_Names();
-            Add_Food(Imported_Data_Arraylist, Db_Value_Names, Database_Controller);
+            try {
+                Add_Food(Imported_Data_Arraylist, Db_Value_Names, Database_Controller);
+            } catch (InterruptedException e) {
+                Log.d(TAG, "IO ERROR FOR ADD_FOOD");
+                throw new RuntimeException(e);
+
+            }
 
         }else if (Sent_From == (int) 3) {
             Log.d(TAG, "Get Food");
@@ -208,7 +215,7 @@ public class Database extends AppCompatActivity {
     }
 
 
-    public void Add_Food(ArrayList<String> Name_Date_Food_Arraylist, Database_Value_Names Db_Value_Names, DatabaseReference Database_Controller) {
+    public void Add_Food(ArrayList<String> Name_Date_Food_Arraylist, Database_Value_Names Db_Value_Names, DatabaseReference Database_Controller) throws InterruptedException {
         Log.d(TAG, "Logging Food");
 
         String Username = Name_Date_Food_Arraylist.get(0);
@@ -225,6 +232,8 @@ public class Database extends AppCompatActivity {
         String Dietary_Fiber = Name_Date_Food_Arraylist.get(11);
         String Protein = Name_Date_Food_Arraylist.get(12);
         String Meal_Type = Name_Date_Food_Arraylist.get(13);
+
+        DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Username).child(Todays_Date).child(Meal_Type).child("Undefined");
 
         //add values in a hashmap to add to db
         Information_Hashmap.put(Db_Value_Names.getDb_Username_Name(), Username);
@@ -248,25 +257,47 @@ public class Database extends AppCompatActivity {
 
         //creates random primary key
         //DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Username).child(Todays_Date).child(Meal_Type).push());
-        DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Username).child(Todays_Date).child(Meal_Type).child(Db_Food_Primary_Key_Checker(Username, Meal_Type)); //should be .child(add pk)
-        Db_Reference.setValue(Information_Hashmap).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            //add data to db (if successful login)/ go back to create account if fail
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Log.d(TAG, "Food Added successfully");
-                    reusableFunctions.Create_Toast(getApplicationContext(), "Food Added To Database. Press back twice to continue");
 
-                } else {
-                    reusableFunctions.Create_Toast(getApplicationContext(), "Network/ Database Error. Try Again");
-                    To_Create_Account();
-                    Log.d(TAG, "Add Account: Account Failed Creation?");
-                }
+        Find_Next_Food_Pk(Username, Meal_Type, new OnPrimaryKeyFoundListener() {
+            @Override
+            public void onPrimaryKeyFound(String nextPk) {
+                // HERE IS DB CODE
+
+                Log.d(TAG, "New Pk Found");
+
+                DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name()).child(Username)
+                        .child(Todays_Date).child(Meal_Type).child(Next_Pk.toString()); //should be .child(add pk)
+
+                Log.d(TAG, Db_Reference.toString());
+
+                Log.d(TAG, "Next_Pk after save = " + Next_Pk);
+                Db_Reference.setValue(Information_Hashmap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    // add data to db (if successful login)/ go back to create account if fail
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "Food Added successfully");
+                            reusableFunctions.Create_Toast(getApplicationContext(), "Food Added To Database. Press back twice to continue");
+
+                        } else {
+                            reusableFunctions.Create_Toast(getApplicationContext(), "Network/ Database Error. Try Again");
+                            To_Create_Account();
+                            Log.d(TAG, "Add Account: Account Failed Creation?");
+                        }
+                    }
+                });
             }
         });
+
+
     }
 
-    private String Db_Food_Primary_Key_Checker(String Username, String Meal_Type){
+
+    public interface OnPrimaryKeyFoundListener {
+        void onPrimaryKeyFound(String nextPk);
+    }
+
+    private void Find_Next_Food_Pk(String Username, String Meal_Type, OnPrimaryKeyFoundListener listener){
         Database_Value_Names Db_Value_Names = new Database_Value_Names();
         Database_Controller.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -286,8 +317,11 @@ public class Database extends AppCompatActivity {
                     } else {
                         // Found the first missing primary key
                         Log.d(TAG, "PK " + str_x + " Does Not Exist - Available as new PK");
-                        Return_Function("0");
+                        Next_Pk = str_x;
+                        Log.d(TAG, "Nxet_Pk = " + Next_Pk);
                         Found_Next_Pk = true;
+                        // Call the callback with the found PK
+                        listener.onPrimaryKeyFound(Next_Pk);
                     }
                 }
             }
@@ -298,17 +332,12 @@ public class Database extends AppCompatActivity {
                 Log.d(TAG, "Error iterating Food Db in Db_Food_Primary_Key_Checker");
             }
 
-            private String Return_Function(final String str){
-                Log.d(TAG, "Returned Through Function");
-                return str;
-            }
-
         });
-        Log.d(TAG, "Hardcoded return");
-        return "HardcodedReturnCase";
     }
 
     public void Get_Food_Data(ArrayList<String> Name_Date_Meal_Type) {
+        //return type was string
+
         Database_Value_Names Db_Value_Names = new Database_Value_Names();
         Log.d(TAG, "Fetching Food Data");
 
@@ -553,6 +582,7 @@ public class Database extends AppCompatActivity {
         return User_Data_Arraylist;
     }
     Database_Value_Names Db_Names = new Database_Value_Names();
+
     private void Update_User_Details(String Username, HashMap<String, Object> Data_To_Update) {
         DatabaseReference Controller = FirebaseDatabase.getInstance().getReference(Db_Names.getDb_Users_Db_Name());
 
