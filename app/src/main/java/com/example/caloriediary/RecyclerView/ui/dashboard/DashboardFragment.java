@@ -34,12 +34,15 @@ public class DashboardFragment extends Fragment {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+
+
         // Set up the RecyclerView
         recyclerView = binding.recyclerView;
         recyclerView.setHasFixedSize(true);
 
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
+        
 
         //EDIT
         //User_Data = getIntent().getExtras().getStringArrayList("UsernameDateFoodtype");

@@ -38,6 +38,7 @@ public class Enter_Weight extends AppCompatActivity {
         setContentView(binding.getRoot());
         Data_For_Bmr = getIntent().getExtras().getStringArrayList("Data_For_Bmr");
         User_Data = getIntent().getExtras().getStringArrayList("User_Data");
+        getSupportActionBar(). hide();
 
         Log.d(TAG, "Loaded");
     }

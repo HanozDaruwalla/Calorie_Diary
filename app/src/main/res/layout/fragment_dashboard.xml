@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/background_color">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/title_fragment"
+        android:name="com.example.caloriediary.Fragments.fragment_title"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        tools:layout="@layout/fragment_title"
+        android:layout_marginBottom="10dp"
+
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
 
-</RelativeLayout>
+</LinearLayout>

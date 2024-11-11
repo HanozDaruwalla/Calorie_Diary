@@ -31,6 +31,7 @@ public class Calorie_Homepage extends AppCompatActivity {
         binding = ActivityCalorieHomepageBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_calorie_homepage);
         setContentView(binding.getRoot());
+        getSupportActionBar(). hide();
 
         User_Data = getIntent().getExtras().getStringArrayList("User_Data");
 

@@ -29,6 +29,7 @@ public class Login extends AppCompatActivity {
         String Imported_Username = getIntent().getExtras().getString("Username");
         binding.UsernameInput.setText(Imported_Username);
         Int_Value_Of_Masked_Pw_Format = binding.PasswordInput.getInputType();
+        getSupportActionBar(). hide();
     }
 
     public void Login_Button_Clicked(View view) {

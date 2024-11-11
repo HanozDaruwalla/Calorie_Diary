@@ -33,6 +33,7 @@ public class OptionForBmi extends AppCompatActivity {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            getSupportActionBar(). hide();
 
             binding = ActivityOptionForBmiBinding.inflate(getLayoutInflater());
             User_Data = getIntent().getExtras().getStringArrayList("User_Data");

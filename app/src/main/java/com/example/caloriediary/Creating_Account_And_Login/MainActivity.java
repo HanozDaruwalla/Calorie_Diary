@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_main);
         setContentView(binding.getRoot());
+        getSupportActionBar(). hide();
     }
 
     public void GetStarted_Clicked(View view) {

@@ -32,6 +32,7 @@ public class Create_Account extends AppCompatActivity {
         setContentView(R.layout.activity_create_account);
         setContentView(binding.getRoot());
         Int_Value_Of_Masked_Pw = binding.PasswordInput.getInputType();
+        getSupportActionBar(). hide();
     }
 
     public void Validation_Checks_Not_Null(View view) {

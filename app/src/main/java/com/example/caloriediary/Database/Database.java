@@ -52,6 +52,7 @@ public class Database extends AppCompatActivity {
         com.example.caloriediary.databinding.ActivityDatabaseBinding binding = ActivityDatabaseBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_database);
         setContentView(binding.getRoot());
+        getSupportActionBar(). hide();
 
         Database_Controller = FirebaseDatabase.getInstance().getReference();
         //gets the data the user entered

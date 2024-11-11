@@ -32,6 +32,7 @@ public class Enter_Height extends AppCompatActivity {
         setContentView(R.layout.activity_user_enter_height);
         setContentView(binding.getRoot());
         User_Data = getIntent().getExtras().getStringArrayList("User_Data");
+        getSupportActionBar(). hide();
 
         Log.d(TAG, "Loaded");
     }

@@ -74,6 +74,7 @@ public class MainActivity2 extends AppCompatActivity {
         binding = ActivityMain2Binding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_main2);
         setContentView(binding.getRoot());
+        getSupportActionBar(). hide();
 
         EdgeToEdge.enable(this);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
