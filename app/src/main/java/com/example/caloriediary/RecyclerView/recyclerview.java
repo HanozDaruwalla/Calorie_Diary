@@ -10,6 +10,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.caloriediary.Api_Refactored.NutritionData;
 import com.example.caloriediary.Bmi_Calc.OptionForBmi;
 import com.example.caloriediary.Database.Database;
 import com.example.caloriediary.R;
@@ -35,6 +36,7 @@ public class recyclerview extends AppCompatActivity {
 
         binding = ActivityRecyclerviewBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        getSupportActionBar(). hide();
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each menu should be considered as top level destinations.
@@ -47,6 +49,10 @@ public class recyclerview extends AppCompatActivity {
         Lunch_Data_Passer(User_Data);
     }
 
+    public interface Food_Data_FoundListener {
+        void Food_Data_Found(ArrayList<ArrayList<NutritionData>> foodDataList);
+    }
+
     private void Lunch_Data_Passer(ArrayList<String> userdata){
 
         Log.d(TAG, "In Function");
@@ -57,25 +63,15 @@ public class recyclerview extends AppCompatActivity {
         Log.d(TAG, "Assigned");
         //gets from string xml file
 
-
-
         Log.d(TAG, "data = " + UsernameDateFoodtype.get(0) + "+" + UsernameDateFoodtype.get(1) + "+" + UsernameDateFoodtype.get(2));
         Log.d(TAG, "Vars Set");
         Database DB = new Database();
-        DB.Get_Food_Data(UsernameDateFoodtype);
-
-
-
-
-        /*Page_Movement_Intent = new Intent(recyclerview.this, DashboardFragment.class);//
-        Log.d(TAG, "taking user to bmi option");
-        Page_Movement_Intent.putExtra("UsernameDateFoodtype", UsernameDateFoodtype);
-        startActivity(Page_Movement_Intent);
-
-
-         */
-
-
+        DB.Get_Food_Data(UsernameDateFoodtype, new Food_Data_FoundListener() {
+            @Override
+            public void Food_Data_Found(ArrayList<ArrayList<NutritionData>> foodDataList) {
+                Log.d(TAG, "Food_Data found overrided");
+            }
+        });
 
     }
 

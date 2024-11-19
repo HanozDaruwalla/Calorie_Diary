@@ -8,19 +8,9 @@
     tools:context=".Coming_Soon"
     android:orientation="vertical"
     android:background="@color/background_color"
-    android:layout_marginTop="10dp"
 
     >
 
-    <LinearLayout
-        android:id="@+id/Extra_Layer"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="25dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-    </LinearLayout>
 
 
     <androidx.fragment.app.FragmentContainerView
@@ -43,8 +33,7 @@
         android:textStyle="bold"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="10dp"
 
         />
 

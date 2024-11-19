@@ -28,15 +28,17 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="12sp"
+            android:layout_marginLeft="10dp"
+            android:textStyle="bold"
             android:text="Default"/>
+
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:textColor="@color/black"
-        android:textSize="12sp"
         android:paddingBottom="4dp">
 
         <TextView
@@ -46,7 +48,7 @@
             android:text="Serving Size: "
             android:textSize="12sp"
             android:textColor="@color/black"
-            android:textStyle="bold"/>
+            />
 
         <TextView
             android:id="@+id/Serving_Size"
@@ -56,48 +58,16 @@
             android:textSize="12sp"
             android:textColor="@color/black"
             android:layout_marginLeft="10dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="4dp">
-
-        <TextView
-            android:id="@+id/Calories_Lb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Calories: "
-            android:textSize="12sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/Calories"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="105"
-            android:textSize="12sp"
-            android:textColor="@color/black"
-            android:layout_marginLeft="38dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:textColor="@color/black"
-        android:paddingBottom="4dp">
 
         <TextView
             android:id="@+id/Fat_Lb"
+            android:layout_marginLeft="40dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Total Fat: "
             android:textSize="12sp"
             android:textColor="@color/black"
-            android:textStyle="bold"/>
+            />
 
         <TextView
             android:id="@+id/Fat"
@@ -106,8 +76,28 @@
             android:text="0.3g"
             android:textSize="12sp"
             android:textColor="@color/black"
-            android:layout_marginLeft="35dp"
+            android:layout_marginLeft="10dp"
             />
+
+        <TextView
+            android:id="@+id/Calories_Lb"
+            android:layout_marginLeft="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calories: "
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            android:id="@+id/Calories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="105"
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="10dp"/>
     </LinearLayout>
+
 </LinearLayout>
 

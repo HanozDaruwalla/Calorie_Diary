@@ -15,6 +15,7 @@ import com.example.caloriediary.Creating_Account_And_Login.Login;
 import com.example.caloriediary.Creating_Account_And_Login.User;
 import com.example.caloriediary.Bmi_Calc.OptionForBmi;
 import com.example.caloriediary.R;
+import com.example.caloriediary.RecyclerView.recyclerview;
 import com.example.caloriediary.ReusableFunctions;
 import com.example.caloriediary.databinding.ActivityDatabaseBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -101,7 +102,12 @@ public class Database extends AppCompatActivity {
             Log.d(TAG, "Get Food");
 
             Database_Value_Names Db_Value_Names = new Database_Value_Names();
-            Get_Food_Data(Imported_Data_Arraylist);
+            Get_Food_Data(Imported_Data_Arraylist, new recyclerview.Food_Data_FoundListener() {
+                @Override
+                public void Food_Data_Found(ArrayList<ArrayList<NutritionData>> foodDataList) {
+                    Log.d(TAG, "Food_Data found overrided in opening function ");
+                }
+            });
 
         } else {
             Log.d(TAG, "Login: Unexpected Page Transfer");
@@ -334,7 +340,8 @@ public class Database extends AppCompatActivity {
         });
     }
 
-    public void Get_Food_Data(ArrayList<String> Name_Date_Meal_Type) {
+
+    public void Get_Food_Data(ArrayList<String> Name_Date_Meal_Type, recyclerview.Food_Data_FoundListener callback) {
         //return type was string
 
         Database_Controller = FirebaseDatabase.getInstance().getReference();
@@ -408,6 +415,9 @@ public class Database extends AppCompatActivity {
                 Nested_Food_Data_List.add(Breakfast_Food_List);
                 Nested_Food_Data_List.add(Lunch_Food_List);
                 Nested_Food_Data_List.add(Dinner_Food_List);
+
+                // Call the success callback with the retrieved data
+                callback.Food_Data_Found(Nested_Food_Data_List);
             }
 
             @Override

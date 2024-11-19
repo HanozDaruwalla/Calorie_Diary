@@ -12,13 +12,12 @@
     >
 
     <androidx.fragment.app.FragmentContainerView
-        android:layout_marginTop="30dp"
         android:id="@+id/fragmentContainerView2"
         android:name="com.example.caloriediary.Fragments.fragment_title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         tools:layout="@layout/fragment_title"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="30dp"
         tools:layout_editor_absoluteX="145dp"
         tools:layout_editor_absoluteY="83dp" />
 
