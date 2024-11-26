@@ -70,6 +70,10 @@ public class recyclerview extends AppCompatActivity {
             @Override
             public void Food_Data_Found(ArrayList<ArrayList<NutritionData>> foodDataList) {
                 Log.d(TAG, "Food_Data found overrided");
+                DashboardFragment Dashboad_Frag = new DashboardFragment();
+                Dashboad_Frag.Create_View(foodDataList);
+
+
             }
         });
 

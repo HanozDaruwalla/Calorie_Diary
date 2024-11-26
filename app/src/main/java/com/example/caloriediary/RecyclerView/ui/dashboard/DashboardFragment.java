@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.caloriediary.Api_Refactored.MainActivity2;
+import com.example.caloriediary.Api_Refactored.NutritionData;
 import com.example.caloriediary.Database.Database;
 import com.example.caloriediary.RecyclerView.Item;
 import com.example.caloriediary.RecyclerView.ItemAdapter;
@@ -42,37 +43,25 @@ public class DashboardFragment extends Fragment {
 
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        
-
-        //EDIT
-        //User_Data = getIntent().getExtras().getStringArrayList("UsernameDateFoodtype");
 
         List<Item> itemList = new ArrayList<>();
         itemList.add(new Item("apple", 23, 34, "large"));
         itemList.add(new Item("peach", 23, 34, "large"));
         itemList.add(new Item("Rubarb", 23, 34, "large"));
 
-        /*Intent Page_Movement_Intent = new Intent(getActivity(), Database.class);
-        Page_Movement_Intent.putExtra("Sent_Info",User_Data);
-        Page_Movement_Intent.putExtra("Sent_From",3);
-        startActivity(Page_Movement_Intent);
-
-         */
-
-        /*
-
-        //EDIT
-        Database db = new Database();
-        db.Get_Food_Data();
-
-        */
-
-
         //set the recycler view to arraylist
         adapter = new ItemAdapter(itemList);
         recyclerView.setAdapter(adapter);
 
         return root;
+
+    }
+
+    public void Create_View(ArrayList<ArrayList<NutritionData>> Food_Data_Arraylists){
+        //set the recycler view to arraylist
+        //adapter = new ItemAdapter(Food_Data_Arraylists);
+        //recyclerView.setAdapter(adapter);
+
 
     }
 

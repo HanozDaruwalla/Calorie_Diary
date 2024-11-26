@@ -20,6 +20,21 @@
         <item>Super Active</item>
     </string-array>
 
+    <string-array name="Food_Options">
+        <item>Calories</item>
+        <item>Product Name</item>
+        <item>Serving Size</item>
+        <item>Total Fat</item>
+        <item>Cholesterol</item>
+        <item>Sodium</item>
+        <item>Total Carbohydrate</item>
+        <item>Sugar</item>
+        <item>Dietary Fiber</item>
+        <item>Potassium</item>
+        <item>Protein</item>
+    </string-array>
+
+
 
     <string name="Breakfast_Meal_Type">Breakfast</string>
     <string name="Lunch_Meal_Type">Lunch</string>
