@@ -38,16 +38,16 @@
                 android:textColor="@color/black"/>
 
             <Spinner
-                android:id="@+id/spinner1"
+                android:id="@+id/Option_1_Spinner"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:layout_weight="1"
                 android:text="boo"
                 />
             <Spinner
-                android:id="@+id/spinner2"
+                android:id="@+id/Option_2_Spinner"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:layout_weight="1"
                 />
 

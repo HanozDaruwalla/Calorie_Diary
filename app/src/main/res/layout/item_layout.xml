@@ -5,13 +5,15 @@
     android:background="@color/interface_color"
     android:orientation="vertical"
     android:padding="2dp"
-    android:layout_marginBottom="2dp"
+
+    android:layout_marginBottom="6dp"
     >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginBottom="5dp"
         >
 
         <TextView
@@ -20,15 +22,16 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:text="Name of Food: "
-            android:textSize="12sp"
-            android:textStyle="bold"/>
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:tex/>
 
         <TextView
             android:id="@+id/Food_Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:layout_marginLeft="10dp"
             android:textStyle="bold"
             android:text="Default"/>
@@ -46,7 +49,7 @@
             android:id="@+id/Serving_Size_Lb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Serving Size: "
+            android:text="Serving: "
             android:textSize="12sp"
             android:textColor="@color/black"
             />
@@ -58,11 +61,12 @@
             android:text="1 piece"
             android:textSize="12sp"
             android:textColor="@color/black"
-            android:layout_marginLeft="10dp"/>
+            android:textStyle="bold"
+            />
 
         <TextView
             android:id="@+id/Fat_Lb"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="80dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Total Fat: "
@@ -77,7 +81,8 @@
             android:text="0.3g"
             android:textSize="12sp"
             android:textColor="@color/black"
-            android:layout_marginLeft="10dp"
+            android:textStyle="bold"
+
             />
 
         <TextView
@@ -97,7 +102,7 @@
             android:text="105"
             android:textSize="12sp"
             android:textColor="@color/black"
-            android:layout_marginLeft="10dp"/>
+            android:textStyle="bold"/>
     </LinearLayout>
 
 </LinearLayout>
