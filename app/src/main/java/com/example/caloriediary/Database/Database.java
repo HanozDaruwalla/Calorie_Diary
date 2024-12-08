@@ -480,6 +480,8 @@ public class Database extends AppCompatActivity {
                     if (Unencrypted_Password.equals((Login_User_Details.getPassword()))) {
                         reusableFunctions.Create_Toast(getApplicationContext(), "Login Successful");
                         Log.d(TAG, "Successful Login");
+                        //REPLACES PW TO PREVENT DATA BEING USED
+                        Gathered_Account_Details.setPassword("Why Do U Wanna Know?");
                         Login_Success(Gathered_Account_Details, reusableFunctions);
                     } else {
                         reusableFunctions.Create_Toast(getApplicationContext(), "Incorrect Username Or Password");

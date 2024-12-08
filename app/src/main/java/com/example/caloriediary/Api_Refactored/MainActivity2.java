@@ -81,7 +81,7 @@ public class MainActivity2 extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 
-            SharedPreferences shared_preference = getSharedPreferences("User_Data", Context.MODE_PRIVATE);
+            /*SharedPreferences shared_preference = getSharedPreferences("User_Data", Context.MODE_PRIVATE);
             String data = shared_preference.getString("Data", null);
 
             String[] Values_In_Preference = data.split(",");
@@ -93,6 +93,14 @@ public class MainActivity2 extends AppCompatActivity {
                 Log.d(TAG, "Shared preferences has got more or less than 2 values!!!!");
             }
 
+             */
+
+            SharedPreferences shared_preference = getSharedPreferences("User_Data", Context.MODE_PRIVATE);
+            String Username = shared_preference.getString("Username", null);
+            String Bmr = shared_preference.getString("Bmr", null);
+
+            Log.d(TAG, "Username= " + Username);
+            Log.d(TAG, "Bmr = " + Bmr);
             binding.progressBar.setVisibility(View.INVISIBLE);
             input_method_manager = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
 

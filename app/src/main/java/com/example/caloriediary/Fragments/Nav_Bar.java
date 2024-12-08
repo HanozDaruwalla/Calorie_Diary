@@ -1,6 +1,9 @@
 package com.example.caloriediary.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,8 +16,12 @@ import androidx.fragment.app.Fragment;
 
 import com.example.caloriediary.Calorie_Homepage;
 import com.example.caloriediary.Coming_Soon;
+import com.example.caloriediary.Creating_Account_And_Login.User;
 import com.example.caloriediary.Info;
 import com.example.caloriediary.R;
+import com.example.caloriediary.RecyclerView.recyclerview;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,6 +56,10 @@ public class Nav_Bar extends Fragment {
      * @return A new instance of fragment Nav_Bar.
      */
     // TODO: Rename and change types and number of parameters
+
+
+    ArrayList<String> User_Data = new ArrayList<>();
+
     public static Nav_Bar newInstance(String param1, String param2) {
         Nav_Bar fragment = new Nav_Bar();
         Bundle args = new Bundle();
@@ -82,6 +93,36 @@ public class Nav_Bar extends Fragment {
 
         Weight_Monitor_View = rootView.findViewById((R.id.Weight_Text));
         Weight_Monitor_Image = rootView.findViewById((R.id.Weight_Image));
+
+        SharedPreferences shared_preference = getActivity().getSharedPreferences("User_Data", Context.MODE_PRIVATE);
+
+        String Age = shared_preference.getString("Age", null);
+        String Email = shared_preference.getString("Email", null);
+        String Height_Cm = shared_preference.getString("Height_Cm", null);
+        String Password = shared_preference.getString("Password", null);
+        String Bmr = shared_preference.getString("Bmr", null);
+        String Is_male = shared_preference.getString("Is_male", null);
+        String Username = shared_preference.getString("Username", null);
+        String Weight_Kg = shared_preference.getString("Weight_Kg", null);
+
+// Optional: Log to verify values
+        Log.d(TAG, "Age: " + Age);
+        Log.d(TAG, "Email: " + Email);
+        Log.d(TAG, "Height (cm): " + Height_Cm);
+        Log.d(TAG, "Password: " + Password);
+        Log.d(TAG, "BMR: " + Bmr);
+        Log.d(TAG, "Is Male: " + Is_male);
+        Log.d(TAG, "Username: " + Username);
+        Log.d(TAG, "Weight (kg): " + Weight_Kg);
+
+        User_Data.add(Age);
+        User_Data.add(Email);
+        User_Data.add(Height_Cm);
+        User_Data.add(Password);
+        User_Data.add(Bmr);
+        User_Data.add(Is_male);
+        User_Data.add(Username);
+        User_Data.add(Weight_Kg);
 
         //Info Section
         Info_Text_View.setOnClickListener(new View.OnClickListener() {
@@ -142,9 +183,10 @@ public class Nav_Bar extends Fragment {
 
     private void Calorie_Diary_Button_Pressed(){
         Log.d(TAG, "Calorie Diary Clicked");
-        Intent Page_Movement_Intent = new Intent(getContext(), Calorie_Homepage.class);
 
-        startActivity(Page_Movement_Intent);
+        Intent intent = new Intent(getContext(), recyclerview.class);
+        intent.putExtra("User_Data",User_Data);
+        startActivity(intent);
     }
 
     private void Weight_Monitor_Pressed(){

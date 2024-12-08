@@ -20,17 +20,17 @@
             android:id="@+id/Food_Name_Lb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
+            android:textColor="@color/Dark_Blue"
             android:text="Name of Food: "
             android:textSize="14sp"
             android:textStyle="bold"
-            android:tex/>
+            />
 
         <TextView
             android:id="@+id/Food_Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
+            android:textColor="@color/Dark_Blue"
             android:textSize="14sp"
             android:layout_marginLeft="10dp"
             android:textStyle="bold"
