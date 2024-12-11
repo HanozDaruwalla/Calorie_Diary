@@ -19,15 +19,15 @@
         android:layout_marginBottom="10dp"
         tools:layout_editor_absoluteX="145dp"
         tools:layout_editor_absoluteY="83dp"
-        android:layout_marginTop="30dp"/>
+        />
 
 
     <LinearLayout
-        android:id="@+id/L_rlayout"
+        android:id="@+id/Search_Layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        android:layout_weight="0.82">
 
         <Button
             android:id="@+id/Search_Button"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:text="Search"
             android:layout_margin="6dp"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:backgroundTint="@color/interface_color"
             android:textColor="@color/black"
             android:textStyle="bold"
@@ -60,7 +60,9 @@
             android:selectAllOnFocus="false"
             android:singleLine="false"
             android:layout_marginTop="7dp"
+            android:layout_marginRight="10dp"
             />
+
 
     </LinearLayout>
 
@@ -68,7 +70,7 @@
             android:id="@+id/mscrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/Search_Bar"
+            android:layout_below="@+id/Search_Layout"
             android:isScrollContainer="true"
             android:scrollbarStyle="insideOverlay"
             >
@@ -87,7 +89,6 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/Search_Bar"
-
                     android:visibility="invisible">
 
                     <TextView
@@ -350,9 +351,11 @@
         </ScrollView>
 
     <LinearLayout
+        android:id="@+id/Food_Buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="4">
+        android:weightSum="4"
+        >
 
 
     <ProgressBar
@@ -371,7 +374,7 @@
             android:layout_height="wrap_content"
             android:text="Add Breakfast"
             android:layout_margin="6dp"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:backgroundTint="@color/interface_color"
             android:textColor="@color/black"
             android:textStyle="bold"
@@ -387,7 +390,7 @@
             android:layout_height="wrap_content"
             android:text="Add Lunch"
             android:layout_margin="6dp"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:backgroundTint="@color/interface_color"
             android:textColor="@color/black"
             android:textStyle="bold"
@@ -403,7 +406,7 @@
             android:layout_height="wrap_content"
             android:text="Add Dinner"
             android:layout_margin="6dp"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:backgroundTint="@color/interface_color"
             android:textColor="@color/black"
             android:textStyle="bold"
@@ -413,6 +416,17 @@
             />
 
     </LinearLayout>
+
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView3"
+        android:name="com.example.caloriediary.Fragments.Nav_Bar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        tools:layout="@layout/fragment_nav__bar"
+        android:layout_marginTop="35dp"
+        android:layout_gravity="bottom"
+        />
 
 </LinearLayout>
 
