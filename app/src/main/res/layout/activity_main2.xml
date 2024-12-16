@@ -66,6 +66,43 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/minus_1_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-1 Portion"
+            android:layout_margin="6dp"
+            android:textSize="15sp"
+            android:backgroundTint="@color/interface_color"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:visibility="invisible">
+        </Button>
+
+        <Button
+            android:id="@+id/plus_1_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+1 Portion"
+            android:layout_margin="6dp"
+            android:textSize="15sp"
+            android:backgroundTint="@color/interface_color"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:visibility="invisible">
+        </Button>
+
+
+    </LinearLayout>
+
         <ScrollView
             android:id="@+id/mscrollView"
             android:layout_width="match_parent"

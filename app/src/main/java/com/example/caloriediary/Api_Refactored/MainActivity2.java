@@ -158,7 +158,7 @@ public class MainActivity2 extends AppCompatActivity {
                 new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
-                        Log.d("Healthier", "Success" + response.toString());
+                        Log.d(TAG, "Success" + response.toString());
                         binding.progressBar.setVisibility(View.INVISIBLE);
                         Nutrition_Data_Template = NutritionData.fromJson(response);
 
@@ -239,9 +239,7 @@ public class MainActivity2 extends AppCompatActivity {
     private void updateUI(NutritionData nutritionData) {
         Log.d(TAG, "4");
         binding.foodNameR.setText(nutritionData.getFoodName());
-
         binding.calriesR.setText(String.valueOf(nutritionData.getCalories()));
-
         binding.proteinR.setText(String.valueOf(nutritionData.getProtein()) + "g");
         binding.totalFatR.setText(String.valueOf(nutritionData.getTotalfat()) + "g");
         binding.sugarR.setText(String.valueOf(nutritionData.getSugar()) + "g");
@@ -254,6 +252,23 @@ public class MainActivity2 extends AppCompatActivity {
         binding.relativeLayout.setVisibility(View.VISIBLE);
 
     }
+
+    public double To_Grams(String value){
+
+        if (value.contains("mg")){
+            value = value.replace("m","");
+            value = value.replace("g","");
+            value = value.trim();
+            //int int_Value = ReusableFunctions.To_Int(value);
+            //return value / 1000
+            return 0.0;
+        }
+        return 0.0;
+
+    }
+
+
+
 
     public void createBitmap(Uri uri) {
 
@@ -302,6 +317,8 @@ public class MainActivity2 extends AppCompatActivity {
             binding.BreakfastButton.setVisibility(View.VISIBLE);
             binding.LunchButton.setVisibility(View.VISIBLE);
             binding.DinnerButton.setVisibility(View.VISIBLE);
+            binding.minus1Button.setVisibility(View.VISIBLE);
+            binding.plus1Button.setVisibility(View.VISIBLE);
 
             binding.progressBar.setVisibility(View.VISIBLE);
             Food_Item = binding.SearchBar.getText().toString();
