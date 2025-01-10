@@ -40,7 +40,7 @@ public class MainActivity2 extends AppCompatActivity {
 
 
     final static String TAG =  "MainActivity2";
-
+    int Quantity_Multiplier = 1;
     String Meal_Type = "Undefined";
 
     private ActivityMain2Binding binding;
@@ -238,6 +238,7 @@ public class MainActivity2 extends AppCompatActivity {
 
     private void updateUI(NutritionData nutritionData) {
         Log.d(TAG, "4");
+        /*
         binding.foodNameR.setText(nutritionData.getFoodName());
         binding.calriesR.setText(String.valueOf(nutritionData.getCalories()));
         binding.proteinR.setText(String.valueOf(nutritionData.getProtein()) + "g");
@@ -250,25 +251,37 @@ public class MainActivity2 extends AppCompatActivity {
         binding.potassiumR.setText(String.valueOf(nutritionData.getPotassium()) + "mg");
         binding.dietaryFiberR.setText(nutritionData.getDiertaryFiber() + "g");
         binding.relativeLayout.setVisibility(View.VISIBLE);
+         */
 
+        binding.foodNameR.setText(nutritionData.getFoodName());
+        binding.calriesR.setText(String.valueOf(nutritionData.getCalories() * Quantity_Multiplier));
+        binding.proteinR.setText(String.valueOf(nutritionData.getProtein() * Quantity_Multiplier) + "g");
+        binding.totalFatR.setText(String.valueOf(nutritionData.getTotalfat() * Quantity_Multiplier) + "g");
+        binding.sugarR.setText(String.valueOf(nutritionData.getSugar() * Quantity_Multiplier) + "g");
+        binding.servingSizeR.setText(String.valueOf(reusableFunctions.To_Int(nutritionData.getServingSize()) * Quantity_Multiplier));
+        binding.totalCarbonhydrateR.setText(String.valueOf(nutritionData.getTotalCarbonhydrate() * Quantity_Multiplier + "G"));
+        binding.sodiuimR.setText(String.valueOf(nutritionData.getSodium() * Quantity_Multiplier) + "mg");
+        binding.cholesterolR.setText(String.valueOf(nutritionData.getCholesterol() * Quantity_Multiplier) + "mg");
+        binding.potassiumR.setText(String.valueOf(nutritionData.getPotassium() * Quantity_Multiplier) + "mg");
+        binding.dietaryFiberR.setText(nutritionData.getDiertaryFiber() * Quantity_Multiplier + "g");
+        binding.relativeLayout.setVisibility(View.VISIBLE);
     }
-
-    public double To_Grams(String value){
-
-        if (value.contains("mg")){
-            value = value.replace("m","");
-            value = value.replace("g","");
+/*
+    public double toGrams(String value) {
+        if (value.contains("mg")) {
+            value = value.replace("m", "");
+            value = value.replace("g", "");
             value = value.trim();
-            //int int_Value = ReusableFunctions.To_Int(value);
-            //return value / 1000
-            return 0.0;
+            ReusableFunctions reusableFunctions_temp = new ReusableFunctions(); // Create an instance
+            int intValue = reusableFunctions_temp.To_Int(value); // Call the non-static method
+            return intValue / 1000.0; // Return the converted value
+        }else{
+            return reusableFunctions.String_To_Double(value);
         }
-        return 0.0;
 
     }
 
-
-
+ */
 
     public void createBitmap(Uri uri) {
 
@@ -319,6 +332,7 @@ public class MainActivity2 extends AppCompatActivity {
             binding.DinnerButton.setVisibility(View.VISIBLE);
             binding.minus1Button.setVisibility(View.VISIBLE);
             binding.plus1Button.setVisibility(View.VISIBLE);
+            binding.QuantityMultiplierTextview.setVisibility(View.VISIBLE);
 
             binding.progressBar.setVisibility(View.VISIBLE);
             Food_Item = binding.SearchBar.getText().toString();
@@ -422,6 +436,30 @@ public class MainActivity2 extends AppCompatActivity {
         binding.DinnerButton.setVisibility(View.INVISIBLE);
     }
 
+    public void Add_Button_Pressed(View view) {
+        Quantity_Multiplier = Quantity_Multiplier + 1;
+        String string_Quantity_Multiplier = Integer.toString(Quantity_Multiplier);
+        binding.QuantityMultiplierTextview.setText(string_Quantity_Multiplier);
+        Log.d(TAG, "Textview Changed");
+        Search_Button_Pressed(view);
+
+
+    }
+
+    public void Minus_Button_Pressed(View view) {
+
+        if(Quantity_Multiplier == 0){
+            Log.d(TAG, "Quantity Multiplier = 0");
+            reusableFunctions.Create_Toast(MainActivity2.this, "Cannot have under 0 portions");
+        }else{
+            Quantity_Multiplier = Quantity_Multiplier - 1;
+        }
+        String string_Quantity_Multiplier = Integer.toString(Quantity_Multiplier);
+        binding.QuantityMultiplierTextview.setText(string_Quantity_Multiplier);
+        Log.d(TAG, "Textview Changed");
+        Search_Button_Pressed(view);
+    }
+
 
     public class msyncTask extends AsyncTask<Uri,String,ArrayList<String>> {
 
@@ -439,3 +477,4 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
 }
+

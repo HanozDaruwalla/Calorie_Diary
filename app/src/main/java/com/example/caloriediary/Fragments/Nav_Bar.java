@@ -195,4 +195,9 @@ public class Nav_Bar extends Fragment {
 
         startActivity(Page_Movement_Intent);
     }
+
+    public void Home_Button_Pressed(View view) {
+        Log.d(TAG, "Calorie Diary Clicked");
+
+    }
 }
