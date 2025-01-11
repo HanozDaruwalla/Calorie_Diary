@@ -258,7 +258,8 @@ public class MainActivity2 extends AppCompatActivity {
         binding.proteinR.setText(String.valueOf(nutritionData.getProtein() * Quantity_Multiplier) + "g");
         binding.totalFatR.setText(String.valueOf(nutritionData.getTotalfat() * Quantity_Multiplier) + "g");
         binding.sugarR.setText(String.valueOf(nutritionData.getSugar() * Quantity_Multiplier) + "g");
-        binding.servingSizeR.setText(String.valueOf(reusableFunctions.To_Int(nutritionData.getServingSize()) * Quantity_Multiplier));
+        //binding.servingSizeR.setText(String.valueOf(reusableFunctions.To_Int(nutritionData.getServingSize()) * Quantity_Multiplier));
+        binding.servingSizeR.setText(nutritionData.getServingSize() + " [x " + String.valueOf(Quantity_Multiplier) + "]");
         binding.totalCarbonhydrateR.setText(String.valueOf(nutritionData.getTotalCarbonhydrate() * Quantity_Multiplier + "G"));
         binding.sodiuimR.setText(String.valueOf(nutritionData.getSodium() * Quantity_Multiplier) + "mg");
         binding.cholesterolR.setText(String.valueOf(nutritionData.getCholesterol() * Quantity_Multiplier) + "mg");

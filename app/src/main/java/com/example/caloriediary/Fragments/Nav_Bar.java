@@ -31,8 +31,8 @@ import java.util.ArrayList;
 public class Nav_Bar extends Fragment {
 
     private static final String TAG = "Nav_Bar_Fragment";
-    private TextView Info_Text_View, Calorie_Counter_View, Weight_Monitor_View;
-    private ImageView Info_Img, Calorie_Counter_Img, Weight_Monitor_Image;
+    private TextView Info_Text_View, Calorie_Counter_View, Weight_Monitor_View, Home_Text_View;
+    private ImageView Info_Img, Calorie_Counter_Img, Weight_Monitor_Image, Home_Img;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -88,6 +88,9 @@ public class Nav_Bar extends Fragment {
         Info_Text_View = rootView.findViewById(R.id.Info_Text);
         Info_Img = rootView.findViewById(R.id.Info_Img);
 
+        Home_Text_View = rootView.findViewById(R.id.Home_Text);
+        Home_Img = rootView.findViewById(R.id.Home_Img);
+
         Calorie_Counter_View = rootView.findViewById(R.id.Calorie_Counter_Text);
         Calorie_Counter_Img = rootView.findViewById(R.id.Calorie_Counter_Image);
 
@@ -136,6 +139,21 @@ public class Nav_Bar extends Fragment {
             @Override
             public void onClick(View view) {
                 Info_Section_Clicked();
+            }
+        });
+
+        //Home Section
+        Home_Text_View.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Home_Button_Pressed();
+            }
+        });
+
+        Home_Img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Home_Button_Pressed();
             }
         });
 
@@ -196,8 +214,10 @@ public class Nav_Bar extends Fragment {
         startActivity(Page_Movement_Intent);
     }
 
-    public void Home_Button_Pressed(View view) {
-        Log.d(TAG, "Calorie Diary Clicked");
-
+    public void Home_Button_Pressed() {
+        Log.d(TAG, "home Clicked");
+        Intent intent = new Intent(getContext(), Calorie_Homepage.class);
+        intent.putExtra("User_Data",User_Data);
+        startActivity(intent);
     }
 }

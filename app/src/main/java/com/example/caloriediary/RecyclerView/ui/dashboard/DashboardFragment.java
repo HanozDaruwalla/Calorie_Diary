@@ -59,8 +59,11 @@ public class DashboardFragment extends Fragment {
 
     public void Create_View(ArrayList<ArrayList<NutritionData>> Food_Data_Arraylists){
         //set the recycler view to arraylist
-        //adapter = new ItemAdapter(Food_Data_Arraylists);
-        //recyclerView.setAdapter(adapter);
+        //seperate this 3 arroylist into eperate arraylists
+        Food_Data_Arraylists
+
+        adapter = new ItemAdapter(Food_Data_Arraylists);
+        recyclerView.setAdapter(adapter);
 
 
     }

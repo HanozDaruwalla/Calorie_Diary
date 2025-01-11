@@ -7,13 +7,16 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.caloriediary.Api_Refactored.MainActivity2;
 import com.example.caloriediary.Api_Refactored.NutritionData;
 import com.example.caloriediary.Bmi_Calc.Enter_Height;
+import com.example.caloriediary.Calorie_Homepage;
 import com.example.caloriediary.Creating_Account_And_Login.Create_Account;
 import com.example.caloriediary.Creating_Account_And_Login.Encryption_Decryption_Class;
 import com.example.caloriediary.Creating_Account_And_Login.Login;
 import com.example.caloriediary.Creating_Account_And_Login.User;
 import com.example.caloriediary.Bmi_Calc.OptionForBmi;
+import com.example.caloriediary.Fragments.Nav_Bar;
 import com.example.caloriediary.R;
 import com.example.caloriediary.RecyclerView.recyclerview;
 import com.example.caloriediary.ReusableFunctions;
@@ -282,8 +285,11 @@ public class Database extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "Food Added successfully");
-                            reusableFunctions.Create_Toast(getApplicationContext(), "Food Added To Database. Press back twice to continue");
-
+                            reusableFunctions.Create_Toast(getApplicationContext(), "Food Added To Database...");
+                            Log.d(TAG, "home Clicked");
+                            Log.d(TAG, "Search Button Pressed");
+                            Intent intent = new Intent(Database.this, MainActivity2.class);
+                            startActivity(intent);
                         } else {
                             reusableFunctions.Create_Toast(getApplicationContext(), "Network/ Database Error. Try Again");
                             To_Create_Account();
