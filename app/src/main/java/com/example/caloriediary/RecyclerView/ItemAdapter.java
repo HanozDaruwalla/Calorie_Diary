@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.caloriediary.Api_Refactored.NutritionData;
 import com.example.caloriediary.R;
 
 import java.util.ArrayList;
@@ -15,21 +16,21 @@ import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
 
-    private List<Item> itemList;
+    private ArrayList<NutritionData> itemList = new ArrayList();
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
-        public TextView Food_Name_TextView, Serving_Size_TextView, Calories_TextView, Fat_TextView;
+        public TextView Value_1_TextView, Value_2_TextView, Value_3_TextView, Value_4_TextView;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            Food_Name_TextView = itemView.findViewById(R.id.Food_Name);
-            Serving_Size_TextView = itemView.findViewById(R.id.Serving_Size);
-            Calories_TextView = itemView.findViewById(R.id.Calories);
-            Fat_TextView = itemView.findViewById(R.id.Fat);
+            Value_1_TextView = itemView.findViewById(R.id.Food_Name);
+            Value_2_TextView = itemView.findViewById(R.id.Serving_Size);
+            Value_3_TextView = itemView.findViewById(R.id.Calories);
+            Value_4_TextView = itemView.findViewById(R.id.Fat);
         }
     }
 
-    public ItemAdapter(List<Item> itemList) {
+    public ItemAdapter(ArrayList<NutritionData> itemList) {
         this.itemList = itemList;
     }
 
@@ -43,15 +44,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        Item currentItem = itemList.get(position);
+        NutritionData currentItem = itemList.get(position);
 
-        holder.Food_Name_TextView.setText(currentItem.getFood_Name());
-        holder.Serving_Size_TextView.setText(currentItem.getServings());
-        holder.Calories_TextView.setText(String.valueOf(currentItem.getCalories()));
-        holder.Fat_TextView.setText(String.valueOf(currentItem.getFat()));
+        holder.Value_1_TextView.setText(currentItem.getFoodName());
+        holder.Value_1_TextView.setText(currentItem.getServingSize());
+        holder.Value_3_TextView.setText(String.valueOf(currentItem.getCalories()));
+        holder.Value_4_TextView.setText(String.valueOf(currentItem.getTotalfat()));
     }
 
-    public void Set_Items(List<Item> items) {
+    public void Set_Items(ArrayList<NutritionData> items) {
         if (items == null) {
             this.itemList = new ArrayList<>(); // Assign an empty list if null
         } else {

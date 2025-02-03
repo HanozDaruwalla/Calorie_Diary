@@ -2,6 +2,7 @@ package com.example.caloriediary.RecyclerView.ui.dashboard;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class DashboardFragment extends Fragment {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     ArrayList<String> User_Data = new ArrayList();
+    final String TAG = "Dashboard_Fragment";
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {DashboardViewModel dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
 
@@ -62,12 +64,22 @@ public class DashboardFragment extends Fragment {
         //set the recycler view to arraylist
         //seperate this 3 arroylist into eperate arraylists
 
+        Log.d(TAG, "Starting On Create View");
         ArrayList<NutritionData> Breakfast_Arraylist = Food_Data_Arraylists.get(0);
+        Log.d(TAG, "got breakfast arraylist");
         ArrayList<NutritionData> Lunch_Arraylist = Food_Data_Arraylists.get(1);
+        Log.d(TAG, "got Lunch arraylist");
         ArrayList<NutritionData> Dinner_Arraylist = Food_Data_Arraylists.get(2);
+        Log.d(TAG, "got Dinner arraylist");
+
+        for (int i = 0;i < 20;i++){
+            Log.d(TAG, i + " = : '" + Breakfast_Arraylist.get(i) + "'" );
+        }
 
         adapter = new ItemAdapter(Breakfast_Arraylist);
+        Log.d(TAG, "Set Adapter");
         recyclerView.setAdapter(adapter);
+        Log.d(TAG, "Adding To Recycler View");
 
     }
 
