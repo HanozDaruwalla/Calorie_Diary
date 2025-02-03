@@ -3,17 +3,40 @@ package com.example.caloriediary.RecyclerView;
 // Item.java
 public class Item {
 
-    public Item(String food_name, int calories, int total_fat, String serving_size) {
-        this.Food_Name = food_name;
-        this.Calories = calories;
-        this.Fat = total_fat;
-        this.Servings = serving_size;
+
+    public Item(String food_Name, int calories, int fat, String servings, int sugar, int protein) {
+        Food_Name = food_Name;
+        Calories = calories;
+        Fat = fat;
+        Servings = servings;
+        Sugar = sugar;
+        Protein = protein;
     }
 
     private String Food_Name;
     private int Calories;
     private int Fat;
     private String Servings;
+
+    public int getSugar() {
+        return Sugar;
+    }
+
+    public void setSugar(int sugar) {
+        Sugar = sugar;
+    }
+
+    public int getProtein() {
+        return Protein;
+    }
+
+    public void setProtein(int protein) {
+        Protein = protein;
+    }
+
+    private int Sugar;
+    private int Protein;
+
 
     public String getFood_Name() {
         return Food_Name;

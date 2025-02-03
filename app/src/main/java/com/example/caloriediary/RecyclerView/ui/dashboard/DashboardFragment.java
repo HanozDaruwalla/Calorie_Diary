@@ -19,6 +19,7 @@ import com.example.caloriediary.RecyclerView.Item;
 import com.example.caloriediary.RecyclerView.ItemAdapter;
 import com.example.caloriediary.databinding.FragmentDashboardBinding;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class DashboardFragment extends Fragment {
 
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-
+/*
         List<Item> itemList = new ArrayList<>();
         itemList.add(new Item("apple", 23, 34, "large"));
         itemList.add(new Item("peach", 23, 34, "large"));
@@ -52,7 +53,7 @@ public class DashboardFragment extends Fragment {
         //set the recycler view to arraylist
         adapter = new ItemAdapter(itemList);
         recyclerView.setAdapter(adapter);
-
+ */
         return root;
 
     }
@@ -60,11 +61,13 @@ public class DashboardFragment extends Fragment {
     public void Create_View(ArrayList<ArrayList<NutritionData>> Food_Data_Arraylists){
         //set the recycler view to arraylist
         //seperate this 3 arroylist into eperate arraylists
-        Food_Data_Arraylists
 
-        adapter = new ItemAdapter(Food_Data_Arraylists);
+        ArrayList<NutritionData> Breakfast_Arraylist = Food_Data_Arraylists.get(0);
+        ArrayList<NutritionData> Lunch_Arraylist = Food_Data_Arraylists.get(1);
+        ArrayList<NutritionData> Dinner_Arraylist = Food_Data_Arraylists.get(2);
+
+        adapter = new ItemAdapter(Breakfast_Arraylist);
         recyclerView.setAdapter(adapter);
-
 
     }
 
