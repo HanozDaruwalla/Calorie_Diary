@@ -62,11 +62,6 @@ public class MainActivity2 extends AppCompatActivity {
     Bitmap ImageData;
 
 
-    String Username = "Undefined";
-    String Bmr = "Undefined";
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,12 +90,6 @@ public class MainActivity2 extends AppCompatActivity {
 
              */
 
-            SharedPreferences shared_preference = getSharedPreferences("User_Data", Context.MODE_PRIVATE);
-            String Username = shared_preference.getString("Username", null);
-            String Bmr = shared_preference.getString("Bmr", null);
-
-            Log.d(TAG, "Username= " + Username);
-            Log.d(TAG, "Bmr = " + Bmr);
             binding.progressBar.setVisibility(View.INVISIBLE);
             input_method_manager = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
 
@@ -346,6 +335,15 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
     public void Save_Button_Pressed(String Meal_Type) {
+
+        //GETTING USERNAME
+        SharedPreferences shared_preference = getSharedPreferences("User_Data", Context.MODE_PRIVATE);
+        String Username = shared_preference.getString("Username", null);
+        String Bmr = shared_preference.getString("Bmr", null);
+        Log.d(TAG, "Username= " + Username);
+        Log.d(TAG, "Bmr = " + Bmr);
+
+
         Log.d(TAG, "Save Button Pressed");
         String Food_Name = binding.foodNameR.getText().toString();
         String Portion_Size = binding.servingSizeR.getText().toString();

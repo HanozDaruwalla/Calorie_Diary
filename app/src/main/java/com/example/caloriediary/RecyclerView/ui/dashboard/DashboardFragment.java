@@ -38,8 +38,6 @@ public class DashboardFragment extends Fragment {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-
-
         // Set up the RecyclerView
         recyclerView = binding.recyclerView;
         recyclerView.setHasFixedSize(true);
@@ -73,9 +71,15 @@ public class DashboardFragment extends Fragment {
         Log.d(TAG, "got Dinner arraylist");
 
         for (int i = 0;i < 20;i++){
-            Log.d(TAG, i + " = : '" + Breakfast_Arraylist.get(i) + "'" );
+            try{
+                Log.d(TAG, i + " = : '" + Breakfast_Arraylist.get(i) + "'" );
+            }catch(IndexOutOfBoundsException Ex){
+                Log.d(TAG, "Done");
+                break;
+            }
         }
 
+        Log.d(TAG, "Log Breakfast Arraylist reader done");
         adapter = new ItemAdapter(Breakfast_Arraylist);
         Log.d(TAG, "Set Adapter");
         recyclerView.setAdapter(adapter);
