@@ -368,12 +368,14 @@ public class Database extends AppCompatActivity {
         DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name())
                 .child(Username)
                 .child(Todays_Date).child(Meal_Type);
+
+
+
         Db_Reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 int i = 0;
-
                 Log.d(TAG, "path set to " + Db_Value_Names.getDb_Food_Name_Name() + Username + Todays_Date + Meal_Type + reusableFunctions.Int_To_Strng(i));
                 ArrayList<ArrayList<NutritionData>> Nested_Food_Data_List = new ArrayList<>();
                 ArrayList<NutritionData> Breakfast_Food_List = new ArrayList<>();
@@ -388,22 +390,32 @@ public class Database extends AppCompatActivity {
 
                         Log.d(TAG, "Data food found for the given Username");
 
+                        //Try New Way
+                        /*
                         NutritionData Gathered_Food = dataSnapshot.child(Db_Value_Names.getDb_Food_Name_Name())
                                 .child(Username).child(Todays_Date).child(Meal_Type).child(reusableFunctions.Int_To_Strng(i))
                                 .getValue(NutritionData.class);
 
+                         */
+
+
+                        NutritionData Gathered_Food = dataSnapshot.child(reusableFunctions.Int_To_Strng(i))
+                                .getValue(NutritionData.class);
                         Log.d(TAG, "got info for id" + i);
                         i++;
 
                         switch(Meal_Type){
                             case "Breakfast":
                                 Breakfast_Food_List.add(Gathered_Food);
+                                Log.d(TAG, "Breakfast_Added");
                                 break;
                             case "Lunch":
                                 Lunch_Food_List.add(Gathered_Food);
+                                Log.d(TAG, "Lunch_Added");
                                 break;
                             case "Dinner":
                                 Dinner_Food_List.add(Gathered_Food);
+                                Log.d(TAG, "Dinner_Added");
                                 break;
                             default:
                                 Log.d(TAG, "Meal Type Not Identified");
@@ -423,6 +435,7 @@ public class Database extends AppCompatActivity {
                 Nested_Food_Data_List.add(Dinner_Food_List);
 
                 // Call the success callback with the retrieved data
+                Log.d(TAG, "sending back");
                 callback.Food_Data_Found(Nested_Food_Data_List);
             }
 

@@ -13,10 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.caloriediary.Api_Refactored.MainActivity2;
 import com.example.caloriediary.Api_Refactored.NutritionData;
-import com.example.caloriediary.Database.Database;
-import com.example.caloriediary.RecyclerView.Item;
 import com.example.caloriediary.RecyclerView.ItemAdapter;
 import com.example.caloriediary.databinding.FragmentDashboardBinding;
 
@@ -39,7 +36,7 @@ public class DashboardFragment extends Fragment {
         View root = binding.getRoot();
 
         // Set up the RecyclerView
-        recyclerView = binding.recyclerView;
+        recyclerView = binding.recyclerView1;
         recyclerView.setHasFixedSize(true);
 
         layoutManager = new LinearLayoutManager(getContext());
@@ -72,7 +69,7 @@ public class DashboardFragment extends Fragment {
 
         for (int i = 0;i < 20;i++){
             try{
-                Log.d(TAG, i + " = : '" + Breakfast_Arraylist.get(i) + "'" );
+                Log.d(TAG, i + " = : '" + Lunch_Arraylist.get(i) + "'" );
             }catch(IndexOutOfBoundsException Ex){
                 Log.d(TAG, "Done");
                 break;
@@ -80,7 +77,7 @@ public class DashboardFragment extends Fragment {
         }
 
         Log.d(TAG, "Log Breakfast Arraylist reader done");
-        adapter = new ItemAdapter(Breakfast_Arraylist);
+        adapter = new ItemAdapter(Lunch_Arraylist);
         Log.d(TAG, "Set Adapter");
         recyclerView.setAdapter(adapter);
         Log.d(TAG, "Adding To Recycler View");
