@@ -12,6 +12,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.caloriediary.Api_Refactored.NutritionData;
 import com.example.caloriediary.Bmi_Calc.OptionForBmi;
+import com.example.caloriediary.Creating_Account_And_Login.User;
 import com.example.caloriediary.Database.Database;
 import com.example.caloriediary.R;
 import com.example.caloriediary.RecyclerView.ui.dashboard.DashboardFragment;
@@ -46,6 +47,7 @@ public class recyclerview extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
 
         //EDIT
+        Log.d(TAG, "User_Data [0] = " + User_Data.get(0));
         Lunch_Data_Passer(User_Data);
     }
 
@@ -70,8 +72,19 @@ public class recyclerview extends AppCompatActivity {
             @Override
             public void Food_Data_Found(ArrayList<ArrayList<NutritionData>> foodDataList) {
                 Log.d(TAG, "Food_Data found overrided");
-                DashboardFragment Dashboard_Frag = new DashboardFragment();
-                Dashboard_Frag.Create_View(foodDataList);
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("foodData", foodDataList); // NutritionData must implement Serializable
+
+                DashboardFragment dashboardFragment = new DashboardFragment();
+                dashboardFragment.setArguments(bundle); // Pass the data to the dashboard fragment
+
+                NavController navController = Navigation.findNavController(recyclerview.this, R.id.nav_host_fragment_activity_recyclerview);
+                navController.navigate(R.id.navigation_dashboard); // Show the Dashboard fragment
+
+
+                //DashboardFragment Dashboard_Frag = new DashboardFragment();
+                //Dashboard_Frag.Create_View(foodDataList);
 
 
             }

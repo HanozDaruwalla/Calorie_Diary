@@ -55,6 +55,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     public void Set_Items(ArrayList<NutritionData> items) {
         if (items == null) {
             this.itemList = new ArrayList<>(); // Assign an empty list if null
+
         } else {
             this.itemList = items;
         }

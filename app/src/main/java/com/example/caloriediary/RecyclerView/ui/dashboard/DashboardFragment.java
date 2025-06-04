@@ -41,6 +41,10 @@ public class DashboardFragment extends Fragment {
 
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
+
+
+
+
 /*
         List<Item> itemList = new ArrayList<>();
         itemList.add(new Item("apple", 23, 34, "large"));
@@ -51,6 +55,10 @@ public class DashboardFragment extends Fragment {
         adapter = new ItemAdapter(itemList);
         recyclerView.setAdapter(adapter);
  */
+
+
+
+
         return root;
 
     }
