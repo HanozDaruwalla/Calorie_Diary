@@ -10,13 +10,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.caloriediary.Api_Refactored.MainActivity2;
 import com.example.caloriediary.Api_Refactored.NutritionData;
 import com.example.caloriediary.Bmi_Calc.Enter_Height;
-import com.example.caloriediary.Calorie_Homepage;
 import com.example.caloriediary.Creating_Account_And_Login.Create_Account;
 import com.example.caloriediary.Creating_Account_And_Login.Encryption_Decryption_Class;
 import com.example.caloriediary.Creating_Account_And_Login.Login;
 import com.example.caloriediary.Creating_Account_And_Login.User;
 import com.example.caloriediary.Bmi_Calc.OptionForBmi;
-import com.example.caloriediary.Fragments.Nav_Bar;
 import com.example.caloriediary.R;
 import com.example.caloriediary.RecyclerView.recyclerview;
 import com.example.caloriediary.ReusableFunctions;
@@ -317,13 +315,13 @@ public class Database extends AppCompatActivity {
                 String str_x;
                 Boolean Found_Next_Pk = false;
                 while (Found_Next_Pk == false){
-                    str_x = reusableFunctions.Int_To_Strng(int_x);
+                    str_x = reusableFunctions.Int_To_String(int_x);
                     DataSnapshot pathSnapshot = snapshot
                             .child(Db_Value_Names.getDb_Food_Name_Name()).child(Username)
                             .child(Todays_Date).child(Meal_Type).child(str_x);
                     if (pathSnapshot.exists()) {
                         int_x = int_x + 1;
-                        str_x = reusableFunctions.Int_To_Strng(int_x);
+                        str_x = reusableFunctions.Int_To_String(int_x);
                         Log.d(TAG, "PK " + int_x + " Exists");
                     } else {
                         // Found the first missing primary key
@@ -369,14 +367,12 @@ public class Database extends AppCompatActivity {
                 .child(Username)
                 .child(Todays_Date).child(Meal_Type);
 
-
-
         Db_Reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 int i = 0;
-                Log.d(TAG, "path set to " + Db_Value_Names.getDb_Food_Name_Name() + Username + Todays_Date + Meal_Type + reusableFunctions.Int_To_Strng(i));
+                Log.d(TAG, "path set to " + Db_Value_Names.getDb_Food_Name_Name() + Username + Todays_Date + Meal_Type + reusableFunctions.Int_To_String(i));
                 ArrayList<ArrayList<NutritionData>> Nested_Food_Data_List = new ArrayList<>();
                 ArrayList<NutritionData> Breakfast_Food_List = new ArrayList<>();
                 ArrayList<NutritionData> Lunch_Food_List = new ArrayList<>();
@@ -386,7 +382,7 @@ public class Database extends AppCompatActivity {
 
                 while (Continue_Collecting_Data == true) {
 
-                    if (dataSnapshot.child(reusableFunctions.Int_To_Strng(i)).exists()) {
+                    if (dataSnapshot.child(reusableFunctions.Int_To_String(i)).exists()) {
 
                         Log.d(TAG, "Data food found for the given Username");
 
@@ -399,7 +395,7 @@ public class Database extends AppCompatActivity {
                          */
 
 
-                        NutritionData Gathered_Food = dataSnapshot.child(reusableFunctions.Int_To_Strng(i))
+                        NutritionData Gathered_Food = dataSnapshot.child(reusableFunctions.Int_To_String(i))
                                 .getValue(NutritionData.class);
                         Log.d(TAG, "got info for id" + i);
                         i++;
@@ -605,7 +601,7 @@ public class Database extends AppCompatActivity {
     private ArrayList<String> Create_String_Arraylist(User Gathered_User_Data) {
 
         Log.d(TAG, "Data to Arraylist called");
-        String Age = reusableFunctions.Int_To_Strng(Gathered_User_Data.getAge());
+        String Age = reusableFunctions.Int_To_String(Gathered_User_Data.getAge());
         ArrayList<String> User_Data_Arraylist = new ArrayList<>();
 
         Log.d(TAG, "Adding Data");

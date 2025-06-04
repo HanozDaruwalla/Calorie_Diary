@@ -13,6 +13,8 @@ public class NutritionData {
 
     private static final int NULL_VALUE =0;
 
+
+
     public static NutritionData fromJson(JSONObject jsonObject) {
         NutritionData data = new NutritionData();
         try {

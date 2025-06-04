@@ -1,5 +1,6 @@
 package com.example.caloriediary.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import java.util.List;
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
 
     private ArrayList<NutritionData> itemList = new ArrayList();
+    private static String TAG = "Item_Adapter";
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
         public TextView Value_1_TextView, Value_2_TextView, Value_3_TextView, Value_4_TextView;
@@ -45,6 +47,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         NutritionData currentItem = itemList.get(position);
+
+        Log.d(TAG, "Food Name = " + currentItem.getFoodName());
+        Log.d(TAG, "Serving Size = " + currentItem.getServingSize());
+        Log.d(TAG, "calories = " + currentItem.getCalories());
+        Log.d(TAG, "Total Fat" + currentItem.getTotalfat());
 
         holder.Value_1_TextView.setText(currentItem.getFoodName());
         holder.Value_1_TextView.setText(currentItem.getServingSize());

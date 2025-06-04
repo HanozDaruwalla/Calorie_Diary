@@ -74,17 +74,13 @@ public class recyclerview extends AppCompatActivity {
                 Log.d(TAG, "Food_Data found overrided");
 
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("foodData", foodDataList); // NutritionData must implement Serializable
+                bundle.putSerializable("User_Meals", foodDataList); // NutritionData must implement Serializable
 
                 DashboardFragment dashboardFragment = new DashboardFragment();
                 dashboardFragment.setArguments(bundle); // Pass the data to the dashboard fragment
 
                 NavController navController = Navigation.findNavController(recyclerview.this, R.id.nav_host_fragment_activity_recyclerview);
-                navController.navigate(R.id.navigation_dashboard); // Show the Dashboard fragment
-
-
-                //DashboardFragment Dashboard_Frag = new DashboardFragment();
-                //Dashboard_Frag.Create_View(foodDataList);
+                navController.navigate(R.id.navigation_dashboard, bundle); // Show the Dashboard fragment
 
 
             }
