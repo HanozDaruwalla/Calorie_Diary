@@ -8,13 +8,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.caloriediary.Api_Refactored.MainActivity2;
-import com.example.caloriediary.Api_Refactored.NutritionData;
 import com.example.caloriediary.Bmi_Calc.Enter_Height;
 import com.example.caloriediary.Creating_Account_And_Login.Create_Account;
 import com.example.caloriediary.Creating_Account_And_Login.Encryption_Decryption_Class;
 import com.example.caloriediary.Creating_Account_And_Login.Login;
 import com.example.caloriediary.Creating_Account_And_Login.User;
 import com.example.caloriediary.Bmi_Calc.OptionForBmi;
+import com.example.caloriediary.Nutrition_Data_From_Db;
 import com.example.caloriediary.R;
 import com.example.caloriediary.RecyclerView.recyclerview;
 import com.example.caloriediary.ReusableFunctions;
@@ -105,7 +105,7 @@ public class Database extends AppCompatActivity {
             Database_Value_Names Db_Value_Names = new Database_Value_Names();
             Get_Food_Data(Imported_Data_Arraylist, new recyclerview.Food_Data_FoundListener() {
                 @Override
-                public void Food_Data_Found(ArrayList<ArrayList<NutritionData>> foodDataList) {
+                public void Food_Data_Found(ArrayList<ArrayList<Nutrition_Data_From_Db>> foodDataList) {
                     Log.d(TAG, "Food_Data found overrided in opening function ");
                 }
             });
@@ -373,10 +373,10 @@ public class Database extends AppCompatActivity {
 
                 int i = 0;
                 Log.d(TAG, "path set to " + Db_Value_Names.getDb_Food_Name_Name() + Username + Todays_Date + Meal_Type + reusableFunctions.Int_To_String(i));
-                ArrayList<ArrayList<NutritionData>> Nested_Food_Data_List = new ArrayList<>();
-                ArrayList<NutritionData> Breakfast_Food_List = new ArrayList<>();
-                ArrayList<NutritionData> Lunch_Food_List = new ArrayList<>();
-                ArrayList<NutritionData> Dinner_Food_List = new ArrayList<>();
+                ArrayList<ArrayList<Nutrition_Data_From_Db>> Nested_Food_Data_List = new ArrayList<>();
+                ArrayList<Nutrition_Data_From_Db> Breakfast_Food_List = new ArrayList<>();
+                ArrayList<Nutrition_Data_From_Db> Lunch_Food_List = new ArrayList<>();
+                ArrayList<Nutrition_Data_From_Db> Dinner_Food_List = new ArrayList<>();
 
                 Boolean Continue_Collecting_Data = true;
 
@@ -395,8 +395,8 @@ public class Database extends AppCompatActivity {
                          */
 
 
-                        NutritionData Gathered_Food = dataSnapshot.child(reusableFunctions.Int_To_String(i))
-                                .getValue(NutritionData.class);
+                        Nutrition_Data_From_Db Gathered_Food = dataSnapshot.child(reusableFunctions.Int_To_String(i))
+                                .getValue(Nutrition_Data_From_Db.class);
                         Log.d(TAG, "got info for id" + i);
                         i++;
 

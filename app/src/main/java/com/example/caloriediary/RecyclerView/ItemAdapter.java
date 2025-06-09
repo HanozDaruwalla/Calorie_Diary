@@ -9,15 +9,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.caloriediary.Api_Refactored.NutritionData;
+import com.example.caloriediary.Api_Refactored.Nutrition_Data_From_Db;
 import com.example.caloriediary.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
 
-    private ArrayList<NutritionData> itemList = new ArrayList();
+    private ArrayList<Nutrition_Data_From_Db> itemList = new ArrayList();
     private static String TAG = "Item_Adapter";
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -29,11 +28,19 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             Value_2_TextView = itemView.findViewById(R.id.Serving_Size);
             Value_3_TextView = itemView.findViewById(R.id.Calories);
             Value_4_TextView = itemView.findViewById(R.id.Fat);
+            Log.d(TAG, "Interface binding set");
         }
     }
 
-    public ItemAdapter(ArrayList<NutritionData> itemList) {
-        this.itemList = itemList;
+    public ItemAdapter(ArrayList<Nutrition_Data_From_Db> itemList) {
+
+        try{
+            this.itemList = itemList;
+
+        }catch(Exception Ex){
+            Log.d(TAG, "Constructor failed");
+        }
+        Log.d(TAG, "Constructor set");
     }
 
     @NonNull
@@ -46,7 +53,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        NutritionData currentItem = itemList.get(position);
+        Log.d(TAG, "in bindviewholder");
+        Nutrition_Data_From_Db currentItem = itemList.get(position);
+
 
         Log.d(TAG, "Food Name = " + currentItem.getFoodName());
         Log.d(TAG, "Serving Size = " + currentItem.getServingSize());
@@ -57,9 +66,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         holder.Value_1_TextView.setText(currentItem.getServingSize());
         holder.Value_3_TextView.setText(String.valueOf(currentItem.getCalories()));
         holder.Value_4_TextView.setText(String.valueOf(currentItem.getTotalfat()));
+        Log.d(TAG, "textviews set");
     }
 
-    public void Set_Items(ArrayList<NutritionData> items) {
+    public void Set_Items(ArrayList<Nutrition_Data_From_Db> items) {
         if (items == null) {
             this.itemList = new ArrayList<>(); // Assign an empty list if null
 

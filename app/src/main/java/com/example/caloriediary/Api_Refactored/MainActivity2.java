@@ -54,7 +54,7 @@ public class MainActivity2 extends AppCompatActivity {
 
     // variables
 
-    NutritionData Nutrition_Data_Template;
+    Nutrition_Data_From_Db Nutrition_Data_Template;
     String Food_Item = "Undefined";
     InputMethodManager input_method_manager;
     int Index_Of_Nutritional_Values_Arraylist;
@@ -149,7 +149,7 @@ public class MainActivity2 extends AppCompatActivity {
                     public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                         Log.d(TAG, "Success" + response.toString());
                         binding.progressBar.setVisibility(View.INVISIBLE);
-                        Nutrition_Data_Template = NutritionData.fromJson(response);
+                        Nutrition_Data_Template = Nutrition_Data_From_Db.fromJson(response);
 
                         new DownloadImageTask(binding.foodPic).execute(Nutrition_Data_Template.getPhotoUrl());
                         binding.foodPic.setVisibility(View.VISIBLE);
@@ -197,7 +197,7 @@ public class MainActivity2 extends AppCompatActivity {
                     public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                         Log.d("Healthier", "Success" + response.toString());
                         binding.progressBar.setVisibility(View.INVISIBLE);
-                        Nutrition_Data_Template = NutritionData.fromJson(response);
+                        Nutrition_Data_Template = Nutrition_Data_From_Db.fromJson(response);
 
                         binding.foodPic.setImageBitmap(ImageData);
                         binding.foodPic.setVisibility(View.VISIBLE);
@@ -225,7 +225,7 @@ public class MainActivity2 extends AppCompatActivity {
                 });
     }
 
-    private void updateUI(NutritionData nutritionData) {
+    private void updateUI(Nutrition_Data_From_Db nutritionDataFromDb) {
         Log.d(TAG, "4");
         /*
         binding.foodNameR.setText(nutritionData.getFoodName());
@@ -242,18 +242,18 @@ public class MainActivity2 extends AppCompatActivity {
         binding.relativeLayout.setVisibility(View.VISIBLE);
          */
 
-        binding.foodNameR.setText(nutritionData.getFoodName());
-        binding.calriesR.setText(String.valueOf(nutritionData.getCalories() * Quantity_Multiplier));
-        binding.proteinR.setText(String.valueOf(nutritionData.getProtein() * Quantity_Multiplier) + "g");
-        binding.totalFatR.setText(String.valueOf(nutritionData.getTotalfat() * Quantity_Multiplier) + "g");
-        binding.sugarR.setText(String.valueOf(nutritionData.getSugar() * Quantity_Multiplier) + "g");
+        binding.foodNameR.setText(nutritionDataFromDb.getFoodName());
+        binding.calriesR.setText(String.valueOf(nutritionDataFromDb.getCalories() * Quantity_Multiplier));
+        binding.proteinR.setText(String.valueOf(nutritionDataFromDb.getProtein() * Quantity_Multiplier) + "g");
+        binding.totalFatR.setText(String.valueOf(nutritionDataFromDb.getTotalfat() * Quantity_Multiplier) + "g");
+        binding.sugarR.setText(String.valueOf(nutritionDataFromDb.getSugar() * Quantity_Multiplier) + "g");
         //binding.servingSizeR.setText(String.valueOf(reusableFunctions.To_Int(nutritionData.getServingSize()) * Quantity_Multiplier));
-        binding.servingSizeR.setText(nutritionData.getServingSize() + " [x " + String.valueOf(Quantity_Multiplier) + "]");
-        binding.totalCarbonhydrateR.setText(String.valueOf(nutritionData.getTotalCarbonhydrate() * Quantity_Multiplier + "G"));
-        binding.sodiuimR.setText(String.valueOf(nutritionData.getSodium() * Quantity_Multiplier) + "mg");
-        binding.cholesterolR.setText(String.valueOf(nutritionData.getCholesterol() * Quantity_Multiplier) + "mg");
-        binding.potassiumR.setText(String.valueOf(nutritionData.getPotassium() * Quantity_Multiplier) + "mg");
-        binding.dietaryFiberR.setText(nutritionData.getDiertaryFiber() * Quantity_Multiplier + "g");
+        binding.servingSizeR.setText(nutritionDataFromDb.getServingSize() + " [x " + String.valueOf(Quantity_Multiplier) + "]");
+        binding.totalCarbonhydrateR.setText(String.valueOf(nutritionDataFromDb.getTotalCarbonhydrate() * Quantity_Multiplier + "G"));
+        binding.sodiuimR.setText(String.valueOf(nutritionDataFromDb.getSodium() * Quantity_Multiplier) + "mg");
+        binding.cholesterolR.setText(String.valueOf(nutritionDataFromDb.getCholesterol() * Quantity_Multiplier) + "mg");
+        binding.potassiumR.setText(String.valueOf(nutritionDataFromDb.getPotassium() * Quantity_Multiplier) + "mg");
+        binding.dietaryFiberR.setText(nutritionDataFromDb.getDiertaryFiber() * Quantity_Multiplier + "g");
         binding.relativeLayout.setVisibility(View.VISIBLE);
     }
 /*

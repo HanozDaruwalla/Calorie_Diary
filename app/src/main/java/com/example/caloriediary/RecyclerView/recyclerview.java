@@ -10,10 +10,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.caloriediary.Api_Refactored.NutritionData;
-import com.example.caloriediary.Bmi_Calc.OptionForBmi;
-import com.example.caloriediary.Creating_Account_And_Login.User;
 import com.example.caloriediary.Database.Database;
+import com.example.caloriediary.Nutrition_Data_From_Db;
 import com.example.caloriediary.R;
 import com.example.caloriediary.RecyclerView.ui.dashboard.DashboardFragment;
 import com.example.caloriediary.ReusableFunctions;
@@ -52,7 +50,7 @@ public class recyclerview extends AppCompatActivity {
     }
 
     public interface Food_Data_FoundListener {
-        void Food_Data_Found(ArrayList<ArrayList<NutritionData>> foodDataList);
+        void Food_Data_Found(ArrayList<ArrayList<Nutrition_Data_From_Db>> foodDataList);
     }
 
     private void Lunch_Data_Passer(ArrayList<String> userdata){
@@ -70,7 +68,7 @@ public class recyclerview extends AppCompatActivity {
         Database DB = new Database();
         DB.Get_Food_Data(UsernameDateFoodtype, new Food_Data_FoundListener() {
             @Override
-            public void Food_Data_Found(ArrayList<ArrayList<NutritionData>> foodDataList) {
+            public void Food_Data_Found(ArrayList<ArrayList<Nutrition_Data_From_Db>> foodDataList) {
                 Log.d(TAG, "Food_Data found overrided");
 
                 Bundle bundle = new Bundle();
