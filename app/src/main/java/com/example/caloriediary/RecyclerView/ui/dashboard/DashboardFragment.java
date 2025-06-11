@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.caloriediary.Api_Refactored.Nutrition_Data_From_Db;
+import com.example.caloriediary.Api_Refactored.Nutrition_Data__From_Api;
 import com.example.caloriediary.RecyclerView.ItemAdapter;
 import com.example.caloriediary.ReusableFunctions;
 import com.example.caloriediary.databinding.FragmentDashboardBinding;
@@ -29,7 +29,7 @@ public class DashboardFragment extends Fragment {
     ArrayList<String> User_Data = new ArrayList();
     final String TAG = "Dashboard_Fragment";
     ReusableFunctions reusable_functions = new ReusableFunctions();
-    private ArrayList<ArrayList<Nutrition_Data_From_Db>> Meals_Arraylist_Nested = new ArrayList<>();
+    private ArrayList<ArrayList<Nutrition_Data__From_Api>> Meals_Arraylist_Nested = new ArrayList<>();
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -39,7 +39,7 @@ public class DashboardFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(getArguments() != null){
-            Meals_Arraylist_Nested = (ArrayList<ArrayList<Nutrition_Data_From_Db>>) getArguments().getSerializable("User_Meals");
+            Meals_Arraylist_Nested = (ArrayList<ArrayList<Nutrition_Data__From_Api>>) getArguments().getSerializable("User_Meals");
             if (Meals_Arraylist_Nested != null){
                 Log.d(TAG, "Successfully got user food arraylist from recycler");
 
@@ -88,16 +88,16 @@ public class DashboardFragment extends Fragment {
 
     }
 
-    public void Setup_Recycler_View(ArrayList<ArrayList<Nutrition_Data_From_Db>> PASSED_Meals_Arraylist_Nested){
+    public void Setup_Recycler_View(ArrayList<ArrayList<Nutrition_Data__From_Api>> PASSED_Meals_Arraylist_Nested){
         //set the recycler view to arraylist
         //seperate this 3 arroylist into eperate arraylists
 
         Log.d(TAG, "Starting On Create View");
-        ArrayList<Nutrition_Data_From_Db> Breakfast_Arraylist = PASSED_Meals_Arraylist_Nested.get(0);
+        ArrayList<Nutrition_Data__From_Api> Breakfast_Arraylist = PASSED_Meals_Arraylist_Nested.get(0);
         Log.d(TAG, "got breakfast arraylist");
-        ArrayList<Nutrition_Data_From_Db> Lunch_Arraylist = PASSED_Meals_Arraylist_Nested.get(1);
+        ArrayList<Nutrition_Data__From_Api> Lunch_Arraylist = PASSED_Meals_Arraylist_Nested.get(1);
         Log.d(TAG, "got Lunch arraylist");
-        ArrayList<Nutrition_Data_From_Db> Dinner_Arraylist = PASSED_Meals_Arraylist_Nested.get(2);
+        ArrayList<Nutrition_Data__From_Api> Dinner_Arraylist = PASSED_Meals_Arraylist_Nested.get(2);
         Log.d(TAG, "got Dinner arraylist");
 
         for (int i = 0;i < 20;i++){

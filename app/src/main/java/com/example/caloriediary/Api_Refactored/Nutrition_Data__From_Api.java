@@ -6,18 +6,18 @@ import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Nutrition_Data_From_Db {
+public class Nutrition_Data__From_Api {
     private String foodName, photoUrl, servingSize;
     private int calories, protein, totalfat, sugar, totalCarbonhydrate, sodium,
             cholesterol, potassium, diertaryFiber;
 
     private static final int NULL_VALUE =0;
 
-    public Nutrition_Data_From_Db() {
+    public Nutrition_Data__From_Api() {
     }
 
-    public static Nutrition_Data_From_Db fromJson(JSONObject jsonObject) {
-        Nutrition_Data_From_Db data = new Nutrition_Data_From_Db();
+    public static Nutrition_Data__From_Api fromJson(JSONObject jsonObject) {
+        Nutrition_Data__From_Api data = new Nutrition_Data__From_Api();
         try {
             JSONObject foods = jsonObject.getJSONArray("foods").getJSONObject(0);
             data.foodName = foods.getString("food_name");

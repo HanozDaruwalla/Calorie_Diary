@@ -54,7 +54,7 @@ public class MainActivity2 extends AppCompatActivity {
 
     // variables
 
-    Nutrition_Data_From_Db Nutrition_Data_Template;
+    Nutrition_Data__From_Api Nutrition_Data_Template;
     String Food_Item = "Undefined";
     InputMethodManager input_method_manager;
     int Index_Of_Nutritional_Values_Arraylist;
@@ -149,7 +149,7 @@ public class MainActivity2 extends AppCompatActivity {
                     public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                         Log.d(TAG, "Success" + response.toString());
                         binding.progressBar.setVisibility(View.INVISIBLE);
-                        Nutrition_Data_Template = Nutrition_Data_From_Db.fromJson(response);
+                        Nutrition_Data_Template = Nutrition_Data__From_Api.fromJson(response);
 
                         new DownloadImageTask(binding.foodPic).execute(Nutrition_Data_Template.getPhotoUrl());
                         binding.foodPic.setVisibility(View.VISIBLE);
@@ -197,7 +197,7 @@ public class MainActivity2 extends AppCompatActivity {
                     public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                         Log.d("Healthier", "Success" + response.toString());
                         binding.progressBar.setVisibility(View.INVISIBLE);
-                        Nutrition_Data_Template = Nutrition_Data_From_Db.fromJson(response);
+                        Nutrition_Data_Template = Nutrition_Data__From_Api.fromJson(response);
 
                         binding.foodPic.setImageBitmap(ImageData);
                         binding.foodPic.setVisibility(View.VISIBLE);
@@ -225,7 +225,7 @@ public class MainActivity2 extends AppCompatActivity {
                 });
     }
 
-    private void updateUI(Nutrition_Data_From_Db nutritionDataFromDb) {
+    private void updateUI(Nutrition_Data__From_Api nutritionDataFromDb) {
         Log.d(TAG, "4");
         /*
         binding.foodNameR.setText(nutritionData.getFoodName());

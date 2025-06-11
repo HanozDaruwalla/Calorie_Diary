@@ -9,14 +9,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.caloriediary.Api_Refactored.Nutrition_Data_From_Db;
+import com.example.caloriediary.Api_Refactored.Nutrition_Data__From_Api;
 import com.example.caloriediary.R;
 
 import java.util.ArrayList;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
 
-    private ArrayList<Nutrition_Data_From_Db> itemList = new ArrayList();
+    private ArrayList<Nutrition_Data__From_Api> itemList = new ArrayList();
     private static String TAG = "Item_Adapter";
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -32,7 +32,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         }
     }
 
-    public ItemAdapter(ArrayList<Nutrition_Data_From_Db> itemList) {
+    public ItemAdapter(ArrayList<Nutrition_Data__From_Api> itemList) {
         if (itemList != null) {
             this.itemList = itemList;
         } else {
@@ -55,7 +55,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
         if (position >= 0 && position < itemList.size()) {
             Log.d(TAG, "Valid Position");
-            Nutrition_Data_From_Db currentItem = itemList.get(position);
+            Nutrition_Data__From_Api currentItem = itemList.get(position);
             Log.d(TAG, "Position " + position + " set");
 
             Log.d(TAG, "Food Name = " + currentItem.getFoodName());
@@ -80,7 +80,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     }
 
-    public void Set_Items(ArrayList<Nutrition_Data_From_Db> items) {
+    public void Set_Items(ArrayList<Nutrition_Data__From_Api> items) {
         if (items == null) {
             this.itemList = new ArrayList<>(); // Assign an empty list if null
 
