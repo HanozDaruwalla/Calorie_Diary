@@ -33,14 +33,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     }
 
     public ItemAdapter(ArrayList<Nutrition_Data_From_Db> itemList) {
-
-        try{
+        if (itemList != null) {
             this.itemList = itemList;
-
-        }catch(Exception Ex){
-            Log.d(TAG, "Constructor failed");
+        } else {
+            this.itemList = new ArrayList<>(); // Initialize to an empty list
+            Log.w(TAG, "Constructor received null itemList, initialized to empty ArrayList.");
         }
-        Log.d(TAG, "Constructor set");
     }
 
     @NonNull
@@ -54,19 +52,32 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         Log.d(TAG, "in bindviewholder");
-        Nutrition_Data_From_Db currentItem = itemList.get(position);
 
+        if (position >= 0 && position < itemList.size()) {
+            Log.d(TAG, "Valid Position");
+            Nutrition_Data_From_Db currentItem = itemList.get(position);
+            Log.d(TAG, "Position " + position + " set");
 
-        Log.d(TAG, "Food Name = " + currentItem.getFoodName());
-        Log.d(TAG, "Serving Size = " + currentItem.getServingSize());
-        Log.d(TAG, "calories = " + currentItem.getCalories());
-        Log.d(TAG, "Total Fat" + currentItem.getTotalfat());
+            Log.d(TAG, "Food Name = " + currentItem.getFoodName());
+            Log.d(TAG, "Serving Size = " + currentItem.getServingSize());
+            Log.d(TAG, "calories = " + currentItem.getCalories());
+            Log.d(TAG, "Total Fat = " + currentItem.getTotalfat()); // Added space for readability
 
-        holder.Value_1_TextView.setText(currentItem.getFoodName());
-        holder.Value_1_TextView.setText(currentItem.getServingSize());
-        holder.Value_3_TextView.setText(String.valueOf(currentItem.getCalories()));
-        holder.Value_4_TextView.setText(String.valueOf(currentItem.getTotalfat()));
-        Log.d(TAG, "textviews set");
+            Log.d(TAG, "Setting textviews");
+            holder.Value_1_TextView.setText(currentItem.getFoodName());
+            holder.Value_2_TextView.setText(currentItem.getServingSize());
+            holder.Value_3_TextView.setText(String.valueOf(currentItem.getCalories()));
+            holder.Value_4_TextView.setText(String.valueOf(currentItem.getTotalfat()));
+            Log.d(TAG, "textviews set");
+        } else {
+            Log.e(TAG, "Error: Invalid position " + position + " for itemList size " + itemList.size());
+            // Optionally clear text views or handle this error state visually
+            holder.Value_1_TextView.setText("");
+            holder.Value_2_TextView.setText("");
+            holder.Value_3_TextView.setText("");
+            holder.Value_4_TextView.setText("");
+        }
+
     }
 
     public void Set_Items(ArrayList<Nutrition_Data_From_Db> items) {

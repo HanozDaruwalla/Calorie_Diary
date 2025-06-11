@@ -109,7 +109,7 @@ public class DashboardFragment extends Fragment {
             }
         }
 
-        Log.d(TAG, "Log Breakfast Arraylist reader done");
+        Log.d(TAG, "Log lunch Arraylist reader done");
         adapter = new ItemAdapter(Lunch_Arraylist);
         Log.d(TAG, "Set Adapter");
         recyclerView.setAdapter(adapter);
