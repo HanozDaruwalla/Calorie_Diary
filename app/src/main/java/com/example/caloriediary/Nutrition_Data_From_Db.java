@@ -1,5 +1,6 @@
 package com.example.caloriediary;
 
+import com.example.caloriediary.Database.Database_Value_Names;
 import com.google.firebase.database.PropertyName;
 
 public class Nutrition_Data_From_Db {
@@ -19,10 +20,10 @@ public class Nutrition_Data_From_Db {
     @PropertyName(("Fat"))
     String Fat = "Undefined";
 
-    @PropertyName(("Name Of Food"))
+    @PropertyName(("Name_Of_Food"))
     String Name_Of_Food = "Undefined";
 
-    @PropertyName(("Portion Size"))
+    @PropertyName(("Portion_Size"))
     String Portion_Size = "Undefined";
 
     @PropertyName(("Potassium"))

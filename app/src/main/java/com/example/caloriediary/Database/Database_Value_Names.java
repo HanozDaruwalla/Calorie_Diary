@@ -19,8 +19,8 @@ public class Database_Value_Names {
     private String Db_Age_Name = "Age";
 
     private String Db_Date_Name = "Date";
-    private String Db_Food_Name_Name = "Name Of Food";
-    private String Db_Portion_Name = "Portion Size";
+    private String Db_Food_Name_Name = "Name_Of_Food";
+    private String Db_Portion_Name = "Portion_Size";
     private String Db_Caloires_Name = "Calories";
     private String Db_Fat_Name = "Fat";
 

@@ -39,6 +39,7 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if(getArguments() != null){
             Meals_Arraylist_Nested = (ArrayList<ArrayList<Nutrition_Data_From_Db>>) getArguments().getSerializable("User_Meals");
             if (Meals_Arraylist_Nested != null){
@@ -61,15 +62,7 @@ public class DashboardFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-/*
-        List<Item> itemList = new ArrayList<>();
-        itemList.add(new Item("apple", 23, 34, "large"));
-        itemList.add(new Item("peach", 23, 34, "large"));
-        itemList.add(new Item("Rubarb", 23, 34, "large"));
-        //set the recycler view to arraylist
-        adapter = new ItemAdapter(itemList);
-        recyclerView.setAdapter(adapter);
- */
+
         return root;
     }
 
