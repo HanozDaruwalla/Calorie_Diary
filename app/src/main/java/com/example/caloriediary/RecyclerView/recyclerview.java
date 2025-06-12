@@ -76,8 +76,10 @@ public class recyclerview extends AppCompatActivity {
 
                 DashboardFragment dashboardFragment = new DashboardFragment();
                 dashboardFragment.setArguments(bundle); // Pass the data to the dashboard fragment
+                Log.d(TAG, "Bundle To Dashboard Set");
 
                 NavController navController = Navigation.findNavController(recyclerview.this, R.id.nav_host_fragment_activity_recyclerview);
+                Log.d(TAG, "Nav Set");
                 navController.navigate(R.id.navigation_dashboard, bundle); // Show the Dashboard fragment
 
 

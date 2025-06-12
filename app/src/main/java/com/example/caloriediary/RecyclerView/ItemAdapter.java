@@ -10,13 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.caloriediary.Api_Refactored.Nutrition_Data__From_Api;
+import com.example.caloriediary.Nutrition_Data_From_Db;
 import com.example.caloriediary.R;
 
 import java.util.ArrayList;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
 
-    private ArrayList<Nutrition_Data__From_Api> itemList = new ArrayList();
+    private ArrayList<Nutrition_Data_From_Db> itemList = new ArrayList();
     private static String TAG = "Item_Adapter";
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -32,7 +33,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         }
     }
 
-    public ItemAdapter(ArrayList<Nutrition_Data__From_Api> itemList) {
+    public ItemAdapter(ArrayList<Nutrition_Data_From_Db> itemList) {
         if (itemList != null) {
             this.itemList = itemList;
         } else {
@@ -55,19 +56,19 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
         if (position >= 0 && position < itemList.size()) {
             Log.d(TAG, "Valid Position");
-            Nutrition_Data__From_Api currentItem = itemList.get(position);
+            Nutrition_Data_From_Db currentItem = itemList.get(position);
             Log.d(TAG, "Position " + position + " set");
 
-            Log.d(TAG, "Food Name = " + currentItem.getFoodName());
-            Log.d(TAG, "Serving Size = " + currentItem.getServingSize());
+            Log.d(TAG, "Food Name = " + currentItem.getName_Of_Food());
+            Log.d(TAG, "Serving Size = " + currentItem.getPortion_Size());
             Log.d(TAG, "calories = " + currentItem.getCalories());
-            Log.d(TAG, "Total Fat = " + currentItem.getTotalfat()); // Added space for readability
+            Log.d(TAG, "Total Fat = " + currentItem.getFat()); // Added space for readability
 
             Log.d(TAG, "Setting textviews");
-            holder.Value_1_TextView.setText(currentItem.getFoodName());
-            holder.Value_2_TextView.setText(currentItem.getServingSize());
+            holder.Value_1_TextView.setText(currentItem.getName_Of_Food());
+            holder.Value_2_TextView.setText(currentItem.getPortion_Size());
             holder.Value_3_TextView.setText(String.valueOf(currentItem.getCalories()));
-            holder.Value_4_TextView.setText(String.valueOf(currentItem.getTotalfat()));
+            holder.Value_4_TextView.setText(String.valueOf(currentItem.getFat()));
             Log.d(TAG, "textviews set");
         } else {
             Log.e(TAG, "Error: Invalid position " + position + " for itemList size " + itemList.size());
@@ -80,7 +81,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     }
 
-    public void Set_Items(ArrayList<Nutrition_Data__From_Api> items) {
+    public void Set_Items(ArrayList<Nutrition_Data_From_Db> items) {
         if (items == null) {
             this.itemList = new ArrayList<>(); // Assign an empty list if null
 
