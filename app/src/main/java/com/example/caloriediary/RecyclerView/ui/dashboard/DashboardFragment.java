@@ -5,6 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,6 +34,9 @@ public class DashboardFragment extends Fragment {
     final String TAG = "Dashboard_Fragment";
     ReusableFunctions reusable_functions = new ReusableFunctions();
     private ArrayList<ArrayList<Nutrition_Data_From_Db>> Meals_Arraylist_Nested = new ArrayList<>();
+    private String Nutrition_Option_1_Picked = "undefined";
+    private String Nutrition_Option_2_Picked = "undefined";
+
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -39,6 +45,9 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Spinner Nutrition_Option_1 = binding.Option1Spinner;
+        Spinner Nutrition_Option_2 = binding.Option2Spinner;
 
         if(getArguments() != null){
             Meals_Arraylist_Nested = (ArrayList<ArrayList<Nutrition_Data_From_Db>>) getArguments().getSerializable("User_Meals");
@@ -52,6 +61,38 @@ public class DashboardFragment extends Fragment {
         }else{
             Log.d(TAG, "No Bundle with name match found (check argument names)");
         }
+
+        Nutrition_Option_1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> Adapterview, View view, int position, long id) {
+                Nutrition_Option_1_Picked = Adapterview.getItemAtPosition(position).toString();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        Nutrition_Option_2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> Adapterview, View view, int position, long id) {
+                Nutrition_Option_2_Picked = Adapterview.getItemAtPosition(position).toString();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        // Create an ArrayAdapter using the string array and a default spinner layout.
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                getContext(), R.array.Food_Options,
+                android.R.layout.simple_spinner_item
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Nutrition_Option_1.setAdapter(adapter);
+
+
+
+
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {DashboardViewModel dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
