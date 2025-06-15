@@ -18,11 +18,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.caloriediary.Api_Refactored.Nutrition_Data__From_Api;
 import com.example.caloriediary.Nutrition_Data_From_Db;
+import com.example.caloriediary.R;
 import com.example.caloriediary.RecyclerView.ItemAdapter;
 import com.example.caloriediary.ReusableFunctions;
 import com.example.caloriediary.databinding.FragmentDashboardBinding;
 
 import java.util.ArrayList;
+
+import cz.msebera.android.httpclient.client.cache.Resource;
 
 public class DashboardFragment extends Fragment {
 
@@ -34,8 +37,8 @@ public class DashboardFragment extends Fragment {
     final String TAG = "Dashboard_Fragment";
     ReusableFunctions reusable_functions = new ReusableFunctions();
     private ArrayList<ArrayList<Nutrition_Data_From_Db>> Meals_Arraylist_Nested = new ArrayList<>();
-    private String Nutrition_Option_1_Picked = "undefined";
-    private String Nutrition_Option_2_Picked = "undefined";
+    String Nutrition_Option_1_Picked = "undefined";
+    String Nutrition_Option_2_Picked = "undefined";
 
 
     public DashboardFragment() {
@@ -62,9 +65,12 @@ public class DashboardFragment extends Fragment {
             Log.d(TAG, "No Bundle with name match found (check argument names)");
         }
 
+
+        Log.d(TAG, "Now beginning Spinner Listener 1");
         Nutrition_Option_1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> Adapterview, View view, int position, long id) {
+                Log.d(TAG, "OnItemSelected1");
                 Nutrition_Option_1_Picked = Adapterview.getItemAtPosition(position).toString();
             }
             @Override
@@ -72,23 +78,37 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        Log.d(TAG, "Now beginning Spinner Listener 1");
         Nutrition_Option_2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> Adapterview, View view, int position, long id) {
+                Log.d(TAG, "OnItemSelected1");
                 Nutrition_Option_2_Picked = Adapterview.getItemAtPosition(position).toString();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+        Log.d(TAG, "Listener 1 and 2 done");
 
+        String[] Filter_Options_1 = getResources().getStringArray(R.array.Food_Options);
         // Create an ArrayAdapter using the string array and a default spinner layout.
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+        ArrayAdapter<CharSequence> Filter_Adapter1 = ArrayAdapter.createFromResource(
                 getContext(), R.array.Food_Options,
                 android.R.layout.simple_spinner_item
         );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Nutrition_Option_1.setAdapter(adapter);
+        Filter_Adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Nutrition_Option_1.setAdapter(Filter_Adapter1);
+
+        String[] Filter_Options_2 = getResources().getStringArray(R.array.Food_Options);
+        // Create an ArrayAdapter using the string array and a default spinner layout.
+        ArrayAdapter<CharSequence> Filter_Adapter2 = ArrayAdapter.createFromResource(
+                getContext(), R.array.Food_Options,
+                android.R.layout.simple_spinner_item
+        );
+        Filter_Adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Nutrition_Option_2.setAdapter(Filter_Adapter2);
+
 
 
 
