@@ -48,10 +48,9 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "oncreate");
 
-        Spinner Nutrition_Option_1 = binding.Option1Spinner;
-        Spinner Nutrition_Option_2 = binding.Option2Spinner;
-
+        Log.d(TAG, "binding created");
         if(getArguments() != null){
             Meals_Arraylist_Nested = (ArrayList<ArrayList<Nutrition_Data_From_Db>>) getArguments().getSerializable("User_Meals");
             if (Meals_Arraylist_Nested != null){
@@ -66,6 +65,21 @@ public class DashboardFragment extends Fragment {
         }
 
 
+    }
+
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {DashboardViewModel dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
+        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+        // Set up the RecyclerView
+        recyclerView = binding.recyclerView1;
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+
+        Log.d(TAG, "Starting Spinners Now");
+        Spinner Nutrition_Option_1 = binding.Option1Spinner;
+        Spinner Nutrition_Option_2 = binding.Option2Spinner;
         Log.d(TAG, "Now beginning Spinner Listener 1");
         Nutrition_Option_1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -112,17 +126,6 @@ public class DashboardFragment extends Fragment {
 
 
 
-
-    }
-
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {DashboardViewModel dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-        // Set up the RecyclerView
-        recyclerView = binding.recyclerView1;
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
 
         return root;
     }

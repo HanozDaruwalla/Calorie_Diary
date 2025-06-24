@@ -22,7 +22,6 @@
         android:layout_height="match_parent"
         android:layout_margin="10dp"
         android:orientation="vertical">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,30 +30,30 @@
 
             <TextView
                 android:id="@+id/food_data_picker_lb"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Food Nutrition Info:"
-                android:textSize="23sp"
+                android:text="Filter:"
+                android:textSize="15sp"
                 android:textAlignment="center"
                 android:textColor="@color/black"/>
 
-            <Spinner
-                android:id="@+id/Option_1_Spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:text="boo"
-                android:entries="@array/Food_Options"
-                />
-            <Spinner
-                android:id="@+id/Option_2_Spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:entries="@array/Food_Options"
-                />
 
+            <Spinner
+                android:id="@+id/Option1Spinner"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:entries="@array/Food_Options"/>
+            <Spinner
+                android:id="@+id/Option2Spinner"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:entries="@array/Food_Options"
+            />
 
         </LinearLayout>
 
