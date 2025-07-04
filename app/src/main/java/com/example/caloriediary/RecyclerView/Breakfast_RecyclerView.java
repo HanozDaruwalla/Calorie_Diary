@@ -20,7 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
-public class recyclerview extends AppCompatActivity {
+public class Breakfast_RecyclerView extends AppCompatActivity {
 
     private ActivityRecyclerviewBinding binding;
     Intent Page_Movement_Intent;
@@ -59,7 +59,7 @@ public class recyclerview extends AppCompatActivity {
         ArrayList<String> UsernameDateFoodtype = new ArrayList<>();
         UsernameDateFoodtype.add(userdata.get(6));
         UsernameDateFoodtype.add(reusableFunctions.Date_Creator());
-        UsernameDateFoodtype.add(getString(R.string.Lunch_Meal_Type));
+        UsernameDateFoodtype.add(getString(R.string.Breakfast_Meal_Type));
         Log.d(TAG, "Assigned");
         //gets from string xml file
 
@@ -78,7 +78,7 @@ public class recyclerview extends AppCompatActivity {
                 dashboardFragment.setArguments(bundle); // Pass the data to the dashboard fragment
                 Log.d(TAG, "Bundle To Dashboard Set");
 
-                NavController navController = Navigation.findNavController(recyclerview.this, R.id.nav_host_fragment_activity_recyclerview);
+                NavController navController = Navigation.findNavController(Breakfast_RecyclerView.this, R.id.nav_host_fragment_activity_recyclerview);
                 Log.d(TAG, "Nav Set");
                 navController.navigate(R.id.navigation_dashboard, bundle); // Show the Dashboard fragment
 

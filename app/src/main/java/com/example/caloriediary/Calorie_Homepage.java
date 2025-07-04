@@ -11,8 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.caloriediary.Api_Refactored.Camera;
 import com.example.caloriediary.Api_Refactored.MainActivity2;
-import com.example.caloriediary.Creating_Account_And_Login.User;
-import com.example.caloriediary.RecyclerView.recyclerview;
+import com.example.caloriediary.RecyclerView.Breakfast_RecyclerView;
 import com.example.caloriediary.databinding.ActivityCalorieHomepageBinding;
 
 import java.util.ArrayList;
@@ -94,7 +93,7 @@ public class Calorie_Homepage extends AppCompatActivity {
     }
 
     public void To_Breakfast_Recycler(View view) {
-        Intent intent = new Intent(view.getContext(), recyclerview.class);
+        Intent intent = new Intent(view.getContext(), Breakfast_RecyclerView.class);
         intent.putExtra("User_Data",User_Data);
         startActivity(intent);
     }

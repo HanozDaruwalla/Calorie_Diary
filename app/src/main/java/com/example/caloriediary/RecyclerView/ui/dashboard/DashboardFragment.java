@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,23 +52,24 @@ public class DashboardFragment extends Fragment {
         Log.d(TAG, "oncreate");
 
         Log.d(TAG, "binding created");
-        if(getArguments() != null){
+        if (getArguments() != null) {
             Meals_Arraylist_Nested = (ArrayList<ArrayList<Nutrition_Data_From_Db>>) getArguments().getSerializable("User_Meals");
-            if (Meals_Arraylist_Nested != null){
+            if (Meals_Arraylist_Nested != null) {
                 Log.d(TAG, "Successfully got user food arraylist from recycler");
 
                 Log.d(TAG, "Size of arraylist = " + String.valueOf(Meals_Arraylist_Nested.size()));
-            }else{
+            } else {
                 Log.d(TAG, "Arraylist Empty!");
             }
-        }else{
+        } else {
             Log.d(TAG, "No Bundle with name match found (check argument names)");
         }
 
 
     }
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {DashboardViewModel dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        DashboardViewModel dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         // Set up the RecyclerView
@@ -87,6 +89,7 @@ public class DashboardFragment extends Fragment {
                 Log.d(TAG, "OnItemSelected1");
                 Nutrition_Option_1_Picked = Adapterview.getItemAtPosition(position).toString();
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -99,6 +102,7 @@ public class DashboardFragment extends Fragment {
                 Log.d(TAG, "OnItemSelected1");
                 Nutrition_Option_2_Picked = Adapterview.getItemAtPosition(position).toString();
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -124,12 +128,44 @@ public class DashboardFragment extends Fragment {
         Nutrition_Option_2.setAdapter(Filter_Adapter2);
 
 
-
-
-
         return root;
     }
 
+    public String Check_Filter1() {
+        return binding.Option1Spinner.getSelectedItem().toString();
+/*
+        if (!Nutrition_Option_1_Picked.isEmpty()) {
+            if (Nutrition_Option_1_Picked.equals(getResources().getString(R.string.food_option_calories))) {
+                return getResources().getString(R.string.food_option_calories);
+            } else if (Nutrition_Option_1_Picked.equals(getResources().getString(R.string.food_option_product_name))) {
+                return getResources().getString(R.string.food_option_product_name);
+            } else if (Nutrition_Option_1_Picked.equals(getResources().getString(R.string.food_option_serving_size))) {
+                return getResources().getString(R.string.food_option_serving_size);
+            } else if (Nutrition_Option_1_Picked.equals(getResources().getString(R.string.food_option_total_fat))) {
+                return getResources().getString(R.string.food_option_total_fat);
+            } else if (Nutrition_Option_1_Picked.equals(getResources().getString(R.string.food_option_cholesterol))) {
+                return getResources().getString(R.string.food_option_cholesterol);
+            } else if (Nutrition_Option_1_Picked.equals(getResources().getString(R.string.food_option_sodium))) {
+                return getResources().getString(R.string.food_option_sodium);
+            } else if (Nutrition_Option_1_Picked.equals(getResources().getString(R.string.food_option_total_carbohydrate))) {
+                return getResources().getString(R.string.food_option_total_carbohydrate);
+            } else if (Nutrition_Option_1_Picked.equals(getResources().getString(R.string.food_option_sugar))) {
+                return getResources().getString(R.string.food_option_sugar);
+            } else if (Nutrition_Option_1_Picked.equals(getResources().getString(R.string.food_option_dietary_fiber))) {
+                return getResources().getString(R.string.food_option_dietary_fiber);
+            } else if (Nutrition_Option_1_Picked.equals(getResources().getString(R.string.food_option_potassium))) {
+                return getResources().getString(R.string.food_option_potassium);
+            } else if (Nutrition_Option_1_Picked.equals(getResources().getString(R.string.food_option_protein))) {
+                return getResources().getString(R.string.food_option_protein);
+            } else {
+                return "N/A";
+            }
+        } else {
+            return "N/A";
+        }
+
+ */
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -160,7 +196,7 @@ public class DashboardFragment extends Fragment {
 
         for (int i = 0;i < 20;i++){
             try{
-                Log.d(TAG, i + " = : '" + Lunch_Arraylist.get(i) + "'" );
+                Log.d(TAG, i + " = : '" + Breakfast_Arraylist.get(i) + "'" );
             }catch(IndexOutOfBoundsException Ex){
                 Log.d(TAG, "Done");
                 break;
@@ -168,7 +204,7 @@ public class DashboardFragment extends Fragment {
         }
 
         Log.d(TAG, "Log lunch Arraylist reader done");
-        adapter = new ItemAdapter(Lunch_Arraylist);
+        adapter = new ItemAdapter(Breakfast_Arraylist);
         Log.d(TAG, "Set Adapter");
         recyclerView.setAdapter(adapter);
         Log.d(TAG, "Adding To Recycler View");

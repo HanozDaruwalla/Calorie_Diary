@@ -34,6 +34,18 @@
         <item>Protein</item>
     </string-array>
 
+    <string name="food_option_calories">Calories</string>
+    <string name="food_option_product_name">Product Name</string>
+    <string name="food_option_serving_size">Serving Size</string>
+    <string name="food_option_total_fat">Total Fat</string>
+    <string name="food_option_cholesterol">Cholesterol</string>
+    <string name="food_option_sodium">Sodium</string>
+    <string name="food_option_total_carbohydrate">Total Carbohydrate</string>
+    <string name="food_option_sugar">Sugar</string>
+    <string name="food_option_dietary_fiber">Dietary Fiber</string>
+    <string name="food_option_potassium">Potassium</string>
+    <string name="food_option_protein">Protein</string>
+
 
 
     <string name="Breakfast_Meal_Type">Breakfast</string>

@@ -29,7 +29,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".RecyclerView.recyclerview"
+            android:name=".RecyclerView.Breakfast_RecyclerView"
             android:exported="false"
             android:screenOrientation="portrait"
             android:label="@string/title_activity_recyclerview" />

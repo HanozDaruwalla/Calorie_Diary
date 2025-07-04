@@ -16,7 +16,7 @@ import com.example.caloriediary.Creating_Account_And_Login.User;
 import com.example.caloriediary.Bmi_Calc.OptionForBmi;
 import com.example.caloriediary.Nutrition_Data_From_Db;
 import com.example.caloriediary.R;
-import com.example.caloriediary.RecyclerView.recyclerview;
+import com.example.caloriediary.RecyclerView.Breakfast_RecyclerView;
 import com.example.caloriediary.ReusableFunctions;
 import com.example.caloriediary.databinding.ActivityDatabaseBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -103,7 +103,7 @@ public class Database extends AppCompatActivity {
             Log.d(TAG, "Get Food");
 
             Database_Value_Names Db_Value_Names = new Database_Value_Names();
-            Get_Food_Data(Imported_Data_Arraylist, new recyclerview.Food_Data_FoundListener() {
+            Get_Food_Data(Imported_Data_Arraylist, new Breakfast_RecyclerView.Food_Data_FoundListener() {
                 @Override
                 public void Food_Data_Found(ArrayList<ArrayList<Nutrition_Data_From_Db>> foodDataList) {
                     Log.d(TAG, "Food_Data found overrided in opening function ");
@@ -345,7 +345,7 @@ public class Database extends AppCompatActivity {
     }
 
 
-    public void Get_Food_Data(ArrayList<String> Name_Date_Meal_Type, recyclerview.Food_Data_FoundListener callback) {
+    public void Get_Food_Data(ArrayList<String> Name_Date_Meal_Type, Breakfast_RecyclerView.Food_Data_FoundListener callback) {
         //return type was string
 
         Database_Controller = FirebaseDatabase.getInstance().getReference();
