@@ -9,28 +9,36 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.caloriediary.Api_Refactored.Nutrition_Data__From_Api;
+import com.example.caloriediary.Food_Item_Adapter_Methods;
 import com.example.caloriediary.Nutrition_Data_From_Db;
 import com.example.caloriediary.R;
-import com.example.caloriediary.RecyclerView.ui.dashboard.DashboardFragment;
 
 import java.util.ArrayList;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
 
     private ArrayList<Nutrition_Data_From_Db> itemList = new ArrayList();
-    private static String TAG = "Item_Adapter";
+    private static final String TAG = "Item_Adapter";
+    String Filter1_Selected = "Undefined";
+    String Filter2_Selected = "Undefined";
+    Food_Item_Adapter_Methods Recycler_Methods = new Food_Item_Adapter_Methods();
+
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
-        public TextView Value_1_TextView, Value_2_TextView, Value_3_TextView, Value_4_TextView;
+        public TextView Food_Name_Textview, Serving_Size_Textview, Dynamic_Textview_1, Dynamic_Textview_2, Dynamic_Lb_1, Dynamic_Lb_2;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            Value_1_TextView = itemView.findViewById(R.id.Food_Name);
-            Value_2_TextView = itemView.findViewById(R.id.Serving_Size);
-            Value_3_TextView = itemView.findViewById(R.id.Calories);
-            Value_4_TextView = itemView.findViewById(R.id.Fat);
+            Food_Name_Textview = itemView.findViewById(R.id.Food_Name);
+            Serving_Size_Textview = itemView.findViewById(R.id.Serving_Size);
+
+            Dynamic_Lb_1 = itemView.findViewById(R.id.Filter_Value_1_Lb);
+            Dynamic_Textview_1 = itemView.findViewById(R.id.Filter_Option_1_Result);
+
+            Dynamic_Lb_2 = itemView.findViewById(R.id.Filter_Value_1_Lb);
+            Dynamic_Textview_2 = itemView.findViewById(R.id.Filter_Option_2_Result);
             Log.d(TAG, "Interface binding set");
+
         }
     }
 
@@ -53,6 +61,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
+        String Value_For_Dyn_1 = "N/A";
+        String Lb_For_Dyn_1 = "N/A";
+        ArrayList<String> Dynamic_Data_Returned = new ArrayList<>();
+
         Log.d(TAG, "in bindviewholder");
 
         if (position >= 0 && position < itemList.size()) {
@@ -62,59 +74,29 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
             Log.d(TAG, "Food Name = " + currentItem.getName_Of_Food());
             Log.d(TAG, "Serving Size = " + currentItem.getPortion_Size());
-            holder.Value_1_TextView.setText(currentItem.getName_Of_Food());
-            holder.Value_2_TextView.setText(currentItem.getPortion_Size());
+            holder.Food_Name_Textview.setText(currentItem.getName_Of_Food());
+            holder.Serving_Size_Textview.setText(currentItem.getPortion_Size());
 
-            DashboardFragment Dash_Frag = new DashboardFragment();
-            String Filter1_Selected = Dash_Frag.Check_Filter1();
+            Dynamic_Data_Returned = Recycler_Methods.Find_Filter_Value(Filter1_Selected, currentItem,Value_For_Dyn_1,Lb_For_Dyn_1);
 
-            //Change all this to hard coded string or see why in dashboard frag, why getresources wirk
-            switch (Filter1_Selected){
-                if (Filter1_Selected.equals(getResources().getString(R.string.food_option_calories))) {
-                    return getResources().getString(R.string.food_option_calories);
-                } else if (Filter1_Selected.equals(getResources().getString(R.string.food_option_product_name))) {
-                    return getResources().getString(R.string.food_option_product_name);
-                } else if (Filter1_Selected.equals(getResources().getString(R.string.food_option_serving_size))) {
-                    return getResources().getString(R.string.food_option_serving_size);
-                } else if (Filter1_Selected.equals(getResources().getString(R.string.food_option_total_fat))) {
-                    return getResources().getString(R.string.food_option_total_fat);
-                } else if (Filter1_Selected.equals(getResources().getString(R.string.food_option_cholesterol))) {
-                    return getResources().getString(R.string.food_option_cholesterol);
-                } else if (Filter1_Selected.equals(getResources().getString(R.string.food_option_sodium))) {
-                    return getResources().getString(R.string.food_option_sodium);
-                } else if (Filter1_Selected.equals(getResources().getString(R.string.food_option_total_carbohydrate))) {
-                    return getResources().getString(R.string.food_option_total_carbohydrate);
-                } else if (Filter1_Selected.equals(getResources().getString(R.string.food_option_sugar))) {
-                    return getResources().getString(R.string.food_option_sugar);
-                } else if (Filter1_Selected.equals(getResources().getString(R.string.food_option_dietary_fiber))) {
-                    return getResources().getString(R.string.food_option_dietary_fiber);
-                } else if (Filter1_Selected.equals(getResources().getString(R.string.food_option_potassium))) {
-                    return getResources().getString(R.string.food_option_potassium);
-                } else if (Filter1_Selected.equals(getResources().getString(R.string.food_option_protein))) {
-                    return getResources().getString(R.string.food_option_protein);
-                } else {
-                    return "N/A";
-                }
-            }
-
-            Log.d(TAG, "Setting textviews");
-            holder.Value_3_TextView.setText(String.valueOf(currentItem.getCalories()));
-            holder.Value_4_TextView.setText(String.valueOf(currentItem.getFat()));
-            Log.d(TAG, "calories = " + currentItem.getCalories());
-            Log.d(TAG, "Total Fat = " + currentItem.getFat()); // Added space for readability
-
-
-
-            Log.d(TAG, "textviews set");
         } else {
             Log.e(TAG, "Error: Invalid position " + position + " for itemList size " + itemList.size());
             // Optionally clear text views or handle this error state visually
-            holder.Value_1_TextView.setText("");
-            holder.Value_2_TextView.setText("");
-            holder.Value_3_TextView.setText("");
-            holder.Value_4_TextView.setText("");
+            holder.Food_Name_Textview.setText("");
+            holder.Serving_Size_Textview.setText("");
+            holder.Dynamic_Textview_1.setText("");
+            holder.Dynamic_Textview_2.setText("");
         }
+        holder.Dynamic_Textview_1.setText(Dynamic_Data_Returned.get(0));
+        holder.Dynamic_Lb_1.setText(Dynamic_Data_Returned.get(1));
+    }
 
+    public void Filter_Changed(String Filter1_Value, String Filter2_Value){
+        Log.d(TAG, "In Filter_Changed");
+        Filter1_Selected=Filter1_Value;
+        Filter2_Selected=Filter2_Value;
+        Log.d(TAG, "Filter1_Value = " + Filter1_Value);
+        notifyDataSetChanged();
     }
 
     public void Set_Items(ArrayList<Nutrition_Data_From_Db> items) {

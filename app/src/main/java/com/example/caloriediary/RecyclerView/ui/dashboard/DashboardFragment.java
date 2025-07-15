@@ -33,6 +33,7 @@ public class DashboardFragment extends Fragment {
     private FragmentDashboardBinding binding;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
+    private ItemAdapter itemAdapter;
     private RecyclerView.LayoutManager layoutManager;
     ArrayList<String> User_Data = new ArrayList();
     final String TAG = "Dashboard_Fragment";
@@ -68,6 +69,7 @@ public class DashboardFragment extends Fragment {
 
     }
 
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         DashboardViewModel dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
@@ -82,12 +84,18 @@ public class DashboardFragment extends Fragment {
         Log.d(TAG, "Starting Spinners Now");
         Spinner Nutrition_Option_1 = binding.Option1Spinner;
         Spinner Nutrition_Option_2 = binding.Option2Spinner;
+
+        Nutrition_Option_1.setSelection(3);
+        Nutrition_Option_2.setSelection(0);
+
         Log.d(TAG, "Now beginning Spinner Listener 1");
         Nutrition_Option_1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> Adapterview, View view, int position, long id) {
                 Log.d(TAG, "OnItemSelected1");
                 Nutrition_Option_1_Picked = Adapterview.getItemAtPosition(position).toString();
+                Log.d(TAG, "Passing Back To item adapter");
+                itemAdapter.Filter_Changed(Nutrition_Option_1_Picked,Nutrition_Option_2_Picked);
             }
 
             @Override
@@ -132,39 +140,12 @@ public class DashboardFragment extends Fragment {
     }
 
     public String Check_Filter1() {
-        return binding.Option1Spinner.getSelectedItem().toString();
-/*
-        if (!Nutrition_Option_1_Picked.isEmpty()) {
-            if (Nutrition_Option_1_Picked.equals(getResources().getString(R.string.food_option_calories))) {
-                return getResources().getString(R.string.food_option_calories);
-            } else if (Nutrition_Option_1_Picked.equals(getResources().getString(R.string.food_option_product_name))) {
-                return getResources().getString(R.string.food_option_product_name);
-            } else if (Nutrition_Option_1_Picked.equals(getResources().getString(R.string.food_option_serving_size))) {
-                return getResources().getString(R.string.food_option_serving_size);
-            } else if (Nutrition_Option_1_Picked.equals(getResources().getString(R.string.food_option_total_fat))) {
-                return getResources().getString(R.string.food_option_total_fat);
-            } else if (Nutrition_Option_1_Picked.equals(getResources().getString(R.string.food_option_cholesterol))) {
-                return getResources().getString(R.string.food_option_cholesterol);
-            } else if (Nutrition_Option_1_Picked.equals(getResources().getString(R.string.food_option_sodium))) {
-                return getResources().getString(R.string.food_option_sodium);
-            } else if (Nutrition_Option_1_Picked.equals(getResources().getString(R.string.food_option_total_carbohydrate))) {
-                return getResources().getString(R.string.food_option_total_carbohydrate);
-            } else if (Nutrition_Option_1_Picked.equals(getResources().getString(R.string.food_option_sugar))) {
-                return getResources().getString(R.string.food_option_sugar);
-            } else if (Nutrition_Option_1_Picked.equals(getResources().getString(R.string.food_option_dietary_fiber))) {
-                return getResources().getString(R.string.food_option_dietary_fiber);
-            } else if (Nutrition_Option_1_Picked.equals(getResources().getString(R.string.food_option_potassium))) {
-                return getResources().getString(R.string.food_option_potassium);
-            } else if (Nutrition_Option_1_Picked.equals(getResources().getString(R.string.food_option_protein))) {
-                return getResources().getString(R.string.food_option_protein);
-            } else {
-                return "N/A";
-            }
-        } else {
-            return "N/A";
-        }
+        Log.d(TAG, "In Check_Filter1");
+        String Filter1_Value = (String) binding.Option1Spinner.getSelectedItem();
+        Log.d(TAG, "Returning" + Filter1_Value);
+        return Filter1_Value;
 
- */
+
     }
 
     @Override
@@ -204,9 +185,9 @@ public class DashboardFragment extends Fragment {
         }
 
         Log.d(TAG, "Log lunch Arraylist reader done");
-        adapter = new ItemAdapter(Breakfast_Arraylist);
+        itemAdapter = new ItemAdapter(Breakfast_Arraylist);
         Log.d(TAG, "Set Adapter");
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(itemAdapter);
         Log.d(TAG, "Adding To Recycler View");
 
     }

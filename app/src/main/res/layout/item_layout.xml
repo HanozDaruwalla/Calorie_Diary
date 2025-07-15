@@ -64,7 +64,7 @@
             />
 
         <TextView
-            android:id="@+id/Fat_Lb"
+            android:id="@+id/Filter_Value_1_Lb"
             android:layout_marginLeft="80dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
             />
 
         <TextView
-            android:id="@+id/Fat"
+            android:id="@+id/Filter_Option_1_Result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0.3g"
@@ -85,7 +85,7 @@
             />
 
         <TextView
-            android:id="@+id/Calories_Lb"
+            android:id="@+id/Filter_Value_2_Lb"
             android:layout_marginLeft="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
             />
 
         <TextView
-            android:id="@+id/Calories"
+            android:id="@+id/Filter_Option_2_Result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="105"
