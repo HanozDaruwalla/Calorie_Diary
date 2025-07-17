@@ -35,7 +35,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             Dynamic_Lb_1 = itemView.findViewById(R.id.Filter_Value_1_Lb);
             Dynamic_Textview_1 = itemView.findViewById(R.id.Filter_Option_1_Result);
 
-            Dynamic_Lb_2 = itemView.findViewById(R.id.Filter_Value_1_Lb);
+            Dynamic_Lb_2 = itemView.findViewById(R.id.Filter_Value_2_Lb);
             Dynamic_Textview_2 = itemView.findViewById(R.id.Filter_Option_2_Result);
             Log.d(TAG, "Interface binding set");
 
@@ -64,6 +64,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         String Value_For_Dyn_1 = "N/A";
         String Lb_For_Dyn_1 = "N/A";
         ArrayList<String> Dynamic_Data_Returned = new ArrayList<>();
+        ArrayList<String> Dynamic_Data_Returned2 = new ArrayList<>();
 
         Log.d(TAG, "in bindviewholder");
 
@@ -78,6 +79,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             holder.Serving_Size_Textview.setText(currentItem.getPortion_Size());
 
             Dynamic_Data_Returned = Recycler_Methods.Find_Filter_Value(Filter1_Selected, currentItem,Value_For_Dyn_1,Lb_For_Dyn_1);
+            Dynamic_Data_Returned2 = Recycler_Methods.Find_Filter_Value(Filter2_Selected, currentItem,Value_For_Dyn_1,Lb_For_Dyn_1);
 
         } else {
             Log.e(TAG, "Error: Invalid position " + position + " for itemList size " + itemList.size());
@@ -89,6 +91,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         }
         holder.Dynamic_Textview_1.setText(Dynamic_Data_Returned.get(0));
         holder.Dynamic_Lb_1.setText(Dynamic_Data_Returned.get(1));
+
+        holder.Dynamic_Textview_2.setText(Dynamic_Data_Returned2.get(0));
+        holder.Dynamic_Lb_2.setText(Dynamic_Data_Returned2.get(1));
+
+
     }
 
     public void Filter_Changed(String Filter1_Value, String Filter2_Value){

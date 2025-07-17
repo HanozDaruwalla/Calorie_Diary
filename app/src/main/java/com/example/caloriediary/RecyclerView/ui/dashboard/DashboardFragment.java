@@ -109,6 +109,8 @@ public class DashboardFragment extends Fragment {
             public void onItemSelected(AdapterView<?> Adapterview, View view, int position, long id) {
                 Log.d(TAG, "OnItemSelected1");
                 Nutrition_Option_2_Picked = Adapterview.getItemAtPosition(position).toString();
+                Log.d(TAG, "Passing Back To item adapter");
+                itemAdapter.Filter_Changed(Nutrition_Option_1_Picked,Nutrition_Option_2_Picked);
             }
 
             @Override
@@ -134,8 +136,6 @@ public class DashboardFragment extends Fragment {
         );
         Filter_Adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Nutrition_Option_2.setAdapter(Filter_Adapter2);
-
-
         return root;
     }
 
@@ -144,8 +144,6 @@ public class DashboardFragment extends Fragment {
         String Filter1_Value = (String) binding.Option1Spinner.getSelectedItem();
         Log.d(TAG, "Returning" + Filter1_Value);
         return Filter1_Value;
-
-
     }
 
     @Override
