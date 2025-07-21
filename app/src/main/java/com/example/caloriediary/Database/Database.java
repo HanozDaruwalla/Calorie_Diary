@@ -29,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -345,6 +346,7 @@ public class Database extends AppCompatActivity {
     }
 
 
+
     public void Get_Food_Data(ArrayList<String> Name_Date_Meal_Type, Breakfast_RecyclerView.Food_Data_FoundListener callback) {
         //return type was string
 
@@ -378,29 +380,20 @@ public class Database extends AppCompatActivity {
                 ArrayList<Nutrition_Data_From_Db> Lunch_Food_List = new ArrayList<>();
                 ArrayList<Nutrition_Data_From_Db> Dinner_Food_List = new ArrayList<>();
 
+
                 Boolean Continue_Collecting_Data = true;
 
                 while (Continue_Collecting_Data == true) {
 
                     if (dataSnapshot.child(reusableFunctions.Int_To_String(i)).exists()) {
-
                         Log.d(TAG, "Data food found for the given Username");
-
-                        //Try New Way
-                        /*
-                        NutritionData Gathered_Food = dataSnapshot.child(Db_Value_Names.getDb_Food_Name_Name())
-                                .child(Username).child(Todays_Date).child(Meal_Type).child(reusableFunctions.Int_To_Strng(i))
-                                .getValue(NutritionData.class);
-
-                         */
-
 
                         Nutrition_Data_From_Db Gathered_Food = dataSnapshot.child(reusableFunctions.Int_To_String(i))
                                 .getValue(Nutrition_Data_From_Db.class);
                         Log.d(TAG, "got info for id" + i);
                         i++;
 
-                        switch(Meal_Type){
+                        switch (Meal_Type) {
                             case "Breakfast":
                                 Breakfast_Food_List.add(Gathered_Food);
                                 Log.d(TAG, "Breakfast_Added");
@@ -415,15 +408,32 @@ public class Database extends AppCompatActivity {
                                 break;
                             default:
                                 Log.d(TAG, "Meal Type Not Identified");
-
                         }
+
 
                     } else {
                         Log.d(TAG, "No food data found for the given Username");
-                        Continue_Collecting_Data = false;
-                    }
-                    //return null;
 
+                        switch (Meal_Type) {
+                            case "Breakfast":
+                                Breakfast_Food_List.add(new Nutrition_Data_From_Db());
+                                Log.d(TAG, "Default Breakfast_Added");
+                                break;
+                            case "Lunch":
+                                Lunch_Food_List.add(new Nutrition_Data_From_Db());
+                                Log.d(TAG, "Default Lunch_Added");
+                                break;
+                            case "Dinner":
+                                Dinner_Food_List.add(new Nutrition_Data_From_Db());
+                                Log.d(TAG, "Default Dinner_Added");
+                                break;
+                            default:
+                                Log.d(TAG, "Meal Type Not Identified");
+                        }
+
+                        Continue_Collecting_Data = false;
+                        //return null;
+                    }
                 }
 
                 Nested_Food_Data_List.add(Breakfast_Food_List);
@@ -441,6 +451,17 @@ public class Database extends AppCompatActivity {
             }
 
         });
+    }
+
+    private Nutrition_Data_From_Db No_Food_Added(Nutrition_Data_From_Db Checking_Arraylist){
+        if(Checking_Arraylist.getName_Of_Food().equals("Undefined")){
+            //Checking_Arraylist.add(new Nutrition_Data_From_Db());
+            reusableFunctions.Create_Toast(getApplicationContext(), "no food data for today");
+
+        }else{
+            return Checking_Arraylist;
+        }
+        return Checking_Arraylist;
     }
 
 

@@ -4,48 +4,48 @@ import com.example.caloriediary.Database.Database_Value_Names;
 import com.google.firebase.database.PropertyName;
 
 public class Nutrition_Data_From_Db {
-
+//was Undefined
     @PropertyName(("Calories"))
-    String Calories = "Undefined";
+    String Calories = "0";
 
     @PropertyName(("Cholesterol"))
-    String Cholesterol = "Undefined";
+    String Cholesterol = "0";
 
     @PropertyName(("Date"))
-    String Date = "Undefined";
+    String Date = "0";
 
     @PropertyName(("Dietary_Fiber"))
-    String Dietary_Fiber = "Undefined";
+    String Dietary_Fiber = "0";
 
     @PropertyName(("Fat"))
-    String Fat = "Undefined";
+    String Fat = "0";
 
     @PropertyName(("Name_Of_Food"))
-    String Name_Of_Food = "Undefined";
+    String Name_Of_Food = "No Data Added Today";
 
     @PropertyName(("Portion_Size"))
-    String Portion_Size = "Undefined";
+    String Portion_Size = "0";
 
     @PropertyName(("Potassium"))
-    String Potassium = "Undefined";
+    String Potassium = "0";
 
     @PropertyName(("Protein"))
-    String Protein = "Undefined";
+    String Protein = "0";
 
     @PropertyName(("Sodium"))
-    String Sodium = "Sodium";
+    String Sodium = "0";
 
     @PropertyName(("Sugar"))
-    String Sugar = "Undefined";
+    String Sugar = "0";
 
     @PropertyName(("Total_Carbs"))
-    String Total_Carbs = "Undefined";
+    String Total_Carbs = "0";
 
     @PropertyName(("Type Of Meal"))
-    String Type_Of_Meal = "Undefined";
+    String Type_Of_Meal = "?";
 
     @PropertyName(("Username"))
-    String Username = "Undefined";
+    String Username = "?";
 
     public Nutrition_Data_From_Db() {
     }

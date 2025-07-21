@@ -82,7 +82,6 @@ public class Breakfast_RecyclerView extends AppCompatActivity {
                 Log.d(TAG, "Nav Set");
                 navController.navigate(R.id.navigation_dashboard, bundle); // Show the Dashboard fragment
 
-
             }
         });
 

@@ -59,23 +59,6 @@ public class Calorie_Homepage extends AppCompatActivity {
         editor.commit();  // or editor.commit() to write immediately
         Log.d(TAG, "done shared pref");
 
-        /*
-        int i=0;
-        while (true){
-            try{
-                Log.d(TAG, "Data_In User_Data: " + User_Data.get(i));
-                i++;
-            }catch (IndexOutOfBoundsException EX){
-                Log.d(TAG, "Reached End Of User_Data");
-                break;
-            }
-
-        }
-        */
-
-
-
-
     }
 
     public void Camera_Button_Pressed(View view) {

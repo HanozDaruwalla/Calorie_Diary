@@ -13,6 +13,8 @@ import com.example.caloriediary.Food_Item_Adapter_Methods;
 import com.example.caloriediary.Nutrition_Data_From_Db;
 import com.example.caloriediary.R;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
@@ -63,6 +65,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         String Value_For_Dyn_1 = "N/A";
         String Lb_For_Dyn_1 = "N/A";
+        String Empty_Data_String = "N/A";
         ArrayList<String> Dynamic_Data_Returned = new ArrayList<>();
         ArrayList<String> Dynamic_Data_Returned2 = new ArrayList<>();
 
