@@ -11,6 +11,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.caloriediary.Database.Database;
+import com.example.caloriediary.Food_Recycler_View_Functions;
 import com.example.caloriediary.Nutrition_Data_From_Db;
 import com.example.caloriediary.R;
 import com.example.caloriediary.RecyclerView.ui.dashboard.DashboardFragment;
@@ -37,6 +38,8 @@ public class Breakfast_RecyclerView extends AppCompatActivity {
         setContentView(binding.getRoot());
         getSupportActionBar(). hide();
 
+
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications).build();
@@ -46,14 +49,15 @@ public class Breakfast_RecyclerView extends AppCompatActivity {
 
         //EDIT
         Log.d(TAG, "User_Data [0] = " + User_Data.get(0));
-        Lunch_Data_Passer(User_Data);
+        Preparing_Data_Passer(User_Data);
+        //Breakfast_Data_Passer(User_Data);
     }
 
     public interface Food_Data_FoundListener {
         void Food_Data_Found(ArrayList<ArrayList<Nutrition_Data_From_Db>> foodDataList);
     }
-
-    private void Lunch_Data_Passer(ArrayList<String> userdata){
+/*
+    private void Breakfast_Data_Passer(ArrayList<String> userdata){
 
         Log.d(TAG, "In Function");
         ArrayList<String> UsernameDateFoodtype = new ArrayList<>();
@@ -84,6 +88,25 @@ public class Breakfast_RecyclerView extends AppCompatActivity {
 
             }
         });
+        */
+
+    private void Preparing_Data_Passer(ArrayList<String> userdata){
+
+        Log.d(TAG, "In Function");
+        ArrayList<String> UsernameDateFoodtype = new ArrayList<>();
+        UsernameDateFoodtype.add(userdata.get(6));
+        UsernameDateFoodtype.add(reusableFunctions.Date_Creator());
+        UsernameDateFoodtype.add(getString(R.string.Breakfast_Meal_Type));
+        Log.d(TAG, "Assigned");
+        //gets from string xml file
+
+        Log.d(TAG, "data = " + UsernameDateFoodtype.get(0) + "+" + UsernameDateFoodtype.get(1) + "+" + UsernameDateFoodtype.get(2));
+        Log.d(TAG, "Vars Set");
+
+        Food_Recycler_View_Functions food_recycler_view_functions = new Food_Recycler_View_Functions();
+        food_recycler_view_functions.Data_Passer(userdata, UsernameDateFoodtype, Breakfast_RecyclerView.this);
+
+
 
     }
 
