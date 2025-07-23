@@ -67,8 +67,6 @@ public class DashboardFragment extends Fragment {
         }
 
 
-
-
     }
 
 
@@ -79,7 +77,6 @@ public class DashboardFragment extends Fragment {
         // Set up the RecyclerView
         recyclerView = binding.recyclerView1;
         recyclerView.setHasFixedSize(true);
-        recyclerView.setRe
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
