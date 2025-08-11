@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.service.autofill.LuhnChecksumValidator;
 import android.util.Log;
 import android.view.View;
 
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.caloriediary.Api_Refactored.Camera;
 import com.example.caloriediary.Api_Refactored.MainActivity2;
 import com.example.caloriediary.RecyclerView.Breakfast_RecyclerView;
+import com.example.caloriediary.RecyclerView.Lunch_RecyclerView;
 import com.example.caloriediary.databinding.ActivityCalorieHomepageBinding;
 
 import java.util.ArrayList;
@@ -76,8 +78,15 @@ public class Calorie_Homepage extends AppCompatActivity {
     }
 
     public void To_Breakfast_Recycler(View view) {
-        Intent intent = new Intent(view.getContext(), Breakfast_RecyclerView.class);
-        intent.putExtra("User_Data",User_Data);
-        startActivity(intent);
+        Intent Breakfast_Recycler_Intent = new Intent(view.getContext(), Breakfast_RecyclerView.class);
+        Breakfast_Recycler_Intent.putExtra("User_Data",User_Data);
+        startActivity(Breakfast_Recycler_Intent);
+
+        Intent Lunch_Recycler_Intent =  new Intent(view.getContext(), Lunch_RecyclerView.class);
+        Lunch_Recycler_Intent.putExtra("User_Data",User_Data);
+        startActivity(Lunch_Recycler_Intent);
+
+
+
     }
 }

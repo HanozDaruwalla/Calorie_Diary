@@ -10,20 +10,22 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.caloriediary.Database.Database;
 import com.example.caloriediary.Food_Recycler_View_Functions;
 import com.example.caloriediary.Nutrition_Data_From_Db;
 import com.example.caloriediary.R;
+import com.example.caloriediary.RecyclerView.ui.dashboard.DashboardFragment;
 import com.example.caloriediary.ReusableFunctions;
 import com.example.caloriediary.databinding.ActivityRecyclerviewBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
-public class Breakfast_RecyclerView extends AppCompatActivity {
+public class Lunch_RecyclerView extends AppCompatActivity {
 
     private ActivityRecyclerviewBinding binding;
     Intent Page_Movement_Intent;
-    String TAG = "recyclerview";
+    String TAG = "Lunch_recyclerview";
     ReusableFunctions reusableFunctions = new ReusableFunctions();
 
     @Override
@@ -54,8 +56,7 @@ public class Breakfast_RecyclerView extends AppCompatActivity {
     public interface Food_Data_FoundListener {
         void Food_Data_Found(ArrayList<ArrayList<Nutrition_Data_From_Db>> foodDataList);
     }
-
- */
+    */
 
     private void Preparing_Data_Passer(ArrayList<String> userdata){
 
@@ -63,7 +64,7 @@ public class Breakfast_RecyclerView extends AppCompatActivity {
         ArrayList<String> UsernameDateFoodtype = new ArrayList<>();
         UsernameDateFoodtype.add(userdata.get(6));
         UsernameDateFoodtype.add(reusableFunctions.Date_Creator());
-        UsernameDateFoodtype.add(getString(R.string.Breakfast_Meal_Type));
+        UsernameDateFoodtype.add(getString(R.string.Lunch_Meal_Type));
         Log.d(TAG, "Assigned");
         //gets from string xml file
 
@@ -71,9 +72,7 @@ public class Breakfast_RecyclerView extends AppCompatActivity {
         Log.d(TAG, "Vars Set");
 
         Food_Recycler_View_Functions food_recycler_view_functions = new Food_Recycler_View_Functions();
-        food_recycler_view_functions.Breakfast_Data_Passer(userdata, UsernameDateFoodtype, Breakfast_RecyclerView.this);
-
-
+        food_recycler_view_functions.Lunch_Data_Passer(userdata, UsernameDateFoodtype, Lunch_RecyclerView.this);
 
     }
 

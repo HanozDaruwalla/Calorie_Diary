@@ -17,6 +17,8 @@ import com.example.caloriediary.Bmi_Calc.OptionForBmi;
 import com.example.caloriediary.Nutrition_Data_From_Db;
 import com.example.caloriediary.R;
 import com.example.caloriediary.RecyclerView.Breakfast_RecyclerView;
+import com.example.caloriediary.RecyclerView.Interface_Food_Data_Found;
+import com.example.caloriediary.RecyclerView.Interface_Food_Data_Found;
 import com.example.caloriediary.ReusableFunctions;
 import com.example.caloriediary.databinding.ActivityDatabaseBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -104,7 +106,7 @@ public class Database extends AppCompatActivity {
             Log.d(TAG, "Get Food");
 
             Database_Value_Names Db_Value_Names = new Database_Value_Names();
-            Get_Food_Data(Imported_Data_Arraylist, new Breakfast_RecyclerView.Food_Data_FoundListener() {
+            Get_Food_Data(Imported_Data_Arraylist, new Interface_Food_Data_Found.Food_Data_FoundListener(){
                 @Override
                 public void Food_Data_Found(ArrayList<ArrayList<Nutrition_Data_From_Db>> foodDataList) {
                     Log.d(TAG, "Food_Data found overrided in opening function ");
@@ -347,7 +349,7 @@ public class Database extends AppCompatActivity {
 
 
 
-    public void Get_Food_Data(ArrayList<String> Name_Date_Meal_Type, Breakfast_RecyclerView.Food_Data_FoundListener callback) {
+    public void Get_Food_Data(ArrayList<String> Name_Date_Meal_Type, Interface_Food_Data_Found.Food_Data_FoundListener callback) {
         //return type was string
 
         Database_Controller = FirebaseDatabase.getInstance().getReference();
@@ -386,7 +388,7 @@ public class Database extends AppCompatActivity {
                 while (Continue_Collecting_Data == true) {
 
                     if (dataSnapshot.child(reusableFunctions.Int_To_String(i)).exists()) {
-                        Log.d(TAG, "Data food found for the given Username");
+                        Log.d(TAG, "food data found for the given Username");
 
                         Nutrition_Data_From_Db Gathered_Food = dataSnapshot.child(reusableFunctions.Int_To_String(i))
                                 .getValue(Nutrition_Data_From_Db.class);

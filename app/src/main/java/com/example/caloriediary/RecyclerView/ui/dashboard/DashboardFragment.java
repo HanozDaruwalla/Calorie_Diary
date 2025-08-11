@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,7 +16,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.caloriediary.Api_Refactored.Nutrition_Data__From_Api;
 import com.example.caloriediary.Nutrition_Data_From_Db;
 import com.example.caloriediary.R;
 import com.example.caloriediary.RecyclerView.ItemAdapter;
@@ -26,15 +24,18 @@ import com.example.caloriediary.databinding.FragmentDashboardBinding;
 
 import java.util.ArrayList;
 
-import cz.msebera.android.httpclient.client.cache.Resource;
-
 public class DashboardFragment extends Fragment {
 
     private FragmentDashboardBinding binding;
-    private RecyclerView recyclerView;
+    private RecyclerView Breakfast_Recycler_View, Lunch_Recycler_View;
     private RecyclerView.Adapter adapter;
-    private ItemAdapter itemAdapter;
-    private RecyclerView.LayoutManager layoutManager;
+    private ItemAdapter Breakfast_Item_Adapter;
+    private ItemAdapter Lunch_Item_Adapter;
+    private RecyclerView.LayoutManager breakfast_layoutManager;
+    private RecyclerView.LayoutManager lunch_layoutManager;
+    private RecyclerView.LayoutManager dinner_layoutManager;
+
+
     ArrayList<String> User_Data = new ArrayList();
     final String TAG = "Dashboard_Fragment";
     ReusableFunctions reusable_functions = new ReusableFunctions();
@@ -75,10 +76,19 @@ public class DashboardFragment extends Fragment {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         // Set up the RecyclerView
-        recyclerView = binding.recyclerView1;
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
+        Breakfast_Recycler_View = binding.recyclerView1;
+        Lunch_Recycler_View = binding.recyclerView2;
+
+        Breakfast_Recycler_View.setHasFixedSize(true);
+        Lunch_Recycler_View.setHasFixedSize(true);
+
+        breakfast_layoutManager = new LinearLayoutManager(getContext());
+        Breakfast_Recycler_View.setLayoutManager(breakfast_layoutManager);
+        Log.d(TAG, "set breakfast layout manager");
+
+        lunch_layoutManager = new LinearLayoutManager(getContext());
+        Lunch_Recycler_View.setLayoutManager(lunch_layoutManager);
+        Log.d(TAG, "set lunch layout manager");
 
 
         Log.d(TAG, "Starting Spinners Now");
@@ -95,7 +105,7 @@ public class DashboardFragment extends Fragment {
                 Log.d(TAG, "OnItemSelected1");
                 Nutrition_Option_1_Picked = Adapterview.getItemAtPosition(position).toString();
                 Log.d(TAG, "Passing Back To item adapter");
-                itemAdapter.Filter_Changed(Nutrition_Option_1_Picked,Nutrition_Option_2_Picked);
+                Breakfast_Item_Adapter.Filter_Changed(Nutrition_Option_1_Picked,Nutrition_Option_2_Picked);
             }
 
             @Override
@@ -110,7 +120,7 @@ public class DashboardFragment extends Fragment {
                 Log.d(TAG, "OnItemSelected1");
                 Nutrition_Option_2_Picked = Adapterview.getItemAtPosition(position).toString();
                 Log.d(TAG, "Passing Back To item adapter");
-                itemAdapter.Filter_Changed(Nutrition_Option_1_Picked,Nutrition_Option_2_Picked);
+                Breakfast_Item_Adapter.Filter_Changed(Nutrition_Option_1_Picked,Nutrition_Option_2_Picked);
             }
 
             @Override
@@ -182,11 +192,30 @@ public class DashboardFragment extends Fragment {
             }
         }
 
-        Log.d(TAG, "Log lunch Arraylist reader done");
-        itemAdapter = new ItemAdapter(Breakfast_Arraylist);
+        Log.d(TAG, "setting up breakfast recycler");
+        Breakfast_Item_Adapter = new ItemAdapter(Breakfast_Arraylist);
         Log.d(TAG, "Set Adapter");
-        recyclerView.setAdapter(itemAdapter);
-        Log.d(TAG, "Adding To Recycler View");
+        
+        Breakfast_Recycler_View.setAdapter(Breakfast_Item_Adapter);
+        Log.d(TAG, "Adding To Breakfast Recycler View");
+
+        for (int i = 0;i < 20;i++){
+            try{
+                Log.d(TAG, i + " = : '" + Lunch_Arraylist.get(i) + "'" );
+            }catch(IndexOutOfBoundsException Ex){
+                Log.d(TAG, "Done");
+                break;
+            }
+        }
+
+
+        Log.d(TAG, "setting up lunch recycler");
+        Lunch_Item_Adapter = new ItemAdapter(Lunch_Arraylist);
+        Log.d(TAG, "Set Adapter");
+        Lunch_Recycler_View.setAdapter(Lunch_Item_Adapter);
+        Log.d(TAG, "Adding To Lunch Recycler View");
+
+
 
     }
 
