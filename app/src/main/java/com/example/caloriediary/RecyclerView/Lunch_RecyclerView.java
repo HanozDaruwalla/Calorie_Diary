@@ -72,7 +72,7 @@ public class Lunch_RecyclerView extends AppCompatActivity {
         Log.d(TAG, "Vars Set");
 
         Food_Recycler_View_Functions food_recycler_view_functions = new Food_Recycler_View_Functions();
-        food_recycler_view_functions.Lunch_Data_Passer(userdata, UsernameDateFoodtype, Lunch_RecyclerView.this);
+        food_recycler_view_functions.Data_Passer_Universal(userdata, UsernameDateFoodtype, Lunch_RecyclerView.this);
 
     }
 

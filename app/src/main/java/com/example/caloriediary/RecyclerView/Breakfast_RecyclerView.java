@@ -11,7 +11,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.caloriediary.Food_Recycler_View_Functions;
-import com.example.caloriediary.Nutrition_Data_From_Db;
 import com.example.caloriediary.R;
 import com.example.caloriediary.ReusableFunctions;
 import com.example.caloriediary.databinding.ActivityRecyclerviewBinding;
@@ -71,7 +70,7 @@ public class Breakfast_RecyclerView extends AppCompatActivity {
         Log.d(TAG, "Vars Set");
 
         Food_Recycler_View_Functions food_recycler_view_functions = new Food_Recycler_View_Functions();
-        food_recycler_view_functions.Breakfast_Data_Passer(userdata, UsernameDateFoodtype, Breakfast_RecyclerView.this);
+        food_recycler_view_functions.Data_Passer_Universal(userdata, UsernameDateFoodtype, Breakfast_RecyclerView.this);
 
 
 
