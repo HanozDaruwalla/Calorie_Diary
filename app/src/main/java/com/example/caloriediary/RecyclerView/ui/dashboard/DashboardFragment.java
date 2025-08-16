@@ -1,5 +1,6 @@
 package com.example.caloriediary.RecyclerView.ui.dashboard;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -83,11 +84,13 @@ public class DashboardFragment extends Fragment {
         Lunch_Recycler_View.setHasFixedSize(true);
 
         breakfast_layoutManager = new LinearLayoutManager(getContext());
-        Breakfast_Recycler_View.setLayoutManager(breakfast_layoutManager);
+        //Breakfast_Recycler_View.setLayoutManager(breakfast_layoutManager);
+        Breakfast_Recycler_View.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false));
         Log.d(TAG, "set breakfast layout manager");
 
         lunch_layoutManager = new LinearLayoutManager(getContext());
-        Lunch_Recycler_View.setLayoutManager(lunch_layoutManager);
+        //Lunch_Recycler_View.setLayoutManager(lunch_layoutManager);
+        Lunch_Recycler_View.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false));
         Log.d(TAG, "set lunch layout manager");
 
 

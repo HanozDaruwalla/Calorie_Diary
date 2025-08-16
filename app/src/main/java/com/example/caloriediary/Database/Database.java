@@ -414,6 +414,7 @@ public class Database extends AppCompatActivity {
 
 
                     } else {
+
                         Log.d(TAG, "No food data found for the given Username");
 
                         switch (Meal_Type) {
