@@ -472,6 +472,8 @@ public class Database extends AppCompatActivity {
 
         // ------------------------------ LOGIN FUNCTION! --------------------------------------------
         // -------------------------------------------------------------------------------------------
+        //THIS CODE IS FOR LEARNING/ DEMO PURPOSES
+
 
         // ---- KEY FOR PASSED VARIABLES ----
         // Imported_Data_Arraylist: all data passed from login page (including username and password user entered)
@@ -483,11 +485,8 @@ public class Database extends AppCompatActivity {
 
         Login_User_Details.setUsername(Imported_Data_Arraylist.get(0));
         Login_User_Details.setPassword(Imported_Data_Arraylist.get(1));
-
-        //--output the username and password to logs--
-        Log.d(TAG, "Login Function Username " + Login_User_Details.getUsername());
-        Log.d(TAG, "Login Function Password " + Login_User_Details.getPassword());
         String Username = Login_User_Details.getUsername();
+        Log.d(TAG, "username and password taken from string arraylist");
 
 
         Database_Controller.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -514,8 +513,7 @@ public class Database extends AppCompatActivity {
                     User Gathered_Account_Details = snapshot.child(Db_Value_Names.getDb_Users_Db_Name()).child(Username).getValue(User.class);//send users username to the Users_Data class
 
                     //logs out the info gathered from the database
-                    Log.d(TAG, "Gathered Data Username = " + Gathered_Account_Details.getUsername());
-                    Log.d(TAG, "Gathered Data Password = " + Gathered_Account_Details.getPassword());
+                    Log.d(TAG, "Gathered data from db ");
                     Log.d(TAG, "Attempting Decryption");
 
                     try {
