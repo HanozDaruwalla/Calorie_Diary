@@ -469,74 +469,106 @@ public class Database extends AppCompatActivity {
 
 
     private void Login(ArrayList<String> Imported_Data_Arraylist, DatabaseReference Database_Controller) {
-        User Login_User_Details = new User();
-        Database_Value_Names Db_Value_Names = new Database_Value_Names();
 
-        //get the username and password and set to vars
+        // ------------------------------ LOGIN FUNCTION! --------------------------------------------
+        // -------------------------------------------------------------------------------------------
+
+        // ---- KEY FOR PASSED VARIABLES ----
+        // Imported_Data_Arraylist: all data passed from login page (including username and password user entered)
+        // Database_Controller: Reference to Firebase Realtime Db
+
+        User Login_User_Details = new User();
+        Database_Value_Names Db_Value_Names = new Database_Value_Names();//contains names of database fields
+        //get the username and password which the user entered.
+
         Login_User_Details.setUsername(Imported_Data_Arraylist.get(0));
         Login_User_Details.setPassword(Imported_Data_Arraylist.get(1));
+
+        //--output the username and password to logs--
         Log.d(TAG, "Login Function Username " + Login_User_Details.getUsername());
         Log.d(TAG, "Login Function Password " + Login_User_Details.getPassword());
-
         String Username = Login_User_Details.getUsername();
-        Log.d(TAG, "Get Username = " + Username);
-        Log.d(TAG, "Login: Username got from GUI");
+
 
         Database_Controller.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.child(Db_Value_Names.getDb_Users_Db_Name()).child(Username).exists()) {//was dataSnapshot
+                //checks if the username exists in the database (if exists then checks if the password saved with the username, matches the password the user entered previously)
+                //if not, go back to login page
+
+                if (snapshot.child(Db_Value_Names.getDb_Users_Db_Name()).child(Username).exists()) { //was dataSnapshot instead of snapshot
+
+                    //this class is capable of encrypting data before sending to the database
                     Encryption_Decryption_Class Encryption_Class = new Encryption_Decryption_Class();
-                    Log.d(TAG, "Checking Pw");
+
+                    //default values
                     String Unencrypted_Username = "N/A";
                     String Unencrypted_Password = "N/A";
-                    //Unencrypted Username is kept encase encryption of username is done
+
+                    //Unencrypted Username is kept encase encryption of username is done (database needs resetting before encrypting username)
                     //get all data from db based on username
+
+                    //goes to the database and gathers all data from the database on the account the user is trying to login to
+                    //this is done to get the password and compare (if fails user logs in again)
                     Log.d(TAG, "Gathering User Info From Db");
                     User Gathered_Account_Details = snapshot.child(Db_Value_Names.getDb_Users_Db_Name()).child(Username).getValue(User.class);//send users username to the Users_Data class
+
+                    //logs out the info gathered from the database
                     Log.d(TAG, "Gathered Data Username = " + Gathered_Account_Details.getUsername());
                     Log.d(TAG, "Gathered Data Password = " + Gathered_Account_Details.getPassword());
                     Log.d(TAG, "Attempting Decryption");
+
                     try {
-                        //encase Username is encrypted in future.
+                        //start decrypting data from the database
                         Log.d(TAG, "Starting Decryption");
 
-                        //Add if u encrypt Username
+                        //encase Username is encrypted in future. (uncomment all this)
                         //Unencrypted_Username = Encryption_Class.decrypt(Gathered_Account_Details.getUsername());
                         //Log.d(TAG,"Login: Username decrypted");
 
-                        //unencrypt pw
-                        Log.d(TAG, "Password = " + Gathered_Account_Details.getPassword());
+                        //decrypt the password from the database
                         Unencrypted_Password = Encryption_Class.Decryption_Function(Gathered_Account_Details.getPassword());
-                        Log.d(TAG, "Decryption Success");
-                        Log.d(TAG, "Decrypted_Password = " + Unencrypted_Password);
-                    } catch (Exception e) {//if encryption failure
+                        Log.d(TAG, "Decryption of password Success");
+
+                        //if decryption fails show error in logs
+                    } catch (Exception e) {
+                        //creates a pop up message showing failure
                         reusableFunctions.Create_Toast(getApplicationContext(), "Decryption Failed. Crashing");
                         Log.d(TAG, "Decryption Failed");
                         e.printStackTrace();
                     }
-                    //if pw matches, Allow Login
+
+                    //if password entered by the user matches the coount they trying to login to, Allow Login
+                    Log.d(TAG, "Checking Pw");
                     if (Unencrypted_Password.equals((Login_User_Details.getPassword()))) {
+                        //say login successul
                         reusableFunctions.Create_Toast(getApplicationContext(), "Login Successful");
                         Log.d(TAG, "Successful Login");
-                        //REPLACES PW TO PREVENT DATA BEING USED
+
+                        //REPLACES Password locally from database TO PREVENT DATA BEING USED or accessed (the correct password is still in database)
                         Gathered_Account_Details.setPassword("Why Do U Wanna Know?");
+
+                        //THE USER HAS LOGGED IN SUCCESSFULLY
+                        //prepares the user to carry on through the app (Bmi Calculations variable setting)
                         Login_Success(Gathered_Account_Details, reusableFunctions);
                     } else {
+                        //If the user enters the password incorrectly. they are taken back to the login page to re-enter details
                         reusableFunctions.Create_Toast(getApplicationContext(), "Incorrect Username Or Password");
                         Log.d(TAG, "Password Doesn't Exist");
                         To_Login(Login_User_Details.getUsername());
                     }
                 } else {//if username doesnt exist
+                    //If the username doesnt exist. they are taken back to the login page to re-enter details
                     reusableFunctions.Create_Toast(getApplicationContext(), "Incorrect Username Or Password");
                     Log.d(TAG, "Username Doesn't Exist");
                     To_Login(Login_User_Details.getUsername());
                 }
                 //return null;
             }
-            @Override//if db cancelled. often cause security
+            @Override//if database error. often cause security settings need changing or no wifi
             public void onCancelled(@NonNull DatabaseError error) {
                 reusableFunctions.Create_Toast(getApplicationContext(), "Database Error. Cancelled");
+                //sends user back to login page
                 To_Login(Login_User_Details.getUsername());
             }
         });
