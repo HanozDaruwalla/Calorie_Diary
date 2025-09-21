@@ -71,7 +71,6 @@ public class DashboardFragment extends Fragment {
 
     }
 
-
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView");
         DashboardViewModel dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
@@ -85,13 +84,15 @@ public class DashboardFragment extends Fragment {
         Lunch_Recycler_View.setHasFixedSize(true);
 
         breakfast_layoutManager = new LinearLayoutManager(getContext());
-        //Breakfast_Recycler_View.setLayoutManager(breakfast_layoutManager);
-        Breakfast_Recycler_View.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false));
+        Breakfast_Recycler_View.setLayoutManager(breakfast_layoutManager);
+
+        //code commented below messes up view
+        //Breakfast_Recycler_View.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false));
         Log.d(TAG, "set breakfast layout manager");
 
         lunch_layoutManager = new LinearLayoutManager(getContext());
-        //Lunch_Recycler_View.setLayoutManager(lunch_layoutManager);
-        Lunch_Recycler_View.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false));
+        Lunch_Recycler_View.setLayoutManager(lunch_layoutManager);
+        //Lunch_Recycler_View.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false));
         Log.d(TAG, "set lunch layout manager");
 
 
@@ -187,7 +188,8 @@ public class DashboardFragment extends Fragment {
         ArrayList<Nutrition_Data_From_Db> Dinner_Arraylist = PASSED_Meals_Arraylist_Nested.get(2);
         Log.d(TAG, "got Dinner arraylist");
 
-        for (int i = 0;i < 20;i++){
+        //for (int i = 0;i < 20;i++){
+          for (int i = 0;i < Breakfast_Arraylist.size();i++){
             try{
                 Log.d(TAG, i + " = : '" + Breakfast_Arraylist.get(i) + "'" );
             }catch(IndexOutOfBoundsException Ex){
@@ -203,7 +205,7 @@ public class DashboardFragment extends Fragment {
         Breakfast_Recycler_View.setAdapter(Breakfast_Item_Adapter);
         Log.d(TAG, "Adding To Breakfast Recycler View");
 
-        for (int i = 0;i < 20;i++){
+        for (int i = 0;i < Lunch_Arraylist.size();i++){
             try{
                 Log.d(TAG, i + " = : '" + Lunch_Arraylist.get(i) + "'" );
             }catch(IndexOutOfBoundsException Ex){
@@ -218,9 +220,6 @@ public class DashboardFragment extends Fragment {
         Log.d(TAG, "Set Adapter");
         Lunch_Recycler_View.setAdapter(Lunch_Item_Adapter);
         Log.d(TAG, "Adding To Lunch Recycler View");
-
-
-
     }
 
     @Override
