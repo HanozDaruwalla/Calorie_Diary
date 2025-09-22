@@ -25,7 +25,7 @@ public class Food_Recycler_View_Functions {
         Log.d(TAG, "data = " + UsernameDateFoodtype_Passed.get(0) + "+" + UsernameDateFoodtype_Passed.get(1) + "+" + UsernameDateFoodtype_Passed.get(2));
         Log.d(TAG, "Vars Set");
         //Database DB = new Database();
-        DB.Get_Food_Data(UsernameDateFoodtype_Passed, new Interface_Food_Data_Found.Food_Data_FoundListener() {
+        DB.Food_Data_Found(UsernameDateFoodtype_Passed, new Interface_Food_Data_Found.Food_Data_FoundListener() {
             @Override
             public void Food_Data_Found(ArrayList<ArrayList<Nutrition_Data_From_Db>> foodDataList) {
                 Log.d(TAG, "Food_Data found overrided");
@@ -42,6 +42,7 @@ public class Food_Recycler_View_Functions {
             }
         });
     }
+
 /*
     public void Lunch_Data_Passer(ArrayList<String> userdata, ArrayList<String> UsernameDateFoodtype_Passed, Activity Activity_Data) {
         Log.d(TAG, "in Lunch_Data_Passer");

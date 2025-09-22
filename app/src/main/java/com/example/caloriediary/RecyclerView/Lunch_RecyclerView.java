@@ -49,7 +49,7 @@ public class Lunch_RecyclerView extends AppCompatActivity {
 
         //EDIT
         Log.d(TAG, "User_Data [0] = " + User_Data.get(0));
-        Preparing_Data_Passer(User_Data);
+        //Preparing_Data_Passer(User_Data);
         //Breakfast_Data_Passer(User_Data);
     }
 /*
@@ -71,8 +71,8 @@ public class Lunch_RecyclerView extends AppCompatActivity {
         Log.d(TAG, "data = " + UsernameDateFoodtype.get(0) + "+" + UsernameDateFoodtype.get(1) + "+" + UsernameDateFoodtype.get(2));
         Log.d(TAG, "Vars Set");
 
-        Food_Recycler_View_Functions food_recycler_view_functions = new Food_Recycler_View_Functions();
-        food_recycler_view_functions.Data_Passer_Universal(userdata, UsernameDateFoodtype, Lunch_RecyclerView.this);
+        //Food_Recycler_View_Functions food_recycler_view_functions = new Food_Recycler_View_Functions();
+        //food_recycler_view_functions.Data_Passer_Universal(userdata, UsernameDateFoodtype, Lunch_RecyclerView.this);
 
     }
 

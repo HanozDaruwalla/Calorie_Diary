@@ -78,12 +78,12 @@ public class Calorie_Homepage extends AppCompatActivity {
     }
 
     public void To_Breakfast_Recycler(View view) {
-/*
+
         Intent Breakfast_Recycler_Intent = new Intent(view.getContext(), Breakfast_RecyclerView.class);
         Breakfast_Recycler_Intent.putExtra("User_Data",User_Data);
         startActivity(Breakfast_Recycler_Intent);
         Log.d(TAG, "Breakfast Intent Done");
-*/
+
         Intent Lunch_Recycler_Intent =  new Intent(view.getContext(), Lunch_RecyclerView.class);
         Lunch_Recycler_Intent.putExtra("User_Data",User_Data);
         startActivity(Lunch_Recycler_Intent);
