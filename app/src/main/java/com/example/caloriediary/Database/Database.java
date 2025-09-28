@@ -374,18 +374,18 @@ public class Database extends AppCompatActivity {
         fetchNextMeal(Meal_Type, Current_List, Nested_Food_Data_List,Username,callback, Database_Controller);
     }
 
-    private void fetchNextMeal(String currentMealType, ArrayList<Nutrition_Data_From_Db> targetList,
-                                   ArrayList<ArrayList<Nutrition_Data_From_Db>> allMealsSoFar,
+    private void fetchNextMeal(String Current_Meal_Type, ArrayList<Nutrition_Data_From_Db> Temporary_Food_ArrayList,
+                                   ArrayList<ArrayList<Nutrition_Data_From_Db>> Nested_Food_ArrayList,
                                    String Username, Interface_Food_Data_Found.Food_Data_FoundListener callback, DatabaseReference Database_Controller) {
 
         // Build the DB reference with CURRENT MEAL TYPE (not Meal_Type!)
         DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name())
                 .child(Username)
                 .child(Todays_Date)
-                .child(currentMealType);  // ← Use parameter, not Meal_Type
+                .child(Current_Meal_Type);  // ← Use parameter, not Meal_Type
 
 
-        Log.d(TAG, "Path = " + Db_Value_Names.getDb_Food_Name_Name() + Username + Todays_Date + currentMealType);
+        Log.d(TAG, "Path = " + Db_Value_Names.getDb_Food_Name_Name() + Username + Todays_Date + Current_Meal_Type);
 
         Db_Reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -405,17 +405,17 @@ public class Database extends AppCompatActivity {
                         i++;
 
                         // Use currentMealType parameter instead of Meal_Type
-                        switch (currentMealType) {  // ← Changed from Meal_Type
+                        switch (Current_Meal_Type) {  // ← Changed from Meal_Type
                             case "Breakfast":
-                                targetList.add(Gathered_Food);  // ← Use targetList parameter
+                                Temporary_Food_ArrayList.add(Gathered_Food);  // ← Use targetList parameter
                                 Log.d(TAG, "Breakfast_Added");
                                 break;
                             case "Lunch":
-                                targetList.add(Gathered_Food);  // ← Same targetList for all meals
+                                Temporary_Food_ArrayList.add(Gathered_Food);  // ← Same targetList for all meals
                                 Log.d(TAG, "Lunch_Added");
                                 break;
                             case "Dinner":
-                                targetList.add(Gathered_Food);  // ← Same targetList for all meals
+                                Temporary_Food_ArrayList.add(Gathered_Food);  // ← Same targetList for all meals
                                 Log.d(TAG, "Dinner_Added");
                                 break;
                             default:
@@ -425,21 +425,23 @@ public class Database extends AppCompatActivity {
                         Log.d(TAG, "No food data found for the given Username");
 
                         // Use currentMealType parameter
-                        switch (currentMealType) {  // ← Changed from Meal_Type
-                            case "Breakfast":
-                                targetList.add(new Nutrition_Data_From_Db());  // ← Use targetList
-                                Log.d(TAG, "Default Breakfast_Added");
-                                break;
-                            case "Lunch":
-                                targetList.add(new Nutrition_Data_From_Db());  // ← Use targetList
-                                Log.d(TAG, "Default Lunch_Added");
-                                break;
-                            case "Dinner":
-                                targetList.add(new Nutrition_Data_From_Db());  // ← Use targetList
-                                Log.d(TAG, "Default Dinner_Added");
-                                break;
-                            default:
-                                Log.d(TAG, "Meal Type Not Identified");
+                        if(i == 0) {
+                            switch (Current_Meal_Type) {  // ← Changed from Meal_Type
+                                case "Breakfast":
+                                    Temporary_Food_ArrayList.add(new Nutrition_Data_From_Db());  // ← Use targetList
+                                    Log.d(TAG, "Default Breakfast_Added");
+                                    break;
+                                case "Lunch":
+                                    Temporary_Food_ArrayList.add(new Nutrition_Data_From_Db());  // ← Use targetList
+                                    Log.d(TAG, "Default Lunch_Added");
+                                    break;
+                                case "Dinner":
+                                    Temporary_Food_ArrayList.add(new Nutrition_Data_From_Db());  // ← Use targetList
+                                    Log.d(TAG, "Default Dinner_Added");
+                                    break;
+                                default:
+                                    Log.d(TAG, "Meal Type Not Identified");
+                            }
                         }
 
                         Continue_Collecting_Data = false;
@@ -447,20 +449,20 @@ public class Database extends AppCompatActivity {
                 }
 
                 // Add this meal's data to accumulated results
-                allMealsSoFar.add(new ArrayList<>(targetList));  // ← Copy targetList to allMealsSoFar
+                Nested_Food_ArrayList.add(new ArrayList<>(Temporary_Food_ArrayList));  // ← Copy targetList to allMealsSoFar
 
                 // CHAIN TO NEXT MEAL (replaces your old switch)
-                String nextMealType = getNextMealType(currentMealType);
+                String nextMealType = getNextMealType(Current_Meal_Type);
                 if (nextMealType != null) {
                     // Clear targetList for next meal and chain
-                    targetList.clear();
-                    Log.d(TAG, "Completed " + currentMealType + ", chaining to " + nextMealType);
-                    fetchNextMeal(nextMealType, targetList, allMealsSoFar, Username, callback, Database_Controller);
+                    Temporary_Food_ArrayList.clear();
+                    Log.d(TAG, "Completed " + Current_Meal_Type + ", chaining to " + nextMealType);
+                    fetchNextMeal(nextMealType, Temporary_Food_ArrayList, Nested_Food_ArrayList, Username, callback, Database_Controller);
                 } else {
                     // All meals done - call callback
                     Log.d(TAG, "All meals complete!");
                     Log.d(TAG, "sending back");
-                    callback.Food_Data_Found(allMealsSoFar);  // ← Use parameter
+                    callback.Food_Data_Found(Nested_Food_ArrayList);  // ← Use parameter
                 }
             }
 

@@ -136,7 +136,9 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view3"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:nestedScrollingEnabled="false" tools:itemCount="4"/>
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                tools:itemCount="4"/>
 
         </LinearLayout>
     </ScrollView>

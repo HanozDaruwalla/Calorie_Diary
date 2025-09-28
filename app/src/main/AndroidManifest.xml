@@ -41,6 +41,12 @@
             android:label="@string/title_activity_recyclerview" />
 
         <activity
+            android:name=".RecyclerView.Dinner_RecyclerView"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_recyclerview" />
+
+        <activity
             android:name=".Recycler_View.item_layout"
             android:exported="false"
             android:screenOrientation="portrait"
