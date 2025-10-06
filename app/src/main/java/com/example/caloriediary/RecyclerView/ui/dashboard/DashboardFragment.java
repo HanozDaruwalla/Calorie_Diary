@@ -49,6 +49,17 @@ public class DashboardFragment extends Fragment {
     String Nutrition_Option_1_Picked = "undefined";
     String Nutrition_Option_2_Picked = "undefined";
 
+    /*
+    ArrayList<Nutrition_Data_From_Db> Breakfast_Arraylist;
+    ArrayList<Nutrition_Data_From_Db> Lunch_Arraylist;
+    ArrayList<Nutrition_Data_From_Db> Dinner_Arraylist;
+
+     */
+
+    ArrayList<Nutrition_Data_From_Db> Breakfast_Arraylist = new ArrayList<>();
+    ArrayList<Nutrition_Data_From_Db> Lunch_Arraylist = new ArrayList<>();
+    ArrayList<Nutrition_Data_From_Db> Dinner_Arraylist = new ArrayList<>();
+
     public DashboardFragment() {
         // Required empty public constructor
     }
@@ -58,13 +69,50 @@ public class DashboardFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "oncreate");
 
-        Log.d(TAG, "binding created");
         if (getArguments() != null) {
             Meals_Arraylist_Nested = (ArrayList<ArrayList<Nutrition_Data_From_Db>>) getArguments().getSerializable("User_Meals");
             if (Meals_Arraylist_Nested != null) {
                 Log.d(TAG, "Successfully got user food arraylist from recycler");
 
                 Log.d(TAG, "Size of arraylist = " + String.valueOf(Meals_Arraylist_Nested.size()));
+
+                Log.d(TAG, "setting up breakfast recycler");
+                Breakfast_Item_Adapter = new ItemAdapter(Breakfast_Arraylist);
+                Log.d(TAG, "Set Adapter");
+
+                Breakfast_Recycler_View.setAdapter(Breakfast_Item_Adapter);
+                Log.d(TAG, "Adding To Breakfast Recycler View");
+
+                for (int i = 0;i < Lunch_Arraylist.size();i++){
+                    try{
+                        Log.d(TAG, i + " = : '" + Lunch_Arraylist.get(i) + "'" );
+                    }catch(IndexOutOfBoundsException Ex){
+                        Log.d(TAG, "Done");
+                        break;
+                    }
+                }
+
+                Log.d(TAG, "setting up lunch recycler");
+                Lunch_Item_Adapter = new ItemAdapter(Lunch_Arraylist);
+                Log.d(TAG, "Set Adapter");
+                Lunch_Recycler_View.setAdapter(Lunch_Item_Adapter);
+                Log.d(TAG, "Adding To Lunch Recycler View");
+
+                for (int i = 0;i < Dinner_Arraylist.size();i++){
+                    try{
+                        Log.d(TAG, i + " = : '" + Dinner_Arraylist.get(i) + "'" );
+                    }catch(IndexOutOfBoundsException Ex){
+                        Log.d(TAG, "Done");
+                        break;
+                    }
+                }
+
+                Log.d(TAG, "setting up dinner recycler");
+                Dinner_Item_Adapter = new ItemAdapter(Dinner_Arraylist);
+                Log.d(TAG, "Set Adapter");
+                Dinner_Recycler_View.setAdapter(Dinner_Item_Adapter);
+                Log.d(TAG, "Adding To dinner Recycler View");
+
             } else {
                 Log.d(TAG, "Arraylist Empty!");
             }
@@ -96,7 +144,7 @@ public class DashboardFragment extends Fragment {
         Temp_Loaded_Data_List.add(new Nutrition_Data_From_Db());
 
         // Initialize adapters with default data
-        /*
+
         Breakfast_Item_Adapter = new ItemAdapter(Temp_Loaded_Data_List); // Triggers setDefaultData
         Breakfast_Recycler_View.setAdapter(Breakfast_Item_Adapter);
         Lunch_Item_Adapter = new ItemAdapter(Temp_Loaded_Data_List);
@@ -104,11 +152,10 @@ public class DashboardFragment extends Fragment {
         Dinner_Item_Adapter = new ItemAdapter(Temp_Loaded_Data_List);
         Dinner_Recycler_View.setAdapter(Dinner_Item_Adapter);
 
-         */
-
 
 
 //here and down should fill recyelers with data from db. sent from breakfast recycler where they get all data and return in the bundle
+
         breakfast_layoutManager = new LinearLayoutManager(getContext());
         Breakfast_Recycler_View.setLayoutManager(breakfast_layoutManager);
 
@@ -124,6 +171,7 @@ public class DashboardFragment extends Fragment {
         dinner_layoutManager = new LinearLayoutManager(getContext());
         Dinner_Recycler_View.setLayoutManager(dinner_layoutManager);
         Log.d(TAG, "set dinner layout manager");
+
 
 
         Log.d(TAG, "Starting Spinners Now");
@@ -164,7 +212,8 @@ public class DashboardFragment extends Fragment {
         });
         Log.d(TAG, "Listener 1 and 2 done");
 
-        String[] Filter_Options_1 = getResources().getStringArray(R.array.Food_Options);
+        String[] Filter_Options_1 = inflater.getContext().getResources().getStringArray(R.array.Food_Options);
+        //String[] Filter_Options_1 = getResources().getStringArray(R.array.Food_Options);
         // Create an ArrayAdapter using the string array and a default spinner layout.
         ArrayAdapter<CharSequence> Filter_Adapter1 = ArrayAdapter.createFromResource(
                 getContext(), R.array.Food_Options,
@@ -173,7 +222,9 @@ public class DashboardFragment extends Fragment {
         Filter_Adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Nutrition_Option_1.setAdapter(Filter_Adapter1);
 
-        String[] Filter_Options_2 = getResources().getStringArray(R.array.Food_Options);
+        String[] Filter_Options_2 = inflater.getContext().getResources().getStringArray(R.array.Food_Options);
+        //String[] Filter_Options_2 = getResources().getStringArray(R.array.Food_Options);
+
         // Create an ArrayAdapter using the string array and a default spinner layout.
         ArrayAdapter<CharSequence> Filter_Adapter2 = ArrayAdapter.createFromResource(
                 getContext(), R.array.Food_Options,
@@ -214,11 +265,11 @@ public class DashboardFragment extends Fragment {
         //seperate this 3 arroylist into eperate arraylists
 
         Log.d(TAG, "Starting On Create View");
-        ArrayList<Nutrition_Data_From_Db> Breakfast_Arraylist = PASSED_Meals_Arraylist_Nested.get(0);
+         Breakfast_Arraylist = PASSED_Meals_Arraylist_Nested.get(0);
         Log.d(TAG, "got breakfast arraylist");
-        ArrayList<Nutrition_Data_From_Db> Lunch_Arraylist = PASSED_Meals_Arraylist_Nested.get(1);
+         Lunch_Arraylist = PASSED_Meals_Arraylist_Nested.get(1);
         Log.d(TAG, "got Lunch arraylist");
-        ArrayList<Nutrition_Data_From_Db> Dinner_Arraylist = PASSED_Meals_Arraylist_Nested.get(2);
+         Dinner_Arraylist = PASSED_Meals_Arraylist_Nested.get(2);
         Log.d(TAG, "got Dinner arraylist");
 
         for (int i = 0; i<PASSED_Meals_Arraylist_Nested.size();i++){
@@ -238,6 +289,7 @@ public class DashboardFragment extends Fragment {
                 break;
             }
         }
+    /*  is to reload recyclers with new data
 
         Log.d(TAG, "setting up breakfast recycler");
         Breakfast_Item_Adapter = new ItemAdapter(Breakfast_Arraylist);
@@ -275,6 +327,8 @@ public class DashboardFragment extends Fragment {
         Log.d(TAG, "Set Adapter");
         Dinner_Recycler_View.setAdapter(Dinner_Item_Adapter);
         Log.d(TAG, "Adding To dinner Recycler View");
+
+ */
     }
 
     @Override

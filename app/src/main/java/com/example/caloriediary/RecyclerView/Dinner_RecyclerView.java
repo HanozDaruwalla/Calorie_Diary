@@ -60,7 +60,8 @@ public class Dinner_RecyclerView extends AppCompatActivity {
         ArrayList<String> UsernameDateFoodtype = new ArrayList<>();
         UsernameDateFoodtype.add(userdata.get(6));
         UsernameDateFoodtype.add(reusableFunctions.Date_Creator());
-        UsernameDateFoodtype.add(getString(R.string.Dinner_Meal_Type));
+        //need to pass breakfast instead of dinner so cycles x3
+        UsernameDateFoodtype.add(getString(R.string.Breakfast_Meal_Type));
         Log.d(TAG, "Assigned");
         //gets from string xml file
 

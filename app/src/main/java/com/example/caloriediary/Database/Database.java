@@ -347,7 +347,7 @@ public class Database extends AppCompatActivity {
     }
 
 
-    public void Food_Data_Found(ArrayList<String> Name_Date_Meal_Type, Interface_Food_Data_Found.Food_Data_FoundListener callback) {
+    public void Food_Data_Found(@NonNull ArrayList<String> Name_Date_Meal_Type, Interface_Food_Data_Found.Food_Data_FoundListener callback) {
         //this.callback = callback; // assuming you store it as field
 
         Database_Controller = FirebaseDatabase.getInstance().getReference();
