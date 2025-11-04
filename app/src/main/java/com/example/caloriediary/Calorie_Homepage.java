@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class Calorie_Homepage extends AppCompatActivity {
 
-    final static String TAG = "Calorie_Homepage";
+    final static String TAG = "Calorie_Homepage_";
 
 
 

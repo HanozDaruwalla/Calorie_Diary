@@ -75,44 +75,6 @@ public class DashboardFragment extends Fragment {
                 Log.d(TAG, "Successfully got user food arraylist from recycler");
 
                 Log.d(TAG, "Size of arraylist = " + String.valueOf(Meals_Arraylist_Nested.size()));
-
-                Log.d(TAG, "setting up breakfast recycler");
-                Breakfast_Item_Adapter = new ItemAdapter(Breakfast_Arraylist);
-                Log.d(TAG, "Set Adapter");
-
-                Breakfast_Recycler_View.setAdapter(Breakfast_Item_Adapter);
-                Log.d(TAG, "Adding To Breakfast Recycler View");
-
-                for (int i = 0;i < Lunch_Arraylist.size();i++){
-                    try{
-                        Log.d(TAG, i + " = : '" + Lunch_Arraylist.get(i) + "'" );
-                    }catch(IndexOutOfBoundsException Ex){
-                        Log.d(TAG, "Done");
-                        break;
-                    }
-                }
-
-                Log.d(TAG, "setting up lunch recycler");
-                Lunch_Item_Adapter = new ItemAdapter(Lunch_Arraylist);
-                Log.d(TAG, "Set Adapter");
-                Lunch_Recycler_View.setAdapter(Lunch_Item_Adapter);
-                Log.d(TAG, "Adding To Lunch Recycler View");
-
-                for (int i = 0;i < Dinner_Arraylist.size();i++){
-                    try{
-                        Log.d(TAG, i + " = : '" + Dinner_Arraylist.get(i) + "'" );
-                    }catch(IndexOutOfBoundsException Ex){
-                        Log.d(TAG, "Done");
-                        break;
-                    }
-                }
-
-                Log.d(TAG, "setting up dinner recycler");
-                Dinner_Item_Adapter = new ItemAdapter(Dinner_Arraylist);
-                Log.d(TAG, "Set Adapter");
-                Dinner_Recycler_View.setAdapter(Dinner_Item_Adapter);
-                Log.d(TAG, "Adding To dinner Recycler View");
-
             } else {
                 Log.d(TAG, "Arraylist Empty!");
             }
@@ -260,35 +222,78 @@ public class DashboardFragment extends Fragment {
 
 
 
-    public void Setup_Recycler_View(ArrayList<ArrayList<Nutrition_Data_From_Db>> PASSED_Meals_Arraylist_Nested){
+    public void Setup_Recycler_View(ArrayList<ArrayList<Nutrition_Data_From_Db>> PASSED_Meals_Arraylist_Nested) {
         //set the recycler view to arraylist
         //seperate this 3 arroylist into eperate arraylists
 
         Log.d(TAG, "Starting On Create View");
-         Breakfast_Arraylist = PASSED_Meals_Arraylist_Nested.get(0);
+        Breakfast_Arraylist = PASSED_Meals_Arraylist_Nested.get(0);
         Log.d(TAG, "got breakfast arraylist");
-         Lunch_Arraylist = PASSED_Meals_Arraylist_Nested.get(1);
+        Lunch_Arraylist = PASSED_Meals_Arraylist_Nested.get(1);
         Log.d(TAG, "got Lunch arraylist");
-         Dinner_Arraylist = PASSED_Meals_Arraylist_Nested.get(2);
+        Dinner_Arraylist = PASSED_Meals_Arraylist_Nested.get(2);
         Log.d(TAG, "got Dinner arraylist");
 
-        for (int i = 0; i<PASSED_Meals_Arraylist_Nested.size();i++){
-            if (!(PASSED_Meals_Arraylist_Nested.get(i).get(0) == null)){
+        for (int i = 0; i < PASSED_Meals_Arraylist_Nested.size(); i++) {
+            if (!(PASSED_Meals_Arraylist_Nested.get(i).get(0) == null)) {
                 Log.d(TAG, "Nested List size = " + i);
-            }else{
+            } else {
                 Log.d(TAG, "Nested List size = " + i + " is null");
             }
         }
 
         //for (int i = 0;i < 20;i++){
-          for (int i = 0;i < Breakfast_Arraylist.size();i++){
-            try{
-                Log.d(TAG, i + " = : '" + Breakfast_Arraylist.get(i) + "'" );
-            }catch(IndexOutOfBoundsException Ex){
+        for (int i = 0; i < Breakfast_Arraylist.size(); i++) {
+            try {
+                Log.d(TAG, i + " = : '" + Breakfast_Arraylist.get(i) + "'");
+            } catch (IndexOutOfBoundsException Ex) {
                 Log.d(TAG, "Done");
                 break;
             }
         }
+
+        Log.d(TAG, "setting up breakfast recycler");
+        Breakfast_Item_Adapter = new ItemAdapter(Breakfast_Arraylist);
+        Log.d(TAG, "Set Adapter");
+
+        Breakfast_Recycler_View.setAdapter(Breakfast_Item_Adapter);
+        Log.d(TAG, "Adding To Breakfast Recycler View");
+
+        for (int i = 0; i < Lunch_Arraylist.size(); i++) {
+            try {
+                Log.d(TAG, i + " = : '" + Lunch_Arraylist.get(i) + "'");
+            } catch (IndexOutOfBoundsException Ex) {
+                Log.d(TAG, "Done");
+                break;
+            }
+        }
+
+        Log.d(TAG, "setting up lunch recycler");
+        Lunch_Item_Adapter = new ItemAdapter(Lunch_Arraylist);
+        Log.d(TAG, "Set Adapter");
+        Lunch_Recycler_View.setAdapter(Lunch_Item_Adapter);
+        Log.d(TAG, "Adding To Lunch Recycler View");
+
+        for (int i = 0; i < Dinner_Arraylist.size(); i++) {
+            try {
+                Log.d(TAG, i + " = : '" + Dinner_Arraylist.get(i) + "'");
+            } catch (IndexOutOfBoundsException Ex) {
+                Log.d(TAG, "Done");
+                break;
+            }
+        }
+
+        Log.d(TAG, "setting up dinner recycler");
+        Dinner_Item_Adapter = new ItemAdapter(Dinner_Arraylist);
+        Log.d(TAG, "Set Adapter");
+        Dinner_Recycler_View.setAdapter(Dinner_Item_Adapter);
+        Log.d(TAG, "Adding To dinner Recycler View");
+
+
+
+
+
+    }
     /*  is to reload recyclers with new data
 
         Log.d(TAG, "setting up breakfast recycler");
@@ -329,7 +334,7 @@ public class DashboardFragment extends Fragment {
         Log.d(TAG, "Adding To dinner Recycler View");
 
  */
-    }
+
 
     @Override
     public void onDestroyView() {
