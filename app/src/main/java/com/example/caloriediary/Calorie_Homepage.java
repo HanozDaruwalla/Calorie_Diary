@@ -24,6 +24,8 @@ public class Calorie_Homepage extends AppCompatActivity {
 
     final static String TAG = "Calorie_Homepage";
 
+
+
     private ActivityCalorieHomepageBinding binding;
     ArrayList<String> User_Data = new ArrayList<>();
 
@@ -44,6 +46,7 @@ public class Calorie_Homepage extends AppCompatActivity {
         }
 
         Log.d(TAG, "Save data to Shared Preference");
+        Log.d(TAG, "tada");
         // Save data to Shared Preference
         SharedPreferences shared_preference = getSharedPreferences("User_Data", Context.MODE_PRIVATE);
         Log.d(TAG, "1");
