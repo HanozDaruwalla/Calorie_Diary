@@ -23,6 +23,7 @@ import java.util.ArrayList;
 public class Calorie_Homepage extends AppCompatActivity {
 
     final static String TAG = "Calorie_Homepage_";
+    string not_needed = "Temp Var U can remove This!";
 
 
 
