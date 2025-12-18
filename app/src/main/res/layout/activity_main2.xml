@@ -157,7 +157,7 @@
                     android:textSize="16sp"
                     android:visibility="visible"/>
 
-                <TextView
+                <EditText
                     android:id="@+id/cholesterol_r"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
@@ -166,9 +166,9 @@
                     android:layout_alignStart="@+id/total_fat_r"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
-                    android:textSize="16sp"/>
+                    android:textSize="12sp"/>
 
-                <TextView
+                <EditText
                     android:id="@+id/sodiuim_r"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
@@ -177,7 +177,7 @@
                     android:layout_alignStart="@+id/cholesterol_r"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
-                    android:textSize="16sp"/>
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/food_name"
@@ -215,7 +215,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="18sp"/>
 
-                <TextView
+                <EditText
                     android:id="@+id/calries_r"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
@@ -223,7 +223,7 @@
                     android:layout_alignStart="@+id/food_name_r"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
-                    android:textSize="26sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"/>
 
                 <TextView
@@ -237,7 +237,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="16sp"/>
 
-                <TextView
+                <EditText
                     android:id="@+id/serving_size_r"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -247,7 +247,7 @@
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
 
-                    android:textSize="16sp"/>
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/total_fat"
@@ -260,7 +260,7 @@
                     android:textColor="@android:color/background_dark"
                     android:textSize="16sp"/>
 
-                <TextView
+                <EditText
                     android:id="@+id/total_fat_r"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
@@ -269,7 +269,7 @@
                     android:layout_alignParentEnd="true"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
-                    android:textSize="16sp"/>
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/cholesterol"
@@ -293,7 +293,7 @@
                     android:textColor="@android:color/background_dark"
                     android:textSize="16sp"/>
 
-                <TextView
+                <EditText
                     android:id="@+id/potassium_r"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
@@ -302,7 +302,7 @@
                     android:layout_alignStart="@+id/sodiuim_r"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
-                    android:textSize="16sp"/>
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/total_carbohydrate"
@@ -315,7 +315,7 @@
                     android:textColor="@android:color/background_dark"
                     android:textSize="16sp"/>
 
-                <TextView
+                <EditText
                     android:id="@+id/total_carbonhydrate_r"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
@@ -324,7 +324,7 @@
                     android:layout_alignEnd="@+id/potassium_r"
                     android:textAlignment="center"
                     android:textColor="@android:color/background_dark"
-                    android:textSize="16sp"/>
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/sugar"
@@ -337,7 +337,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="16sp"/>
 
-                <TextView
+                <EditText
                     android:id="@+id/sugar_r"
                     android:layout_width="160dp"
                     android:layout_height="wrap_content"
@@ -345,7 +345,7 @@
                     android:layout_alignTop="@+id/sugar"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
-                    android:textSize="15sp"/>
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/dietary_fiber"
@@ -360,7 +360,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="15sp"/>
 
-                <TextView
+                <EditText
                     android:id="@+id/dietary_fiber_r"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
@@ -368,7 +368,7 @@
                     android:layout_alignTop="@+id/dietary_fiber"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
-                    android:textSize="15sp"/>
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/protein"
@@ -381,7 +381,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="16sp"/>
 
-                <TextView
+                <EditText
                     android:id="@+id/protein_r"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
@@ -390,7 +390,7 @@
                     android:layout_alignParentEnd="true"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
-                    android:textSize="16sp"/>
+                    android:textSize="12sp"/>
 
                 <ImageView
                     android:id="@+id/foodPic"

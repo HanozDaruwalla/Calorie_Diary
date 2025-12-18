@@ -184,7 +184,7 @@ public class MainActivity2 extends AppCompatActivity {
                         }
 
                         Log.d(TAG, "API Error: " + statusCode);
-                        reusableFunctions.Create_Toast(MainActivity2.this, "API Error: " + statusCode);;
+                        reusableFunctions.Create_Toast(MainActivity2.this, "Data Collect Fail: Enter Data Manually!");;
 
 
 
