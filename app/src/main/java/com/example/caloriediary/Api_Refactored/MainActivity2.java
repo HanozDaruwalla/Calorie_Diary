@@ -62,7 +62,6 @@ public class MainActivity2 extends AppCompatActivity {
     Bitmap ImageData;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -182,8 +181,13 @@ public class MainActivity2 extends AppCompatActivity {
                             throwable.printStackTrace();
                         }
 
-                        Toast.makeText(MainActivity2.this, "API Error: " + statusCode, Toast.LENGTH_SHORT).show();
-                        binding.progressBar.setVisibility(View.INVISIBLE);
+                        Log.d(TAG, "API Error: " + statusCode);
+                        reusableFunctions.Create_Toast(MainActivity2.this, "API Error: " + statusCode);;
+
+
+                        updateUI(Nutrition_Data_Template);
+                        //is invis cause trying to pass ui function
+                        //binding.progressBar.setVisibility(View.INVISIBLE);
                     }
                 });
 

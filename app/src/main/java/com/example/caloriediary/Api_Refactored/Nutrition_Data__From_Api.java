@@ -32,7 +32,7 @@ public class Nutrition_Data__From_Api {
             data.totalfat = foods.getInt("nf_total_fat");
 
             if( foods.getString("nf_sugars").equals("null")){
-                data.sugar =NULL_VALUE;
+                data.sugar = NULL_VALUE;
             }else{
                 data.sugar = foods.getInt("nf_sugars");
             }
