@@ -1,5 +1,6 @@
 package com.example.caloriediary.Api_Refactored;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,6 +21,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.caloriediary.Api_Refactored.My_Functions.Nutrition_Data_Template;
 import com.example.caloriediary.Database.Database;
 import com.example.caloriediary.R;
 import com.example.caloriediary.ReusableFunctions;
@@ -54,7 +56,7 @@ public class MainActivity2 extends AppCompatActivity {
 
     // variables
 
-    Nutrition_Data__From_Api Nutrition_Data_Template;
+    Nutrition_Data__From_Api Data_From_Api;
     String Food_Item = "Undefined";
     InputMethodManager input_method_manager;
     int Index_Of_Nutritional_Values_Arraylist;
@@ -162,12 +164,12 @@ public class MainActivity2 extends AppCompatActivity {
                         Log.d(TAG, "Response = " + response.toString());
 
                         binding.progressBar.setVisibility(View.INVISIBLE);
-                        Nutrition_Data_Template = Nutrition_Data__From_Api.fromJson(response);
+                        Data_From_Api = Nutrition_Data__From_Api.fromJson(response);
 
-                        new DownloadImageTask(binding.foodPic).execute(Nutrition_Data_Template.getPhotoUrl());
+                        new DownloadImageTask(binding.foodPic).execute(Data_From_Api.getPhotoUrl());
                         binding.foodPic.setVisibility(View.VISIBLE);
 
-                        updateUI(Nutrition_Data_Template);
+                        updateUI_Preparer(Data_From_Api);
                     }
                     @Override
                     public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
@@ -185,7 +187,10 @@ public class MainActivity2 extends AppCompatActivity {
                         reusableFunctions.Create_Toast(MainActivity2.this, "API Error: " + statusCode);;
 
 
-                        updateUI(Nutrition_Data_Template);
+
+                        Nutrition_Data_Template Nutrition_Error_Placeholder_Data = new Nutrition_Data_Template(binding.SearchBar.getText().toString());
+
+                        updateUi(Nutrition_Error_Placeholder_Data);
                         //is invis cause trying to pass ui function
                         //binding.progressBar.setVisibility(View.INVISIBLE);
                     }
@@ -221,12 +226,12 @@ public class MainActivity2 extends AppCompatActivity {
                     public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                         Log.d("Healthier", "Success" + response.toString());
                         binding.progressBar.setVisibility(View.INVISIBLE);
-                        Nutrition_Data_Template = Nutrition_Data__From_Api.fromJson(response);
+                        Data_From_Api = Nutrition_Data__From_Api.fromJson(response);
 
                         binding.foodPic.setImageBitmap(ImageData);
                         binding.foodPic.setVisibility(View.VISIBLE);
 
-                        updateUI(Nutrition_Data_Template);
+                        updateUI_Preparer(Data_From_Api);
                     }
 
                     @Override
@@ -249,8 +254,38 @@ public class MainActivity2 extends AppCompatActivity {
                 });
     }
 
-    private void updateUI(Nutrition_Data__From_Api nutritionDataFromDb) {
-        Log.d(TAG, "4");
+    private void updateUI_Preparer(Nutrition_Data__From_Api nutritionDataFromDb) {
+        Log.d(TAG, "Inside updateUI");
+
+        String name = nutritionDataFromDb.getFoodName();
+        String photo_url = nutritionDataFromDb.getPhotoUrl();
+        String serving_size = nutritionDataFromDb.getServingSize();
+        int calories = nutritionDataFromDb.getCalories();
+        int protein = nutritionDataFromDb.getProtein();
+        int total_fat = nutritionDataFromDb.getTotalfat();
+        int sugar = nutritionDataFromDb.getSugar();
+        int total_carbs = nutritionDataFromDb.getTotalCarbonhydrate();
+        int sodium = nutritionDataFromDb.getSodium();
+        int cholesterol = nutritionDataFromDb.getCholesterol();
+        int potassium = nutritionDataFromDb.getPotassium();
+        int dietary_fibre = nutritionDataFromDb.getDiertaryFiber();
+
+
+        Nutrition_Data_Template nutrition_template =
+                new Nutrition_Data_Template(name, photo_url, serving_size, calories, protein,
+                        total_fat, sugar, total_carbs, sodium,
+                        cholesterol, potassium, dietary_fibre);
+
+
+
+        updateUi(nutrition_template);
+
+
+
+    }
+
+    private void updateUi(Nutrition_Data_Template nutritionDataFromDb){
+
         /*
         binding.foodNameR.setText(nutritionData.getFoodName());
         binding.calriesR.setText(String.valueOf(nutritionData.getCalories()));

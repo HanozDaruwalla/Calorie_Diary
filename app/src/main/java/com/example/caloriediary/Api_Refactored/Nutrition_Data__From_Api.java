@@ -2,6 +2,8 @@ package com.example.caloriediary.Api_Refactored;
 
 import android.util.Log;
 
+import com.example.caloriediary.Api_Refactored.My_Functions.Nutrition_Data_Universal;
+
 import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,7 +23,7 @@ public class Nutrition_Data__From_Api {
         try {
             JSONObject foods = jsonObject.getJSONArray("foods").getJSONObject(0);
             data.foodName = foods.getString("food_name");
-            data.servingSize = servingSizeMaker(foods);
+            data.servingSize = servingSizeMaker_Preparer(foods);
             if(foods.get("nf_calories")== null){
                 data.calories =NULL_VALUE;
             }else {
@@ -52,7 +54,7 @@ public class Nutrition_Data__From_Api {
         return data;
     }
 
-    private static String servingSizeMaker(JSONObject foods) {
+    private static String servingSizeMaker_Preparer(JSONObject foods) {
         String servingSize;
         String servingQty, servingUnit, servingWeight;
 
@@ -67,8 +69,8 @@ public class Nutrition_Data__From_Api {
             servingSize = "not found";
             return servingSize;
         }
-        servingSize = servingQty + " " + servingUnit + "(" + servingWeight + "g" + ")";
-        return servingSize;
+        Nutrition_Data_Universal Nutrit_Universal = new Nutrition_Data_Universal();
+        return Nutrit_Universal.Serving_Size_Maker(servingQty, servingUnit, servingWeight);
 
     }
 

@@ -1,6 +1,21 @@
-package com.example.caloriediary.Api_Refactored;
+package com.example.caloriediary.Api_Refactored.My_Functions;
 
-public class Nutrition_Data_When_No_Api {
+public class Nutrition_Data_Template {
+    public Nutrition_Data_Template(String foodName, String photoUrl, String servingSize, int calories, int protein, int totalfat, int sugar, int totalCarbonhydrate, int sodium, int cholesterol, int potassium, int diertaryFiber) {
+        this.foodName = foodName;
+        this.photoUrl = photoUrl;
+        this.servingSize = servingSize;
+        this.calories = calories;
+        this.protein = protein;
+        this.totalfat = totalfat;
+        this.sugar = sugar;
+        this.totalCarbonhydrate = totalCarbonhydrate;
+        this.sodium = sodium;
+        this.cholesterol = cholesterol;
+        this.potassium = potassium;
+        this.diertaryFiber = diertaryFiber;
+    }
+
     private String foodName, photoUrl, servingSize;
     private int calories;
     private int protein;
@@ -13,26 +28,28 @@ public class Nutrition_Data_When_No_Api {
     private int diertaryFiber;
 
     private static final int NULL_VALUE =0;
+    Nutrition_Data_Universal Nutri_Universal = new Nutrition_Data_Universal();
 
-    public Nutrition_Data_When_No_Api(String Imported_Food_Name) {
+    public Nutrition_Data_Template(String Imported_Food_Name) {
 
         if(Imported_Food_Name == ""){
-            foodName = "ENTER FOOD NAME!";
+            this.foodName = "ENTER FOOD NAME!";
         }else{
-            foodName = Imported_Food_Name;
+            this.foodName = Imported_Food_Name;
         }
 
-        photoUrl = "";
-        servingSize = "0 Cup (0g) [x1]";
-        calories = 0;
-        protein = 0;
-        totalfat = 0;
-        sugar = 0;
-        totalCarbonhydrate = 0;
-        sodium = 0;
-        cholesterol = 0;
-        potassium = 0;
-        diertaryFiber = 0;
+        this.photoUrl = "";
+        this.calories = 0;
+        this.protein = 0;
+        this.totalfat = 0;
+        this.sugar = 0;
+        this.totalCarbonhydrate = 0;
+        this.sodium = 0;
+        this.cholesterol = 0;
+        this.potassium = 0;
+        this.diertaryFiber = 0;
+        //                                               servingQty  servingUnit  servingWeight
+        this.servingSize = Nutrition_Data_Universal.Serving_Size_Maker("0", "g", "0");
     }
 
     public String getFoodName() {
