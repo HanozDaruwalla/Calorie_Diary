@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Api_Refactored.MainActivity2"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:fitsSystemWindows="true"
+    android:background="@color/background_color"
+    >
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView2"
+        android:name="com.example.caloriediary.Fragments.fragment_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        tools:layout="@layout/fragment_title"
+        android:layout_marginBottom="10dp"
+        tools:layout_editor_absoluteX="145dp"
+        tools:layout_editor_absoluteY="83dp"
+        />
+
+
+    <LinearLayout
+        android:id="@+id/Search_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/Search_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:layout_margin="6dp"
+            android:textSize="18dp"
+            android:backgroundTint="@color/interface_color"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:onClick="Search_Button_Pressed"
+
+            />
+
+        <EditText
+            android:id="@+id/Search_Bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text=""
+            android:hint="Enter Food/ Drink Name"
+            android:textSize="22sp"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:textColorHint="@color/Hint_Color"
+            android:maxLines="1"
+            android:selectAllOnFocus="false"
+            android:singleLine="false"
+            android:layout_marginTop="7dp"
+            android:layout_marginRight="10dp"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <Button
+            android:id="@+id/minus_1_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-1 Portion"
+            android:layout_margin="6dp"
+            android:textSize="15sp"
+            android:backgroundTint="@color/interface_color"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:onClick="Minus_Button_Pressed"
+            android:visibility="invisible">
+        </Button>
+
+        <TextView
+            android:id="@+id/Quantity_Multiplier_Textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textAlignment="center"
+            android:layout_margin="6dp"
+            android:textSize="15sp"
+            android:backgroundTint="@color/interface_color"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:visibility="invisible"/>
+
+        <Button
+            android:id="@+id/plus_1_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+1 Portion"
+            android:layout_margin="6dp"
+            android:textSize="15sp"
+            android:backgroundTint="@color/interface_color"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:onClick="Add_Button_Pressed"
+            android:visibility="invisible">
+        </Button>
+
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/mscrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Search_Layout"
+        android:isScrollContainer="true"
+        android:scrollbarStyle="insideOverlay"
+        >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/Search_Bar"
+                android:visibility="invisible">
+
+                <TextView
+                    android:id="@+id/sodiuim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/cholesterol"
+                    android:layout_below="@+id/cholesterol_r"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/sodium"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:visibility="visible"/>
+
+                <TextView
+                    android:id="@+id/cholesterol_r"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/cholesterol"
+                    android:layout_alignBottom="@+id/cholesterol"
+                    android:layout_alignStart="@+id/total_fat_r"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/sodiuim_r"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/sodiuim"
+                    android:layout_alignBottom="@+id/sodiuim"
+                    android:layout_alignStart="@+id/cholesterol_r"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/food_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/foodPic"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="9dp"
+                    android:text="@string/food_name"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/food_name_r"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/food_name"
+                    android:layout_alignBottom="@+id/food_name"
+                    android:layout_marginStart="44dp"
+                    android:layout_toEndOf="@+id/serving_size"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/calories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/food_name"
+                    android:layout_below="@+id/food_name"
+                    android:layout_marginTop="18dp"
+                    android:text="@string/calories"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/calries_r"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/serving_size"
+                    android:layout_alignStart="@+id/food_name_r"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="26sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/serving_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/calories"
+                    android:layout_below="@+id/calories"
+                    android:layout_marginTop="13dp"
+                    android:text="@string/serving_size"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/serving_size_r"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/serving_size"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignStart="@+id/calries_r"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/total_fat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/serving_size"
+                    android:layout_below="@+id/serving_size"
+                    android:layout_marginTop="14dp"
+                    android:text="@string/total_fat"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/total_fat_r"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/total_fat"
+                    android:layout_alignBottom="@+id/total_fat"
+                    android:layout_alignParentEnd="true"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/cholesterol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/total_fat"
+                    android:layout_below="@+id/total_fat"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/cholesterol"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/potassium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/sodiuim"
+                    android:layout_below="@+id/sodiuim"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/potassium"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/potassium_r"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/potassium"
+                    android:layout_alignBottom="@+id/potassium"
+                    android:layout_alignStart="@+id/sodiuim_r"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/total_carbohydrate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/potassium"
+                    android:layout_below="@+id/potassium"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/total_carbohydrate"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/total_carbonhydrate_r"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/total_carbohydrate"
+                    android:layout_alignBottom="@+id/total_carbohydrate"
+                    android:layout_alignEnd="@+id/potassium_r"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/sugar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/total_carbohydrate"
+                    android:layout_below="@+id/total_carbohydrate"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/sugars"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/sugar_r"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/total_carbonhydrate_r"
+                    android:layout_alignTop="@+id/sugar"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/dietary_fiber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignStart="@+id/sugar"
+                    android:layout_below="@+id/sugar"
+                    android:layout_marginTop="9dp"
+                    android:layout_toStartOf="@+id/dietary_fiber_r"
+                    android:text="@string/dfiber"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/dietary_fiber_r"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/sugar_r"
+                    android:layout_alignTop="@+id/dietary_fiber"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/protein"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/sodiuim"
+                    android:layout_below="@+id/dietary_fiber"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/protein"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/protein_r"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/protein"
+                    android:layout_alignBottom="@+id/protein"
+                    android:layout_alignParentEnd="true"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"/>
+
+                <ImageView
+                    android:id="@+id/foodPic"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    app:srcCompat="@android:color/background_light"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/Food_Buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="4"
+        >
+
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/Search_Bar"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/Breakfast_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Breakfast"
+            android:layout_margin="6dp"
+            android:textSize="12sp"
+            android:backgroundTint="@color/interface_color"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:onClick="Add_Breakfast_Button"
+            android:layout_weight="1"
+            android:visibility="invisible"
+
+            />
+
+        <Button
+            android:id="@+id/Lunch_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Lunch"
+            android:layout_margin="6dp"
+            android:textSize="12sp"
+            android:backgroundTint="@color/interface_color"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:onClick="Add_Lunch_Button"
+            android:layout_weight="1"
+            android:visibility="invisible"
+
+            />
+
+        <Button
+            android:id="@+id/Dinner_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Dinner"
+            android:layout_margin="6dp"
+            android:textSize="12sp"
+            android:backgroundTint="@color/interface_color"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:onClick="Add_Dinner_Button"
+            android:layout_weight="1"
+            android:visibility="invisible"
+            />
+
+    </LinearLayout>
+
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView3"
+        android:name="com.example.caloriediary.Fragments.Nav_Bar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        tools:layout="@layout/fragment_nav__bar"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="bottom"
+        />
+
+</LinearLayout>

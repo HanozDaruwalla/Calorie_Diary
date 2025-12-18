@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Bmi_Calc.OptionForBmi"
+    android:background="@color/background_color"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:gravity="top"
+    >
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView2"
+        android:name="com.example.caloriediary.Fragments.fragment_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        tools:layout="@layout/fragment_title"
+        android:layout_marginBottom="30dp"
+        tools:layout_editor_absoluteX="145dp"
+        tools:layout_editor_absoluteY="83dp" />
+
+    <TextView
+
+        android:id="@+id/Title_Label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Re-Enter Weight And Height?:"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="30dp"
+        />
+
+    <TextView
+
+        android:id="@+id/Title2_Label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Do you want to Re-enter your Weight and Height?:"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:layout_marginBottom="5dp"
+        />
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        >
+        <Button
+            android:id="@+id/Kg_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yes"
+            android:backgroundTint="@color/interface_color"
+            android:textColor="@color/black"
+            android:onClick="Yes_Button_Pressed"
+            android:layout_marginRight="10dp"
+            >
+        </Button>
+
+        <Button
+            android:id="@+id/Stone_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"
+            android:backgroundTint="@color/interface_color_clicked"
+            android:textColor="@color/black"
+            android:onClick="No_Button_Pressed"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            >
+        </Button>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        app:srcCompat="@drawable/caloriecounter"
+        android:padding="10dp"
+        android:layout_marginTop="40dp"/>
+
+</LinearLayout>

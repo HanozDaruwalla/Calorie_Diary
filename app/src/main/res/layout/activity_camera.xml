@@ -1,0 +1,187 @@
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    android:fitsSystemWindows="true"
+    tools:context=".Api_Refactored.Camera">
+
+    <LinearLayout
+        android:id="@+id/Extra_Layer"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+    </LinearLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView2"
+        android:name="com.example.caloriediary.Fragments.fragment_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        tools:layout="@layout/fragment_title"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/Extra_Layer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <TextView
+        android:id="@+id/Title_Label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Camera:"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/fragmentContainerView2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/Credits_Lb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/API_Credits"
+        android:textSize="15sp"
+        android:layout_margin="8dp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/Title_Label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <TextView
+        android:id="@+id/Permissions_Label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Permissions:"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/Credits_Lb"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:layout_margin="12dp"
+        android:id="@+id/Permissions_Info_Label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Please Note, that the app will ask you for permissions on the 'Camera' and 'Media And Storage' to be turned on (this can be set to, just when the app is open)."
+        android:textSize="17sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/Permissions_Label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <TextView
+        android:layout_margin="12dp"
+        android:id="@+id/Permissions_Info_Label2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is to allow you to take a picture and gather the Nutritional data on the picture:"
+        android:textSize="17sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/Permissions_Info_Label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:layout_margin="12dp"
+        android:id="@+id/Permissions_Info_Label3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Or you can go to the previous page and use text searching instead."
+        android:textSize="17sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/Permissions_Info_Label2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <TextView
+        android:layout_margin="12dp"
+        android:id="@+id/Then_Label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="You Are Ready! Click the Button Below:"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/Permissions_Info_Label3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <Button
+        android:id="@+id/Camera_Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Use Camera"
+        android:onClick="Call_Camera"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="476dp"
+        app:layout_constraintTop_toBottomOf="@id/Then_Label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="@color/interface_color"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        />
+
+
+    <Button
+        android:id="@+id/Gallery_Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Open Gallery"
+        android:onClick="Call_Gallery"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="476dp"
+        app:layout_constraintTop_toBottomOf="@id/Camera_Button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="@color/interface_color"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        />
+
+
+
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView3"
+        android:name="com.example.caloriediary.Fragments.Nav_Bar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        tools:layout="@layout/fragment_nav__bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
