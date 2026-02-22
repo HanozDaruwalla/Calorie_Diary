@@ -23,6 +23,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     String Filter2_Selected = "Undefined";
     Food_Item_Adapter_Methods Recycler_Methods = new Food_Item_Adapter_Methods();
 
+    //FOR THE RECYCLER VIEWS
+
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
         public TextView Food_Name_Textview, Serving_Size_Textview, Dynamic_Textview_1, Dynamic_Textview_2, Dynamic_Lb_1, Dynamic_Lb_2;

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -92,18 +93,28 @@ public class DashboardFragment extends Fragment {
         Log.d(TAG, "onCreateView");
         DashboardViewModel dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        Log.d(TAG, "setting up root");
         View root = binding.getRoot();
         // Set up the RecyclerView
+        Log.d(TAG, "setting up recyclers");
         Breakfast_Recycler_View = binding.recyclerView1;
         Lunch_Recycler_View = binding.recyclerView2;
         Dinner_Recycler_View = binding.recyclerView3;
 
+
         Breakfast_Recycler_View.setHasFixedSize(true);
         Lunch_Recycler_View.setHasFixedSize(true);
         Dinner_Recycler_View.setHasFixedSize(true);
+        Log.d(TAG, "fixed size set");
 
         ArrayList<Nutrition_Data_From_Db> Temp_Loaded_Data_List = new ArrayList<>();
-        Temp_Loaded_Data_List.add(new Nutrition_Data_From_Db());
+
+        try{
+            Temp_Loaded_Data_List.add(new Nutrition_Data_From_Db());
+            Log.d(TAG, "added data from db");
+        }catch(Exception EX){
+            Log.d(TAG, "failed adding Nutrition Data from db");
+        }
 
         // Initialize adapters with default data
 
@@ -143,6 +154,7 @@ public class DashboardFragment extends Fragment {
         Nutrition_Option_1.setSelection(3);
         Nutrition_Option_2.setSelection(0);
 
+
         Log.d(TAG, "Now beginning Spinner Listener 1");
         Nutrition_Option_1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -158,7 +170,7 @@ public class DashboardFragment extends Fragment {
             }
         });
 
-        Log.d(TAG, "Now beginning Spinner Listener 1");
+        Log.d(TAG, "Now beginning Spinner Listener 2");
         Nutrition_Option_2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> Adapterview, View view, int position, long id) {
@@ -289,47 +301,10 @@ public class DashboardFragment extends Fragment {
         Dinner_Recycler_View.setAdapter(Dinner_Item_Adapter);
         Log.d(TAG, "Adding To dinner Recycler View..");
         Log.d(TAG, "Adding To dinner Recycler View2");
+
     }
-    /*  is to reload recyclers with new data
+    //create function to create sum of values for breakfast ....lunch...
 
-        Log.d(TAG, "setting up breakfast recycler");
-        Breakfast_Item_Adapter = new ItemAdapter(Breakfast_Arraylist);
-        Log.d(TAG, "Set Adapter");
-
-        Breakfast_Recycler_View.setAdapter(Breakfast_Item_Adapter);
-        Log.d(TAG, "Adding To Breakfast Recycler View");
-
-        for (int i = 0;i < Lunch_Arraylist.size();i++){
-            try{
-                Log.d(TAG, i + " = : '" + Lunch_Arraylist.get(i) + "'" );
-            }catch(IndexOutOfBoundsException Ex){
-                Log.d(TAG, "Done");
-                break;
-            }
-        }
-
-        Log.d(TAG, "setting up lunch recycler");
-        Lunch_Item_Adapter = new ItemAdapter(Lunch_Arraylist);
-        Log.d(TAG, "Set Adapter");
-        Lunch_Recycler_View.setAdapter(Lunch_Item_Adapter);
-        Log.d(TAG, "Adding To Lunch Recycler View");
-
-        for (int i = 0;i < Dinner_Arraylist.size();i++){
-            try{
-                Log.d(TAG, i + " = : '" + Dinner_Arraylist.get(i) + "'" );
-            }catch(IndexOutOfBoundsException Ex){
-                Log.d(TAG, "Done");
-                break;
-            }
-        }
-
-        Log.d(TAG, "setting up dinner recycler");
-        Dinner_Item_Adapter = new ItemAdapter(Dinner_Arraylist);
-        Log.d(TAG, "Set Adapter");
-        Dinner_Recycler_View.setAdapter(Dinner_Item_Adapter);
-        Log.d(TAG, "Adding To dinner Recycler View");
-
- */
 
     @Override
     public void onDestroyView() {

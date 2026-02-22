@@ -314,6 +314,8 @@ public class MainActivity2 extends AppCompatActivity {
         binding.potassiumR.setText(String.valueOf(nutritionDataFromDb.getPotassium() * Quantity_Multiplier) + "mg");
         binding.dietaryFiberR.setText(nutritionDataFromDb.getDiertaryFiber() * Quantity_Multiplier + "g");
         binding.relativeLayout.setVisibility(View.VISIBLE);
+
+        //binding.
     }
 /*
     public double toGrams(String value) {

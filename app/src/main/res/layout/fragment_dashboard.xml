@@ -123,6 +123,39 @@
                 android:nestedScrollingEnabled="false"
                 tools:itemCount="4"/>
 
+            <LinearLayout
+                android:id="@+id/Lunch_Total_Linear_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginBottom="20dp">
+                <TextView
+                    android:id="@+id/Lunch_Total_Lb"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Lunch Totals"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/Lunch_Dymanic_Sum1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="value 1"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/Lunch_Dynamic_Sum2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="value 2"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/Dinner_Label"
                 android:layout_width="match_parent"
@@ -141,6 +174,71 @@
                 android:nestedScrollingEnabled="false"
                 tools:itemCount="4"/>
 
+            <LinearLayout
+                android:id="@+id/Dinner_Total_Linear_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginBottom="20dp">
+                <TextView
+                    android:id="@+id/Dinner_Total_Lb"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Dinner Totals"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/Dinner_Dymanic_Sum1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="value 1"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/Dinner_Dynamic_Sum2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="value 2"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
+    <LinearLayout
+        android:id="@+id/Final_Sum_Total_Linear_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:layout_marginBottom="20dp">
+        <TextView
+            android:id="@+id/Final_Sum_Total_Lb"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Final Totals"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/Final_Sum_Dymanic_Sum1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="value 1"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/Final_Sum_Dynamic_Sum2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="value 2"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:layout_weight="1"/>
+    </LinearLayout>
 </LinearLayout>
