@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -39,6 +40,7 @@ public class Enter_Weight extends AppCompatActivity {
         Data_For_Bmr = getIntent().getExtras().getStringArrayList("Data_For_Bmr");
         User_Data = getIntent().getExtras().getStringArrayList("User_Data");
         getSupportActionBar(). hide();
+        EdgeToEdge.enable(this);
 
         Log.d(TAG, "Loaded");
     }

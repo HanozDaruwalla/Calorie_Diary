@@ -24,7 +24,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.caloriediary.Creating_Account_And_Login.MainActivity;
 import com.example.caloriediary.R;
 import com.example.caloriediary.ReusableFunctions;
 import com.loopj.android.http.AsyncHttpClient;
@@ -71,6 +70,7 @@ public class Camera extends AppCompatActivity {
             setRequestImageCapture();
             setGalleryPermissionsRequest();
             getSupportActionBar(). hide();
+            EdgeToEdge.enable(this);
 
             bitmap =null;
 

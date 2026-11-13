@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Calorie Diary</string>
+    <string name="action_settings">Settings</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_info_page">Info_Page</string>
@@ -27,12 +28,24 @@
         <item>Total Fat</item>
         <item>Cholesterol</item>
         <item>Sodium</item>
-        <item>Total Carbohydrate</item>
+        <item>Carbs</item>
         <item>Sugar</item>
         <item>Dietary Fiber</item>
         <item>Potassium</item>
         <item>Protein</item>
     </string-array>
+
+    <string name="food_option_calories">Calories</string>
+    <string name="food_option_product_name">Product Name</string>
+    <string name="food_option_serving_size">Serving Size</string>
+    <string name="food_option_total_fat">Total Fat</string>
+    <string name="food_option_cholesterol">Cholesterol</string>
+    <string name="food_option_sodium">Sodium</string>
+    <string name="food_option_total_carbohydrate">Total Carbohydrate</string>
+    <string name="food_option_sugar">Sugar</string>
+    <string name="food_option_dietary_fiber">Dietary Fiber</string>
+    <string name="food_option_potassium">Potassium</string>
+    <string name="food_option_protein">Protein</string>
 
 
 

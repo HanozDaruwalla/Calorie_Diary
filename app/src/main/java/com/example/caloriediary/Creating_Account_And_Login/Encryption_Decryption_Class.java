@@ -29,7 +29,7 @@ public class Encryption_Decryption_Class {
         Cipher Cipher_Object = Cipher.getInstance(TRANSFORMATION);
         Cipher_Object.init(Cipher.DECRYPT_MODE, Generate_Encryption_Decryption_Key(Encrypt_Decrypt_Key));
         byte[] Encrypted_Bytes = new byte[0];
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Encrypted_Bytes = Base64.getDecoder().decode(Inputted_Encrypted_String);
         }
         byte[] decryptedBytes = Cipher_Object.doFinal(Encrypted_Bytes);

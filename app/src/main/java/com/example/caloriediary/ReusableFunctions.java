@@ -66,7 +66,7 @@ public class ReusableFunctions {
 
     // Convert integer to string in Java
 
-    public static String Int_To_Strng(int number) {
+    public static String Int_To_String(int number) {
         // Convert the integer to a string
         return String.valueOf(number);
     }

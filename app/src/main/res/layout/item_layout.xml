@@ -5,7 +5,7 @@
     android:background="@color/interface_color"
     android:orientation="vertical"
     android:padding="2dp"
-
+    android:fitsSystemWindows="true"
     android:layout_marginBottom="6dp"
     >
 
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/Dark_Blue"
             android:text="Name of Food: "
-            android:textSize="14sp"
+            android:textSize="11sp"
             android:textStyle="bold"
             />
 
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/Dark_Blue"
-            android:textSize="14sp"
+            android:textSize="11sp"
             android:layout_marginLeft="10dp"
             android:textStyle="bold"
             android:text="Default"/>
@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Serving: "
-            android:textSize="12sp"
+            android:textSize="9sp"
             android:textColor="@color/black"
             />
 
@@ -59,51 +59,50 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1 piece"
-            android:textSize="12sp"
+            android:textSize="9sp"
             android:textColor="@color/black"
             android:textStyle="bold"
             />
 
         <TextView
-            android:id="@+id/Fat_Lb"
+            android:id="@+id/Filter_Value_1_Lb"
             android:layout_marginLeft="80dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Total Fat: "
-            android:textSize="12sp"
+            android:textSize="9sp"
             android:textColor="@color/black"
             />
 
         <TextView
-            android:id="@+id/Fat"
+            android:id="@+id/Filter_Option_1_Result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0.3g"
-            android:textSize="12sp"
+            android:textSize="9sp"
             android:textColor="@color/black"
             android:textStyle="bold"
 
             />
 
         <TextView
-            android:id="@+id/Calories_Lb"
-            android:layout_marginLeft="40dp"
+            android:id="@+id/Filter_Value_2_Lb"
+            android:layout_marginLeft="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Calories: "
-            android:textSize="12sp"
+            android:textSize="9sp"
             android:textColor="@color/black"
             />
 
         <TextView
-            android:id="@+id/Calories"
+            android:id="@+id/Filter_Option_2_Result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="105"
-            android:textSize="12sp"
+            android:textSize="9sp"
             android:textColor="@color/black"
             android:textStyle="bold"/>
     </LinearLayout>
 
 </LinearLayout>
-

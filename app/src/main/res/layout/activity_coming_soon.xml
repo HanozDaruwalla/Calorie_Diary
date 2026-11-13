@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".Coming_Soon"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     android:background="@color/background_color"
 
     >

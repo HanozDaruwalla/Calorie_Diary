@@ -7,6 +7,7 @@
     tools:context=".Creating_Account_And_Login.Create_Account"
     android:background="@color/background_color"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     android:gravity="top">
 
     <androidx.fragment.app.FragmentContainerView

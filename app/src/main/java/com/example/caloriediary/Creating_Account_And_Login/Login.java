@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.caloriediary.Database.Database;
@@ -30,6 +31,7 @@ public class Login extends AppCompatActivity {
         binding.UsernameInput.setText(Imported_Username);
         Int_Value_Of_Masked_Pw_Format = binding.PasswordInput.getInputType();
         getSupportActionBar(). hide();
+        EdgeToEdge.enable(this);
     }
 
     public void Login_Button_Clicked(View view) {

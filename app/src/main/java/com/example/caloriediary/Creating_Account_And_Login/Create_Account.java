@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.caloriediary.Database.Database;
@@ -33,6 +34,7 @@ public class Create_Account extends AppCompatActivity {
         setContentView(binding.getRoot());
         Int_Value_Of_Masked_Pw = binding.PasswordInput.getInputType();
         getSupportActionBar(). hide();
+        EdgeToEdge.enable(this);
     }
 
     public void Validation_Checks_Not_Null(View view) {
@@ -117,7 +119,7 @@ public class Create_Account extends AppCompatActivity {
         Account_Info.add(user.getPassword());
         Account_Info.add(user.getEmail());
         Account_Info.add(String.valueOf(user.isMale()));
-        Account_Info.add(ReusableFunctions.Int_To_Strng(user.getAge()));
+        Account_Info.add(ReusableFunctions.Int_To_String(user.getAge()));
         Account_Info.add(user.getHeight_Cm());
         Account_Info.add(user.getWeight_Kg());
         Account_Info.add(user.getBmr());

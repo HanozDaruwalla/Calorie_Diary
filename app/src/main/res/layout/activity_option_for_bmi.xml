@@ -8,6 +8,7 @@
     tools:context=".Bmi_Calc.OptionForBmi"
     android:background="@color/background_color"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     android:gravity="top"
     >
 

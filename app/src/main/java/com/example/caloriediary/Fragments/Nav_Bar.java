@@ -3,7 +3,6 @@ package com.example.caloriediary.Fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,10 +15,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.caloriediary.Calorie_Homepage;
 import com.example.caloriediary.Coming_Soon;
-import com.example.caloriediary.Creating_Account_And_Login.User;
 import com.example.caloriediary.Info;
 import com.example.caloriediary.R;
-import com.example.caloriediary.RecyclerView.recyclerview;
+import com.example.caloriediary.RecyclerView.Breakfast_RecyclerView;
 
 import java.util.ArrayList;
 
@@ -202,7 +200,7 @@ public class Nav_Bar extends Fragment {
     private void Calorie_Diary_Button_Pressed(){
         Log.d(TAG, "Calorie Diary Clicked");
 
-        Intent intent = new Intent(getContext(), recyclerview.class);
+        Intent intent = new Intent(getContext(), Breakfast_RecyclerView.class);
         intent.putExtra("User_Data",User_Data);
         startActivity(intent);
     }

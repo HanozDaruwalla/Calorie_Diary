@@ -7,6 +7,7 @@
     tools:context=".Bmi_Calc.Enter_Weight"
     android:background="@color/background_color"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     android:gravity="top"
     >
 

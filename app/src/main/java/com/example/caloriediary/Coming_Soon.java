@@ -19,6 +19,7 @@ public class Coming_Soon extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             getSupportActionBar(). hide();
+            EdgeToEdge.enable(this);
             return insets;
 
         });

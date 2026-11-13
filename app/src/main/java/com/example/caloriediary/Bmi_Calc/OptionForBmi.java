@@ -12,10 +12,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.caloriediary.Calorie_Homepage;
-import com.example.caloriediary.Database.Database;
 import com.example.caloriediary.R;
 import com.example.caloriediary.databinding.ActivityOptionForBmiBinding;
-import com.example.caloriediary.databinding.ActivityUserEnterHeightBinding;
 
 import java.util.ArrayList;
 

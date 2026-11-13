@@ -8,6 +8,7 @@
     android:background="@color/interface_color"
     tools:context=".Fragments.fragment_title"
     android:padding="5dp"
+    android:fitsSystemWindows="true"
     android:weightSum="3">
 
     <!-- TODO: Update blank fragment layout -->

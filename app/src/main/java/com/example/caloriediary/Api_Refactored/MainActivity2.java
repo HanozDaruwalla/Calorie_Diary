@@ -1,5 +1,6 @@
 package com.example.caloriediary.Api_Refactored;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,6 +21,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.caloriediary.Api_Refactored.My_Functions.Nutrition_Data_Template;
 import com.example.caloriediary.Database.Database;
 import com.example.caloriediary.R;
 import com.example.caloriediary.ReusableFunctions;
@@ -38,7 +40,6 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class MainActivity2 extends AppCompatActivity {
 
-
     final static String TAG =  "MainActivity2";
     int Quantity_Multiplier = 1;
     String Meal_Type = "Undefined";
@@ -53,18 +54,12 @@ public class MainActivity2 extends AppCompatActivity {
     final String REQUEST_URL = "https://trackapi.nutritionix.com/v2/natural/nutrients";
 
     // variables
-
-    NutritionData Nutrition_Data_Template;
+    Nutrition_Data__From_Api Data_From_Api;
     String Food_Item = "Undefined";
     InputMethodManager input_method_manager;
     int Index_Of_Nutritional_Values_Arraylist;
     ArrayList<String> Nutritional_Values_Arraylist;
     Bitmap ImageData;
-
-
-    String Username = "Undefined";
-    String Bmr = "Undefined";
-
 
 
     @Override
@@ -75,6 +70,7 @@ public class MainActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
         setContentView(binding.getRoot());
         getSupportActionBar(). hide();
+        EdgeToEdge.enable(this);
 
         EdgeToEdge.enable(this);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -95,12 +91,6 @@ public class MainActivity2 extends AppCompatActivity {
 
              */
 
-            SharedPreferences shared_preference = getSharedPreferences("User_Data", Context.MODE_PRIVATE);
-            String Username = shared_preference.getString("Username", null);
-            String Bmr = shared_preference.getString("Bmr", null);
-
-            Log.d(TAG, "Username= " + Username);
-            Log.d(TAG, "Bmr = " + Bmr);
             binding.progressBar.setVisibility(View.INVISIBLE);
             input_method_manager = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
 
@@ -129,52 +119,74 @@ public class MainActivity2 extends AppCompatActivity {
 
     //API CALLS Method
     private void connectNutrionix(String foodName) {
-
-        Log.d(TAG, "2");
+        Log.i(TAG, "════════════════════════════════");
+        Log.i(TAG, "API CALL STARTED");
+        Log.d(TAG, "FOOD = " + foodName);
+        Log.d(TAG, "App ID = " + APP_ID);
+        Log.d(TAG, "App ID = " + APP_ID);
+        Log.d(TAG, "API_KEY: " + API_KEY.substring(0, 8) + "...");
+        Log.d(TAG, "URL: " + REQUEST_URL);
+        Log.i(TAG, "════════════════════════════════");
 
         StringEntity stringEntity = null;
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("x-app-id", APP_ID);
         client.addHeader("x-app-key", API_KEY);
-        client.addHeader("x-remote-user-id", "0");
-        JSONObject jsonObject = new JSONObject();
 
-        Log.d(TAG, "8");
+        JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("query", foodName);
+            Log.d(TAG, "JSON = " + jsonObject.toString());
             Log.d(TAG, "9");
 
         } catch (JSONException e) {
             Log.d("Healthier", e.toString());
-            Log.d(TAG, "10 error!");
+            Log.d(TAG, "Json Error" + e);
         }
         try {
             stringEntity = new StringEntity(jsonObject.toString());
         } catch (UnsupportedEncodingException e) {
-            Log.d("Healthier", e.toString());
+            Log.e(TAG, "ENCODING ERROR", e);
         }
 
+        Log.d(TAG, "Going To API");
         client.post(this, REQUEST_URL, stringEntity, "application/json",
                 new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
-                        Log.d(TAG, "Success" + response.toString());
-                        binding.progressBar.setVisibility(View.INVISIBLE);
-                        Nutrition_Data_Template = NutritionData.fromJson(response);
 
-                        new DownloadImageTask(binding.foodPic).execute(Nutrition_Data_Template.getPhotoUrl());
+                        Log.i(TAG, "✓✓✓ API SUCCESS ✓✓✓");
+                        Log.i(TAG, "Status = " + statusCode);
+                        Log.d(TAG, "Response = " + response.toString());
+
+                        binding.progressBar.setVisibility(View.INVISIBLE);
+                        Data_From_Api = Nutrition_Data__From_Api.fromJson(response);
+
+                        new DownloadImageTask(binding.foodPic).execute(Data_From_Api.getPhotoUrl());
                         binding.foodPic.setVisibility(View.VISIBLE);
 
-                        updateUI(Nutrition_Data_Template);
+                        updateUI_Preparer(Data_From_Api);
                     }
                     @Override
                     public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                        Log.d("Healthier", "failed" + errorResponse.toString());
-                        Toast.makeText(MainActivity2.this, "Sorry, We couldn't match any of your foods",
-                                Toast.LENGTH_SHORT).show();
-                        binding.progressBar.setVisibility(View.INVISIBLE);
 
+                        Log.e(TAG, "✗✗✗ API FAILED ✗✗✗");
+                        Log.i(TAG, "Status = " + statusCode);
+                        Log.e(TAG, "Error Response: " + (errorResponse != null ? errorResponse.toString() : "null"));
+                        Log.e(TAG, "Throwable: " + (throwable != null ? throwable.getMessage() : "null"));
 
+                        if (throwable != null) {
+                            throwable.printStackTrace();
+                        }
+
+                        Log.d(TAG, "API Error: " + statusCode);
+                        reusableFunctions.Create_Toast(MainActivity2.this, "Data Collect Fail: Enter Data Manually!");;
+
+                        Nutrition_Data_Template Nutrition_Error_Placeholder_Data = new Nutrition_Data_Template(binding.SearchBar.getText().toString());
+
+                        updateUi(Nutrition_Error_Placeholder_Data);
+                        //is invis cause trying to pass ui function
+                        //binding.progressBar.setVisibility(View.INVISIBLE);
                     }
                 });
 
@@ -208,12 +220,12 @@ public class MainActivity2 extends AppCompatActivity {
                     public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                         Log.d("Healthier", "Success" + response.toString());
                         binding.progressBar.setVisibility(View.INVISIBLE);
-                        Nutrition_Data_Template = NutritionData.fromJson(response);
+                        Data_From_Api = Nutrition_Data__From_Api.fromJson(response);
 
                         binding.foodPic.setImageBitmap(ImageData);
                         binding.foodPic.setVisibility(View.VISIBLE);
 
-                        updateUI(Nutrition_Data_Template);
+                        updateUI_Preparer(Data_From_Api);
                     }
 
                     @Override
@@ -224,105 +236,19 @@ public class MainActivity2 extends AppCompatActivity {
                         if(Index_Of_Nutritional_Values_Arraylist > Nutritional_Values_Arraylist.size()-1) {
                             Toast.makeText(MainActivity2.this, "Sorry,We couldn't match any of your foods",
                                     Toast.LENGTH_SHORT).show();
-
                             binding.progressBar.setVisibility(View.INVISIBLE);
-
                         }else {
                             callNutrionix(Nutritional_Values_Arraylist, Index_Of_Nutritional_Values_Arraylist);
-
                         }
-
                     }
                 });
     }
 
-    private void updateUI(NutritionData nutritionData) {
-        Log.d(TAG, "4");
-        /*
-        binding.foodNameR.setText(nutritionData.getFoodName());
-        binding.calriesR.setText(String.valueOf(nutritionData.getCalories()));
-        binding.proteinR.setText(String.valueOf(nutritionData.getProtein()) + "g");
-        binding.totalFatR.setText(String.valueOf(nutritionData.getTotalfat()) + "g");
-        binding.sugarR.setText(String.valueOf(nutritionData.getSugar()) + "g");
-        binding.servingSizeR.setText(nutritionData.getServingSize());
-        binding.totalCarbonhydrateR.setText(String.valueOf(nutritionData.getTotalCarbonhydrate() + "G"));
-        binding.sodiuimR.setText(String.valueOf(nutritionData.getSodium()) + "mg");
-        binding.cholesterolR.setText(String.valueOf(nutritionData.getCholesterol()) + "mg");
-        binding.potassiumR.setText(String.valueOf(nutritionData.getPotassium()) + "mg");
-        binding.dietaryFiberR.setText(nutritionData.getDiertaryFiber() + "g");
-        binding.relativeLayout.setVisibility(View.VISIBLE);
-         */
-
-        binding.foodNameR.setText(nutritionData.getFoodName());
-        binding.calriesR.setText(String.valueOf(nutritionData.getCalories() * Quantity_Multiplier));
-        binding.proteinR.setText(String.valueOf(nutritionData.getProtein() * Quantity_Multiplier) + "g");
-        binding.totalFatR.setText(String.valueOf(nutritionData.getTotalfat() * Quantity_Multiplier) + "g");
-        binding.sugarR.setText(String.valueOf(nutritionData.getSugar() * Quantity_Multiplier) + "g");
-        //binding.servingSizeR.setText(String.valueOf(reusableFunctions.To_Int(nutritionData.getServingSize()) * Quantity_Multiplier));
-        binding.servingSizeR.setText(nutritionData.getServingSize() + " [x " + String.valueOf(Quantity_Multiplier) + "]");
-        binding.totalCarbonhydrateR.setText(String.valueOf(nutritionData.getTotalCarbonhydrate() * Quantity_Multiplier + "G"));
-        binding.sodiuimR.setText(String.valueOf(nutritionData.getSodium() * Quantity_Multiplier) + "mg");
-        binding.cholesterolR.setText(String.valueOf(nutritionData.getCholesterol() * Quantity_Multiplier) + "mg");
-        binding.potassiumR.setText(String.valueOf(nutritionData.getPotassium() * Quantity_Multiplier) + "mg");
-        binding.dietaryFiberR.setText(nutritionData.getDiertaryFiber() * Quantity_Multiplier + "g");
-        binding.relativeLayout.setVisibility(View.VISIBLE);
-    }
-/*
-    public double toGrams(String value) {
-        if (value.contains("mg")) {
-            value = value.replace("m", "");
-            value = value.replace("g", "");
-            value = value.trim();
-            ReusableFunctions reusableFunctions_temp = new ReusableFunctions(); // Create an instance
-            int intValue = reusableFunctions_temp.To_Int(value); // Call the non-static method
-            return intValue / 1000.0; // Return the converted value
-        }else{
-            return reusableFunctions.String_To_Double(value);
-        }
-
-    }
-
- */
-
-    public void createBitmap(Uri uri) {
-
-        Log.d(TAG, "5");
-        if (uri != null) {
-            try {
-                // scale the image to save on bandwidth
-                ImageData = scaleBitmapDown(MediaStore.Images.Media.getBitmap(getContentResolver(), uri), 1200);
-
-            } catch (IOException e) {
-                Log.d("upload", "Image picking failed because " + e.getMessage());
-                Toast.makeText(this, R.string.image_picker_error, Toast.LENGTH_LONG).show();
-            }
-        } else {
-            Log.d("upload", "Image picker gave us a null image.");
-            Toast.makeText(this, R.string.image_picker_error, Toast.LENGTH_LONG).show();
-        }
-
-    }
-
-    public Bitmap scaleBitmapDown(Bitmap bitmap, int maxDimension) {
-
-        Log.d(TAG, "6");
-        int originalWidth = bitmap.getWidth();
-        int originalHeight = bitmap.getHeight();
-        int resizedWidth = maxDimension;
-        int resizedHeight = maxDimension;
-
-        if (originalHeight > originalWidth) {
-            resizedHeight = maxDimension;
-            resizedWidth = (int) (resizedHeight * (float) originalWidth / (float) originalHeight);
-        } else if (originalWidth > originalHeight) {
-            resizedWidth = maxDimension;
-            resizedHeight = (int) (resizedWidth * (float) originalHeight / (float) originalWidth);
-        } else if (originalHeight == originalWidth) {
-            resizedHeight = maxDimension;
-            resizedWidth = maxDimension;
-        }
-        return Bitmap.createScaledBitmap(bitmap, resizedWidth, resizedHeight, false);
-    }
+    /*
+    ------------------------------------------------------------------------------------
+    ---------------------------------- UI ----------------------------------------------
+    ------------------------------------------------------------------------------------
+     */
 
     public void Search_Button_Pressed(View view) {
         Log.d(TAG, "7");
@@ -346,6 +272,15 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
     public void Save_Button_Pressed(String Meal_Type) {
+
+        //GETTING USERNAME
+        SharedPreferences shared_preference = getSharedPreferences("User_Data", Context.MODE_PRIVATE);
+        String Username = shared_preference.getString("Username", null);
+        String Bmr = shared_preference.getString("Bmr", null);
+        Log.d(TAG, "Username= " + Username);
+        Log.d(TAG, "Bmr = " + Bmr);
+
+
         Log.d(TAG, "Save Button Pressed");
         String Food_Name = binding.foodNameR.getText().toString();
         String Portion_Size = binding.servingSizeR.getText().toString();
@@ -416,9 +351,7 @@ public class MainActivity2 extends AppCompatActivity {
         if(Is_Data_Entered()){
             Buttons_Invisble();
             Save_Button_Pressed(Meal_Type);
-
         }
-
     }
 
     private boolean Is_Data_Entered(){
@@ -428,7 +361,6 @@ public class MainActivity2 extends AppCompatActivity {
         }else{
             return true;
         }
-
     }
 
     private void Buttons_Invisble(){
@@ -476,6 +408,130 @@ public class MainActivity2 extends AppCompatActivity {
         }
 
     }
+
+
+    private void updateUI_Preparer(Nutrition_Data__From_Api nutritionDataFromDb) {
+        Log.d(TAG, "Inside updateUI");
+
+        String name = nutritionDataFromDb.getFoodName();
+        String photo_url = nutritionDataFromDb.getPhotoUrl();
+        String serving_size = nutritionDataFromDb.getServingSize();
+        int calories = nutritionDataFromDb.getCalories();
+        int protein = nutritionDataFromDb.getProtein();
+        int total_fat = nutritionDataFromDb.getTotalfat();
+        int sugar = nutritionDataFromDb.getSugar();
+        int total_carbs = nutritionDataFromDb.getTotalCarbonhydrate();
+        int sodium = nutritionDataFromDb.getSodium();
+        int cholesterol = nutritionDataFromDb.getCholesterol();
+        int potassium = nutritionDataFromDb.getPotassium();
+        int dietary_fibre = nutritionDataFromDb.getDiertaryFiber();
+
+        Nutrition_Data_Template nutrition_template =
+                new Nutrition_Data_Template(name, photo_url, serving_size, calories, protein,
+                        total_fat, sugar, total_carbs, sodium,
+                        cholesterol, potassium, dietary_fibre);
+        updateUi(nutrition_template);
+    }
+
+    private void updateUi(Nutrition_Data_Template nutritionDataFromDb){
+
+        /*
+        binding.foodNameR.setText(nutritionData.getFoodName());
+        binding.calriesR.setText(String.valueOf(nutritionData.getCalories()));
+        binding.proteinR.setText(String.valueOf(nutritionData.getProtein()) + "g");
+        binding.totalFatR.setText(String.valueOf(nutritionData.getTotalfat()) + "g");
+        binding.sugarR.setText(String.valueOf(nutritionData.getSugar()) + "g");
+        binding.servingSizeR.setText(nutritionData.getServingSize());
+        binding.totalCarbonhydrateR.setText(String.valueOf(nutritionData.getTotalCarbonhydrate() + "G"));
+        binding.sodiuimR.setText(String.valueOf(nutritionData.getSodium()) + "mg");
+        binding.cholesterolR.setText(String.valueOf(nutritionData.getCholesterol()) + "mg");
+        binding.potassiumR.setText(String.valueOf(nutritionData.getPotassium()) + "mg");
+        binding.dietaryFiberR.setText(nutritionData.getDiertaryFiber() + "g");
+        binding.relativeLayout.setVisibility(View.VISIBLE);
+         */
+
+        binding.foodNameR.setText(nutritionDataFromDb.getFoodName());
+        binding.calriesR.setText(String.valueOf(nutritionDataFromDb.getCalories() * Quantity_Multiplier));
+        binding.proteinR.setText(String.valueOf(nutritionDataFromDb.getProtein() * Quantity_Multiplier) + "g");
+        binding.totalFatR.setText(String.valueOf(nutritionDataFromDb.getTotalfat() * Quantity_Multiplier) + "g");
+        binding.sugarR.setText(String.valueOf(nutritionDataFromDb.getSugar() * Quantity_Multiplier) + "g");
+        //binding.servingSizeR.setText(String.valueOf(reusableFunctions.To_Int(nutritionData.getServingSize()) * Quantity_Multiplier));
+        binding.servingSizeR.setText(nutritionDataFromDb.getServingSize() + " [x " + String.valueOf(Quantity_Multiplier) + "]");
+        binding.totalCarbonhydrateR.setText(String.valueOf(nutritionDataFromDb.getTotalCarbonhydrate() * Quantity_Multiplier + "G"));
+        binding.sodiuimR.setText(String.valueOf(nutritionDataFromDb.getSodium() * Quantity_Multiplier) + "mg");
+        binding.cholesterolR.setText(String.valueOf(nutritionDataFromDb.getCholesterol() * Quantity_Multiplier) + "mg");
+        binding.potassiumR.setText(String.valueOf(nutritionDataFromDb.getPotassium() * Quantity_Multiplier) + "mg");
+        binding.dietaryFiberR.setText(nutritionDataFromDb.getDiertaryFiber() * Quantity_Multiplier + "g");
+        binding.relativeLayout.setVisibility(View.VISIBLE);
+
+        //binding.
+    }
+/*
+    public double toGrams(String value) {
+        if (value.contains("mg")) {
+            value = value.replace("m", "");
+            value = value.replace("g", "");
+            value = value.trim();
+            ReusableFunctions reusableFunctions_temp = new ReusableFunctions(); // Create an instance
+            int intValue = reusableFunctions_temp.To_Int(value); // Call the non-static method
+            return intValue / 1000.0; // Return the converted value
+        }else{
+            return reusableFunctions.String_To_Double(value);
+        }
+
+    }
+
+ */
+
+    /*
+    ------------------------------------------------------------------------------------
+    ---------------------------------- IMAGES ----------------------------------------------
+    ------------------------------------------------------------------------------------
+     */
+
+    public void createBitmap(Uri uri) {
+
+        Log.d(TAG, "5");
+        if (uri != null) {
+            try {
+                // scale the image to save on bandwidth
+                ImageData = scaleBitmapDown(MediaStore.Images.Media.getBitmap(getContentResolver(), uri), 1200);
+
+            } catch (IOException e) {
+                Log.d("upload", "Image picking failed because " + e.getMessage());
+                Toast.makeText(this, R.string.image_picker_error, Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Log.d("upload", "Image picker gave us a null image.");
+            Toast.makeText(this, R.string.image_picker_error, Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+
+
+    public Bitmap scaleBitmapDown(Bitmap bitmap, int maxDimension) {
+
+        Log.d(TAG, "6");
+        int originalWidth = bitmap.getWidth();
+        int originalHeight = bitmap.getHeight();
+        int resizedWidth = maxDimension;
+        int resizedHeight = maxDimension;
+
+        if (originalHeight > originalWidth) {
+            resizedHeight = maxDimension;
+            resizedWidth = (int) (resizedHeight * (float) originalWidth / (float) originalHeight);
+        } else if (originalWidth > originalHeight) {
+            resizedWidth = maxDimension;
+            resizedHeight = (int) (resizedWidth * (float) originalHeight / (float) originalWidth);
+        } else if (originalHeight == originalWidth) {
+            resizedHeight = maxDimension;
+            resizedWidth = maxDimension;
+        }
+        return Bitmap.createScaledBitmap(bitmap, resizedWidth, resizedHeight, false);
+    }
+
+
 
 }
 

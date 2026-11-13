@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -33,6 +34,7 @@ public class Enter_Height extends AppCompatActivity {
         setContentView(binding.getRoot());
         User_Data = getIntent().getExtras().getStringArrayList("User_Data");
         getSupportActionBar(). hide();
+        EdgeToEdge.enable(this);
 
         Log.d(TAG, "Loaded");
     }
@@ -156,7 +158,7 @@ public class Enter_Height extends AppCompatActivity {
         int Age = reusableFunctions.To_Int(User_Data.get(0));
         boolean isMale = reusableFunctions.String_To_Bool(User_Data.get(5));
 
-        Data_For_Bmr.add(ReusableFunctions.Int_To_Strng(Age));
+        Data_For_Bmr.add(ReusableFunctions.Int_To_String(Age));
         Data_For_Bmr.add(String.valueOf(isMale));
         Data_For_Bmr.add(Height);
 

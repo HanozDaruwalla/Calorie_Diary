@@ -4,21 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.caloriediary.Api_Refactored.MainActivity2;
-import com.example.caloriediary.Api_Refactored.NutritionData;
 import com.example.caloriediary.Bmi_Calc.Enter_Height;
-import com.example.caloriediary.Calorie_Homepage;
+import com.example.caloriediary.Bmi_Calc.OptionForBmi;
 import com.example.caloriediary.Creating_Account_And_Login.Create_Account;
 import com.example.caloriediary.Creating_Account_And_Login.Encryption_Decryption_Class;
 import com.example.caloriediary.Creating_Account_And_Login.Login;
 import com.example.caloriediary.Creating_Account_And_Login.User;
-import com.example.caloriediary.Bmi_Calc.OptionForBmi;
-import com.example.caloriediary.Fragments.Nav_Bar;
+import com.example.caloriediary.Nutrition_Data_From_Db;
 import com.example.caloriediary.R;
-import com.example.caloriediary.RecyclerView.recyclerview;
+import com.example.caloriediary.RecyclerView.Interface_Food_Data_Found;
 import com.example.caloriediary.ReusableFunctions;
 import com.example.caloriediary.databinding.ActivityDatabaseBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,7 +29,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -38,6 +36,7 @@ public class Database extends AppCompatActivity {
 
     ReusableFunctions reusableFunctions = new ReusableFunctions();
     private static final String TAG = "Database_Class";
+    Database_Value_Names Db_Value_Names = new Database_Value_Names();
 
     HashMap<String, Object> Information_Hashmap = new HashMap<>();
     Intent Page_Movement_Intent;
@@ -45,18 +44,20 @@ public class Database extends AppCompatActivity {
     private String Creation_Type = "";
     int Sent_From = -1;
     ArrayList<String> Imported_Data_Arraylist = new ArrayList<>();
-    String Todays_Date = (ReusableFunctions.Date_Creator().replace("/","-"));
+    String Todays_Date = (ReusableFunctions.Date_Creator().replace("/", "-"));
     public String Next_Pk = "Na";
 
     DatabaseReference Database_Controller = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "Login: onCreate");
         super.onCreate(savedInstanceState);
-        com.example.caloriediary.databinding.ActivityDatabaseBinding binding = ActivityDatabaseBinding.inflate(getLayoutInflater());
+        ActivityDatabaseBinding binding = ActivityDatabaseBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_database);
         setContentView(binding.getRoot());
-        getSupportActionBar(). hide();
+        getSupportActionBar().hide();
+        EdgeToEdge.enable(this);
 
         Database_Controller = FirebaseDatabase.getInstance().getReference();
         //gets the data the user entered
@@ -78,7 +79,7 @@ public class Database extends AppCompatActivity {
 
             Validate_Username(Imported_Data_Arraylist, Database_Controller);
 
-        // 0 = Create_Account, 1 = login, 2 = Add Product From Db
+            // 0 = Create_Account, 1 = login, 2 = Add Product From Db
         } else if (Sent_From == (int) 1) { // says is redundant but crashes without
             Log.d(TAG, "Login: Login Section Called");
             Creation_Type = "Users";
@@ -88,8 +89,8 @@ public class Database extends AppCompatActivity {
 
             Login(Imported_Data_Arraylist, Database_Controller);
 
-        // 0 = Create_Account, 1 = login, 2 = Add Food
-        }else if (Sent_From == (int) 2) {
+            // 0 = Create_Account, 1 = login, 2 = Add Food
+        } else if (Sent_From == (int) 2) {
             Log.d(TAG, "Add Food");
 
             Database_Value_Names Db_Value_Names = new Database_Value_Names();
@@ -101,13 +102,13 @@ public class Database extends AppCompatActivity {
 
             }
 
-        }else if (Sent_From == (int) 3) {
+        } else if (Sent_From == (int) 3) {
             Log.d(TAG, "Get Food");
 
             Database_Value_Names Db_Value_Names = new Database_Value_Names();
-            Get_Food_Data(Imported_Data_Arraylist, new recyclerview.Food_Data_FoundListener() {
+            Food_Data_Found(Imported_Data_Arraylist, new Interface_Food_Data_Found.Food_Data_FoundListener() {
                 @Override
-                public void Food_Data_Found(ArrayList<ArrayList<NutritionData>> foodDataList) {
+                public void Food_Data_Found(ArrayList<ArrayList<Nutrition_Data_From_Db>> foodDataList) {
                     Log.d(TAG, "Food_Data found overrided in opening function ");
                 }
             });
@@ -218,8 +219,8 @@ public class Database extends AppCompatActivity {
                     }
                 }
             });
-        }else{
-            Log.d(TAG,"Db Name doesnt match");
+        } else {
+            Log.d(TAG, "Db Name doesnt match");
         }
     }
 
@@ -249,7 +250,7 @@ public class Database extends AppCompatActivity {
         Information_Hashmap.put(Db_Value_Names.getDb_Date_Name(), Date);
         Information_Hashmap.put(Db_Value_Names.getDb_Food_Name_Name(), Food_Name);
         Information_Hashmap.put(Db_Value_Names.getDb_Portion_Name(), Portion_Size);
-        Information_Hashmap.put(Db_Value_Names.getDb_Caloires_Name(),Calories );
+        Information_Hashmap.put(Db_Value_Names.getDb_Caloires_Name(), Calories);
         Information_Hashmap.put(Db_Value_Names.getDb_Fat_Name(), Fat);
         Information_Hashmap.put(Db_Value_Names.getDb_Cholesterol_Name(), Cholesterol);
         Information_Hashmap.put(Db_Value_Names.getDb_Sodium_Name(), Sodium);
@@ -308,7 +309,7 @@ public class Database extends AppCompatActivity {
         void onPrimaryKeyFound(String nextPk);
     }
 
-    private void Find_Next_Food_Pk(String Username, String Meal_Type, OnPrimaryKeyFoundListener listener){
+    private void Find_Next_Food_Pk(String Username, String Meal_Type, OnPrimaryKeyFoundListener listener) {
         Database_Value_Names Db_Value_Names = new Database_Value_Names();
         Database_Controller.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -316,14 +317,14 @@ public class Database extends AppCompatActivity {
                 int int_x = 0;
                 String str_x;
                 Boolean Found_Next_Pk = false;
-                while (Found_Next_Pk == false){
-                    str_x = reusableFunctions.Int_To_Strng(int_x);
+                while (Found_Next_Pk == false) {
+                    str_x = reusableFunctions.Int_To_String(int_x);
                     DataSnapshot pathSnapshot = snapshot
                             .child(Db_Value_Names.getDb_Food_Name_Name()).child(Username)
                             .child(Todays_Date).child(Meal_Type).child(str_x);
                     if (pathSnapshot.exists()) {
                         int_x = int_x + 1;
-                        str_x = reusableFunctions.Int_To_Strng(int_x);
+                        str_x = reusableFunctions.Int_To_String(int_x);
                         Log.d(TAG, "PK " + int_x + " Exists");
                     } else {
                         // Found the first missing primary key
@@ -347,163 +348,259 @@ public class Database extends AppCompatActivity {
     }
 
 
-    public void Get_Food_Data(ArrayList<String> Name_Date_Meal_Type, recyclerview.Food_Data_FoundListener callback) {
-        //return type was string
+    public void Food_Data_Found(@NonNull ArrayList<String> Name_Date_Meal_Type, Interface_Food_Data_Found.Food_Data_FoundListener callback) {
+        //this.callback = callback; // assuming you store it as field
 
         Database_Controller = FirebaseDatabase.getInstance().getReference();
+        Log.d(TAG, "in Get_Foof_Data");
+        String Username = Name_Date_Meal_Type.get(0);
+        String Meal_Type = Name_Date_Meal_Type.get(2);
+        //Todays_Date = Name_Date_Meal_Type.get(1); // assuming you set this
+        Log.d(TAG, "vars set");
+
+        // Your existing setup (unchanged)
+        ArrayList<ArrayList<Nutrition_Data_From_Db>> Nested_Food_Data_List = new ArrayList<>();
+        ArrayList<Nutrition_Data_From_Db> Current_List = new ArrayList<>();
+        ArrayList<Nutrition_Data_From_Db> Breakfast_Food_List = new ArrayList<>();
+        ArrayList<Nutrition_Data_From_Db> Lunch_Food_List = new ArrayList<>();
+        ArrayList<Nutrition_Data_From_Db> Dinner_Food_List = new ArrayList<>();
 
         Database_Value_Names Db_Value_Names = new Database_Value_Names();
-        Log.d(TAG, "\n\n -------------------- Fetching Food Data  -------------------- \n");
 
-        String Username = Name_Date_Meal_Type.get(0);
-        String Date = Name_Date_Meal_Type.get(1);
-        String Meal_Type = Name_Date_Meal_Type.get(2);
-        Log.d(TAG, "Username = " + Username + "date = "+ Date + "Meal_Type=" + Meal_Type);
+        Log.d(TAG, "\n\n -------------------- Fetching Food Data  -------------------- \n");
+        Log.d(TAG, "Username = " + Username + " date = " + Todays_Date);
         Log.d(TAG, "Vars Set");
 
-        // Reference to the "Food" node in the database
-        //DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name());
-        Log.d(TAG, "Path = " + Db_Value_Names.getDb_Food_Name_Name() + Username + Todays_Date + Meal_Type);
+        // Start the chain with Breakfast - PASS YOUR LISTS
+        fetchNextMeal(Meal_Type, Current_List, Nested_Food_Data_List,Username,callback, Database_Controller);
+    }
 
+    private void fetchNextMeal(String Current_Meal_Type, ArrayList<Nutrition_Data_From_Db> Temporary_Food_ArrayList,
+                                   ArrayList<ArrayList<Nutrition_Data_From_Db>> Nested_Food_ArrayList,
+                                   String Username, Interface_Food_Data_Found.Food_Data_FoundListener callback, DatabaseReference Database_Controller) {
+
+        // Build the DB reference with CURRENT MEAL TYPE (not Meal_Type!)
         DatabaseReference Db_Reference = Database_Controller.child(Db_Value_Names.getDb_Food_Name_Name())
                 .child(Username)
-                .child(Todays_Date).child(Meal_Type);
+                .child(Todays_Date)
+                .child(Current_Meal_Type);  // ← Use parameter, not Meal_Type
+
+
+        Log.d(TAG, "Path = " + Db_Value_Names.getDb_Food_Name_Name() + Username + Todays_Date + Current_Meal_Type);
+
         Db_Reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 int i = 0;
-
-                Log.d(TAG, "path set to " + Db_Value_Names.getDb_Food_Name_Name() + Username + Todays_Date + Meal_Type + reusableFunctions.Int_To_Strng(i));
-                ArrayList<ArrayList<NutritionData>> Nested_Food_Data_List = new ArrayList<>();
-                ArrayList<NutritionData> Breakfast_Food_List = new ArrayList<>();
-                ArrayList<NutritionData> Lunch_Food_List = new ArrayList<>();
-                ArrayList<NutritionData> Dinner_Food_List = new ArrayList<>();
+                Log.d(TAG, "Iteration " + i);
 
                 Boolean Continue_Collecting_Data = true;
 
                 while (Continue_Collecting_Data == true) {
+                    if (dataSnapshot.child(ReusableFunctions.Int_To_String(i)).exists()) {
+                        Log.d(TAG, "food data found for the given Username");
 
-                    if (dataSnapshot.child(reusableFunctions.Int_To_Strng(i)).exists()) {
-
-                        Log.d(TAG, "Data food found for the given Username");
-
-                        NutritionData Gathered_Food = dataSnapshot.child(Db_Value_Names.getDb_Food_Name_Name())
-                                .child(Username).child(Todays_Date).child(Meal_Type).child(reusableFunctions.Int_To_Strng(i))
-                                .getValue(NutritionData.class);
-
+                        Nutrition_Data_From_Db Gathered_Food = dataSnapshot.child(ReusableFunctions.Int_To_String(i))
+                                .getValue(Nutrition_Data_From_Db.class);
                         Log.d(TAG, "got info for id" + i);
                         i++;
 
-                        switch(Meal_Type){
+                        // Use currentMealType parameter instead of Meal_Type
+                        switch (Current_Meal_Type) {  // ← Changed from Meal_Type
                             case "Breakfast":
-                                Breakfast_Food_List.add(Gathered_Food);
+                                Temporary_Food_ArrayList.add(Gathered_Food);  // ← Use targetList parameter
+                                Log.d(TAG, "Breakfast_Added");
                                 break;
                             case "Lunch":
-                                Lunch_Food_List.add(Gathered_Food);
+                                Temporary_Food_ArrayList.add(Gathered_Food);  // ← Same targetList for all meals
+                                Log.d(TAG, "Lunch_Added");
                                 break;
                             case "Dinner":
-                                Dinner_Food_List.add(Gathered_Food);
+                                Temporary_Food_ArrayList.add(Gathered_Food);  // ← Same targetList for all meals
+                                Log.d(TAG, "Dinner_Added");
                                 break;
                             default:
                                 Log.d(TAG, "Meal Type Not Identified");
+                        }
+                    } else {//adds default foods (should also check if i=0)
+                        Log.d(TAG, "No food data found for the given Username");
 
+                        // Use currentMealType parameter
+                        if(i == 0) {
+                            switch (Current_Meal_Type) {  // ← Changed from Meal_Type
+                                case "Breakfast":
+                                    Temporary_Food_ArrayList.add(new Nutrition_Data_From_Db());  // ← Use targetList
+                                    Log.d(TAG, "Default Breakfast_Added");
+                                    break;
+                                case "Lunch":
+                                    Temporary_Food_ArrayList.add(new Nutrition_Data_From_Db());  // ← Use targetList
+                                    Log.d(TAG, "Default Lunch_Added");
+                                    break;
+                                case "Dinner":
+                                    Temporary_Food_ArrayList.add(new Nutrition_Data_From_Db());  // ← Use targetList
+                                    Log.d(TAG, "Default Dinner_Added");
+                                    break;
+                                default:
+                                    Log.d(TAG, "Meal Type Not Identified");
+                            }
                         }
 
-                    } else {
-                        Log.d(TAG, "No food data found for the given Username");
                         Continue_Collecting_Data = false;
                     }
-                    //return null;
-
                 }
 
-                Nested_Food_Data_List.add(Breakfast_Food_List);
-                Nested_Food_Data_List.add(Lunch_Food_List);
-                Nested_Food_Data_List.add(Dinner_Food_List);
+                // Add this meal's data to accumulated results
+                Nested_Food_ArrayList.add(new ArrayList<>(Temporary_Food_ArrayList));  // ← Copy targetList to allMealsSoFar
 
-                // Call the success callback with the retrieved data
-                callback.Food_Data_Found(Nested_Food_Data_List);
+                // CHAIN TO NEXT MEAL (replaces your old switch)
+                String nextMealType = getNextMealType(Current_Meal_Type);
+                if (nextMealType != null) {
+                    // Clear targetList for next meal and chain
+                    Temporary_Food_ArrayList.clear();
+                    Log.d(TAG, "Completed " + Current_Meal_Type + ", chaining to " + nextMealType);
+                    fetchNextMeal(nextMealType, Temporary_Food_ArrayList, Nested_Food_ArrayList, Username, callback, Database_Controller);
+                } else {
+                    // All meals done - call callback
+                    Log.d(TAG, "All meals complete!");
+                    Log.d(TAG, "sending back");
+                    callback.Food_Data_Found(Nested_Food_ArrayList);  // ← Use parameter
+                }
             }
 
             @Override
-            public void onCancelled (DatabaseError databaseError){
+            public void onCancelled(DatabaseError databaseError) {
                 Log.d(TAG, "Database Error: " + databaseError.getMessage());
+                // You could chain to next or call callback with partial data
             }
-
         });
+    }
+
+    // Add this helper method for the chaining logic
+    private String getNextMealType(String currentMealType) {
+        switch (currentMealType) {
+            case "Breakfast":
+                return "Lunch";
+            case "Lunch":
+                return "Dinner";
+            case "Dinner":
+                return null;  // End of chain
+            default:
+                Log.d(TAG, "Meal Type Not Identified");
+                return null;
+        }
+    }
+
+    private Nutrition_Data_From_Db No_Food_Added(Nutrition_Data_From_Db Checking_Arraylist){
+        if(Checking_Arraylist.getName_Of_Food().equals("Undefined")){
+            //Checking_Arraylist.add(new Nutrition_Data_From_Db());
+            reusableFunctions.Create_Toast(getApplicationContext(), "no food data for today");
+
+        }else{
+            return Checking_Arraylist;
+        }
+        return Checking_Arraylist;
     }
 
 
     private void Login(ArrayList<String> Imported_Data_Arraylist, DatabaseReference Database_Controller) {
-        User Login_User_Details = new User();
-        Database_Value_Names Db_Value_Names = new Database_Value_Names();
 
-        //get the username and password and set to vars
+        // ------------------------------ LOGIN FUNCTION! --------------------------------------------
+        // -------------------------------------------------------------------------------------------
+        //THIS CODE IS FOR LEARNING/ DEMO PURPOSES
+
+
+        // ---- KEY FOR PASSED VARIABLES ----
+        // Imported_Data_Arraylist: all data passed from login page (including username and password user entered)
+        // Database_Controller: Reference to Firebase Realtime Db
+
+        User Login_User_Details = new User();
+        Database_Value_Names Db_Value_Names = new Database_Value_Names();//contains names of database fields
+        //get the username and password which the user entered.
+
         Login_User_Details.setUsername(Imported_Data_Arraylist.get(0));
         Login_User_Details.setPassword(Imported_Data_Arraylist.get(1));
-        Log.d(TAG, "Login Function Username " + Login_User_Details.getUsername());
-        Log.d(TAG, "Login Function Password " + Login_User_Details.getPassword());
-
         String Username = Login_User_Details.getUsername();
-        Log.d(TAG, "Get Username = " + Username);
-        Log.d(TAG, "Login: Username got from GUI");
+        Log.d(TAG, "username and password taken from string arraylist");
+
 
         Database_Controller.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.child(Db_Value_Names.getDb_Users_Db_Name()).child(Username).exists()) {//was dataSnapshot
+                //checks if the username exists in the database (if exists then checks if the password saved with the username, matches the password the user entered previously)
+                //if not, go back to login page
+
+                if (snapshot.child(Db_Value_Names.getDb_Users_Db_Name()).child(Username).exists()) { //was dataSnapshot instead of snapshot
+
+                    //this class is capable of encrypting data before sending to the database
                     Encryption_Decryption_Class Encryption_Class = new Encryption_Decryption_Class();
-                    Log.d(TAG, "Checking Pw");
+
+                    //default values
                     String Unencrypted_Username = "N/A";
                     String Unencrypted_Password = "N/A";
-                    //Unencrypted Username is kept encase encryption of username is done
+
+                    //Unencrypted Username is kept encase encryption of username is done (database needs resetting before encrypting username)
                     //get all data from db based on username
+
+                    //goes to the database and gathers all data from the database on the account the user is trying to login to
+                    //this is done to get the password and compare (if fails user logs in again)
                     Log.d(TAG, "Gathering User Info From Db");
                     User Gathered_Account_Details = snapshot.child(Db_Value_Names.getDb_Users_Db_Name()).child(Username).getValue(User.class);//send users username to the Users_Data class
-                    Log.d(TAG, "Gathered Data Username = " + Gathered_Account_Details.getUsername());
-                    Log.d(TAG, "Gathered Data Password = " + Gathered_Account_Details.getPassword());
+
+                    //logs out the info gathered from the database
+                    Log.d(TAG, "Gathered data from db ");
                     Log.d(TAG, "Attempting Decryption");
+
                     try {
-                        //encase Username is encrypted in future.
+                        //start decrypting data from the database
                         Log.d(TAG, "Starting Decryption");
 
-                        //Add if u encrypt Username
+                        //encase Username is encrypted in future. (uncomment all this)
                         //Unencrypted_Username = Encryption_Class.decrypt(Gathered_Account_Details.getUsername());
                         //Log.d(TAG,"Login: Username decrypted");
 
-                        //unencrypt pw
-                        Log.d(TAG, "Password = " + Gathered_Account_Details.getPassword());
+                        //decrypt the password from the database
                         Unencrypted_Password = Encryption_Class.Decryption_Function(Gathered_Account_Details.getPassword());
-                        Log.d(TAG, "Decryption Success");
-                        Log.d(TAG, "Decrypted_Password = " + Unencrypted_Password);
-                    } catch (Exception e) {//if encryption failure
+                        Log.d(TAG, "Decryption of password Success");
+
+                        //if decryption fails show error in logs
+                    } catch (Exception e) {
+                        //creates a pop up message showing failure
                         reusableFunctions.Create_Toast(getApplicationContext(), "Decryption Failed. Crashing");
                         Log.d(TAG, "Decryption Failed");
                         e.printStackTrace();
                     }
-                    //if pw matches, Allow Login
+
+                    //if password entered by the user matches the coount they trying to login to, Allow Login
+                    Log.d(TAG, "Checking Pw");
                     if (Unencrypted_Password.equals((Login_User_Details.getPassword()))) {
+                        //say login successul
                         reusableFunctions.Create_Toast(getApplicationContext(), "Login Successful");
                         Log.d(TAG, "Successful Login");
-                        //REPLACES PW TO PREVENT DATA BEING USED
+
+                        //REPLACES Password locally from database TO PREVENT DATA BEING USED or accessed (the correct password is still in database)
                         Gathered_Account_Details.setPassword("Why Do U Wanna Know?");
+
+                        //THE USER HAS LOGGED IN SUCCESSFULLY
+                        //prepares the user to carry on through the app (Bmi Calculations variable setting)
                         Login_Success(Gathered_Account_Details, reusableFunctions);
                     } else {
+                        //If the user enters the password incorrectly. they are taken back to the login page to re-enter details
                         reusableFunctions.Create_Toast(getApplicationContext(), "Incorrect Username Or Password");
                         Log.d(TAG, "Password Doesn't Exist");
                         To_Login(Login_User_Details.getUsername());
                     }
                 } else {//if username doesnt exist
+                    //If the username doesnt exist. they are taken back to the login page to re-enter details
                     reusableFunctions.Create_Toast(getApplicationContext(), "Incorrect Username Or Password");
                     Log.d(TAG, "Username Doesn't Exist");
                     To_Login(Login_User_Details.getUsername());
                 }
                 //return null;
             }
-            @Override//if db cancelled. often cause security
+            @Override//if database error. often cause security settings need changing or no wifi
             public void onCancelled(@NonNull DatabaseError error) {
                 reusableFunctions.Create_Toast(getApplicationContext(), "Database Error. Cancelled");
+                //sends user back to login page
                 To_Login(Login_User_Details.getUsername());
             }
         });
@@ -592,7 +689,7 @@ public class Database extends AppCompatActivity {
     private ArrayList<String> Create_String_Arraylist(User Gathered_User_Data) {
 
         Log.d(TAG, "Data to Arraylist called");
-        String Age = reusableFunctions.Int_To_Strng(Gathered_User_Data.getAge());
+        String Age = reusableFunctions.Int_To_String(Gathered_User_Data.getAge());
         ArrayList<String> User_Data_Arraylist = new ArrayList<>();
 
         Log.d(TAG, "Adding Data");

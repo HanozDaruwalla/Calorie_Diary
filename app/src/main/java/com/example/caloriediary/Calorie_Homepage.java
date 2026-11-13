@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.caloriediary.Api_Refactored.Camera;
 import com.example.caloriediary.Api_Refactored.MainActivity2;
-import com.example.caloriediary.Creating_Account_And_Login.User;
-import com.example.caloriediary.RecyclerView.recyclerview;
+import com.example.caloriediary.RecyclerView.Breakfast_RecyclerView;
+import com.example.caloriediary.RecyclerView.Dinner_RecyclerView;
+import com.example.caloriediary.RecyclerView.Lunch_RecyclerView;
 import com.example.caloriediary.databinding.ActivityCalorieHomepageBinding;
 
 import java.util.ArrayList;
@@ -21,6 +23,8 @@ import java.util.ArrayList;
 public class Calorie_Homepage extends AppCompatActivity {
 
     final static String TAG = "Calorie_Homepage";
+
+
 
     private ActivityCalorieHomepageBinding binding;
     ArrayList<String> User_Data = new ArrayList<>();
@@ -31,6 +35,7 @@ public class Calorie_Homepage extends AppCompatActivity {
         binding = ActivityCalorieHomepageBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_calorie_homepage);
         setContentView(binding.getRoot());
+        EdgeToEdge.enable(this);
         getSupportActionBar(). hide();
 
         User_Data = getIntent().getExtras().getStringArrayList("User_Data");
@@ -42,6 +47,7 @@ public class Calorie_Homepage extends AppCompatActivity {
         }
 
         Log.d(TAG, "Save data to Shared Preference");
+        Log.d(TAG, "tada");
         // Save data to Shared Preference
         SharedPreferences shared_preference = getSharedPreferences("User_Data", Context.MODE_PRIVATE);
         Log.d(TAG, "1");
@@ -60,23 +66,6 @@ public class Calorie_Homepage extends AppCompatActivity {
         editor.commit();  // or editor.commit() to write immediately
         Log.d(TAG, "done shared pref");
 
-        /*
-        int i=0;
-        while (true){
-            try{
-                Log.d(TAG, "Data_In User_Data: " + User_Data.get(i));
-                i++;
-            }catch (IndexOutOfBoundsException EX){
-                Log.d(TAG, "Reached End Of User_Data");
-                break;
-            }
-
-        }
-        */
-
-
-
-
     }
 
     public void Camera_Button_Pressed(View view) {
@@ -94,8 +83,29 @@ public class Calorie_Homepage extends AppCompatActivity {
     }
 
     public void To_Breakfast_Recycler(View view) {
-        Intent intent = new Intent(view.getContext(), recyclerview.class);
-        intent.putExtra("User_Data",User_Data);
-        startActivity(intent);
+
+
+        Intent Lunch_Recycler_Intent =  new Intent(view.getContext(), Lunch_RecyclerView.class);
+        Lunch_Recycler_Intent.putExtra("User_Data",User_Data);
+        startActivity(Lunch_Recycler_Intent);
+        Log.d(TAG, "Lunch Intent Done");
+
+        Intent Dinner_Recycler_Intent =  new Intent(view.getContext(), Dinner_RecyclerView.class);
+        Dinner_Recycler_Intent.putExtra("User_Data",User_Data);
+        startActivity(Dinner_Recycler_Intent);
+        Log.d(TAG, "Dinner Intent Done");
+
+        Intent Breakfast_Recycler_Intent = new Intent(view.getContext(), Breakfast_RecyclerView.class);
+        Breakfast_Recycler_Intent.putExtra("User_Data",User_Data);
+        startActivity(Breakfast_Recycler_Intent);
+        Log.d(TAG, "Breakfast Intent Done");
+
+
+
+
+
+
+
+
     }
 }

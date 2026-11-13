@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
     android:background="@color/background_color">
 
     <androidx.fragment.app.FragmentContainerView
@@ -13,76 +12,233 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         tools:layout="@layout/fragment_title"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="10dp"/>
 
-        />
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:orientation="vertical">
+        android:layout_margin="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3">
-
-            <TextView
-                android:id="@+id/food_data_picker_lb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Food Nutrition Info:"
-                android:textStyle="bold"
-                android:textColor="@color/black"/>
-
-            <Spinner
-                android:id="@+id/Option_1_Spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:layout_weight="1"
-                android:text="boo"
-                />
-            <Spinner
-                android:id="@+id/Option_2_Spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:layout_weight="1"
-                />
-
-
-        </LinearLayout>
-
-        <TextView
-
-            android:id="@+id/Title_Label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Breakfast"
-            android:textSize="10sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="10dp"
-            android:textColor="@color/black"
-            android:layout_marginTop="10dp"
-            />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
-        </ScrollView>
+                android:orientation="horizontal"
+                android:weightSum="3">
+                <TextView
+                    android:id="@+id/food_data_picker_lb"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Filter:"
+                    android:textSize="15sp"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"/>
+                <Spinner
+                    android:id="@+id/Option1Spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:entries="@array/Food_Options"/>
+                <Spinner
+                    android:id="@+id/Option2Spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:entries="@array/Food_Options"/>
+            </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/Breakfast_Title_Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Breakfast"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                tools:itemCount="4"/>
+
+            <LinearLayout
+                android:id="@+id/Breakfast_Total_Linear_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginBottom="20dp">
+                <TextView
+                    android:id="@+id/Breakfast_Total_Lb"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Breakfast Totals"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/Dymanic_Sum1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="value 1"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/Breakfast_Dynamic_Sum2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="value 2"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/Lunch_Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lunch"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                tools:itemCount="4"/>
+
+            <LinearLayout
+                android:id="@+id/Lunch_Total_Linear_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginBottom="20dp">
+                <TextView
+                    android:id="@+id/Lunch_Total_Lb"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Lunch Totals"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/Lunch_Dymanic_Sum1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="value 1"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/Lunch_Dynamic_Sum2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="value 2"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/Dinner_Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dinner"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                tools:itemCount="4"/>
+
+            <LinearLayout
+                android:id="@+id/Dinner_Total_Linear_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginBottom="20dp">
+                <TextView
+                    android:id="@+id/Dinner_Total_Lb"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Dinner Totals"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/Dinner_Dymanic_Sum1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="value 1"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/Dinner_Dynamic_Sum2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="value 2"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout
+        android:id="@+id/Final_Sum_Total_Linear_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:layout_marginBottom="20dp">
+        <TextView
+            android:id="@+id/Final_Sum_Total_Lb"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:itemCount="4" />
-
-
+            android:text="Final Totals"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/Final_Sum_Dymanic_Sum1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="value 1"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/Final_Sum_Dynamic_Sum2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="value 2"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:layout_weight="1"/>
     </LinearLayout>
 </LinearLayout>
